@@ -77,5 +77,9 @@ export class UpdateOrgRequest {
 }
 
 
-export type UpdateOrgRequestOperationEnum = "ADD" | "REMOVE" | "REPLACE" ;
+export enum UpdateOrgRequestOperationEnum {
+    Add = 'ADD',
+    Remove = 'REMOVE',
+    Replace = 'REPLACE'
+}
 

@@ -117,5 +117,8 @@ export class FetchLiveboardDataRequest {
 }
 
 
-export type FetchLiveboardDataRequestDataFormatEnum = "FULL" | "COMPACT" ;
+export enum FetchLiveboardDataRequestDataFormatEnum {
+    Full = 'FULL',
+    Compact = 'COMPACT'
+}
 

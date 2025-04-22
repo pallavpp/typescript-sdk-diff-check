@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { SearchUserGroupsRequestSortOptions } from '../models/SearchUserGroupsRequestSortOptions';
+import { SortOptions } from '../models/SortOptions';
 import { HttpFile } from '../http/http';
 
 export class SearchUserGroupsRequest {
@@ -70,7 +70,10 @@ export class SearchUserGroupsRequest {
     * The number of records that should be included.
     */
     'record_size'?: number;
-    'sort_options'?: SearchUserGroupsRequestSortOptions;
+    /**
+    * Sort options to filter group details.
+    */
+    'sort_options'?: SortOptions;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -162,7 +165,7 @@ export class SearchUserGroupsRequest {
         {
             "name": "sort_options",
             "baseName": "sort_options",
-            "type": "SearchUserGroupsRequestSortOptions",
+            "type": "SortOptions",
             "format": ""
         }    ];
 
@@ -175,7 +178,50 @@ export class SearchUserGroupsRequest {
 }
 
 
-export type SearchUserGroupsRequestPrivilegesEnum = "ADMINISTRATION" | "AUTHORING" | "USERDATAUPLOADING" | "DATADOWNLOADING" | "USERMANAGEMENT" | "DATAMANAGEMENT" | "SHAREWITHALL" | "JOBSCHEDULING" | "A3ANALYSIS" | "EXPERIMENTALFEATUREPRIVILEGE" | "BYPASSRLS" | "RANALYSIS" | "DEVELOPER" | "USER_ADMINISTRATION" | "GROUP_ADMINISTRATION" | "SYNCMANAGEMENT" | "CAN_CREATE_CATALOG" | "DISABLE_PINBOARD_CREATION" | "LIVEBOARD_VERIFIER" | "PREVIEW_THOUGHTSPOT_SAGE" | "APPLICATION_ADMINISTRATION" | "SYSTEM_INFO_ADMINISTRATION" | "ORG_ADMINISTRATION" | "ROLE_ADMINISTRATION" | "AUTHENTICATION_ADMINISTRATION" | "BILLING_INFO_ADMINISTRATION" | "CAN_MANAGE_CUSTOM_CALENDAR" | "CAN_CREATE_OR_EDIT_CONNECTIONS" | "CAN_MANAGE_WORKSHEET_VIEWS_TABLES" | "CAN_MANAGE_VERSION_CONTROL" | "THIRDPARTY_ANALYSIS" | "ALLOW_NON_EMBED_FULL_APP_ACCESS" | "CAN_ACCESS_ANALYST_STUDIO" | "CAN_MANAGE_ANALYST_STUDIO" | "PREVIEW_DOCUMENT_SEARCH" | "CAN_SETUP_VERSION_CONTROL" ;
-export type SearchUserGroupsRequestTypeEnum = "LOCAL_GROUP" | "LDAP_GROUP" ;
-export type SearchUserGroupsRequestVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
+export enum SearchUserGroupsRequestPrivilegesEnum {
+    Administration = 'ADMINISTRATION',
+    Authoring = 'AUTHORING',
+    Userdatauploading = 'USERDATAUPLOADING',
+    Datadownloading = 'DATADOWNLOADING',
+    Usermanagement = 'USERMANAGEMENT',
+    Datamanagement = 'DATAMANAGEMENT',
+    Sharewithall = 'SHAREWITHALL',
+    Jobscheduling = 'JOBSCHEDULING',
+    A3Analysis = 'A3ANALYSIS',
+    Experimentalfeatureprivilege = 'EXPERIMENTALFEATUREPRIVILEGE',
+    Bypassrls = 'BYPASSRLS',
+    Ranalysis = 'RANALYSIS',
+    Developer = 'DEVELOPER',
+    UserAdministration = 'USER_ADMINISTRATION',
+    GroupAdministration = 'GROUP_ADMINISTRATION',
+    Syncmanagement = 'SYNCMANAGEMENT',
+    CanCreateCatalog = 'CAN_CREATE_CATALOG',
+    DisablePinboardCreation = 'DISABLE_PINBOARD_CREATION',
+    LiveboardVerifier = 'LIVEBOARD_VERIFIER',
+    PreviewThoughtspotSage = 'PREVIEW_THOUGHTSPOT_SAGE',
+    ApplicationAdministration = 'APPLICATION_ADMINISTRATION',
+    SystemInfoAdministration = 'SYSTEM_INFO_ADMINISTRATION',
+    OrgAdministration = 'ORG_ADMINISTRATION',
+    RoleAdministration = 'ROLE_ADMINISTRATION',
+    AuthenticationAdministration = 'AUTHENTICATION_ADMINISTRATION',
+    BillingInfoAdministration = 'BILLING_INFO_ADMINISTRATION',
+    CanManageCustomCalendar = 'CAN_MANAGE_CUSTOM_CALENDAR',
+    CanCreateOrEditConnections = 'CAN_CREATE_OR_EDIT_CONNECTIONS',
+    CanManageWorksheetViewsTables = 'CAN_MANAGE_WORKSHEET_VIEWS_TABLES',
+    CanManageVersionControl = 'CAN_MANAGE_VERSION_CONTROL',
+    ThirdpartyAnalysis = 'THIRDPARTY_ANALYSIS',
+    AllowNonEmbedFullAppAccess = 'ALLOW_NON_EMBED_FULL_APP_ACCESS',
+    CanAccessAnalystStudio = 'CAN_ACCESS_ANALYST_STUDIO',
+    CanManageAnalystStudio = 'CAN_MANAGE_ANALYST_STUDIO',
+    PreviewDocumentSearch = 'PREVIEW_DOCUMENT_SEARCH',
+    CanSetupVersionControl = 'CAN_SETUP_VERSION_CONTROL'
+}
+export enum SearchUserGroupsRequestTypeEnum {
+    LocalGroup = 'LOCAL_GROUP',
+    LdapGroup = 'LDAP_GROUP'
+}
+export enum SearchUserGroupsRequestVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
 

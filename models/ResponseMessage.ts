@@ -77,6 +77,12 @@ export class ResponseMessage {
 }
 
 
-export type ResponseMessageMessageTypeEnum = "TSAnswer" ;
-export type ResponseMessageVisualizationTypeEnum = "Chart" | "Table" | "Undefined" ;
+export enum ResponseMessageMessageTypeEnum {
+    TsAnswer = 'TSAnswer'
+}
+export enum ResponseMessageVisualizationTypeEnum {
+    Chart = 'Chart',
+    Table = 'Table',
+    Undefined = 'Undefined'
+}
 
