@@ -50,5 +50,9 @@ export class CustomActionMetadataTypeInput {
 }
 
 
-export type CustomActionMetadataTypeInputTypeEnum = "VISUALIZATION" | "ANSWER" | "WORKSHEET" ;
+export enum CustomActionMetadataTypeInputTypeEnum {
+    Visualization = 'VISUALIZATION',
+    Answer = 'ANSWER',
+    Worksheet = 'WORKSHEET'
+}
 

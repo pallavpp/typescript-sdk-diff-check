@@ -120,5 +120,7 @@ export class PdfOptions {
 }
 
 
-export type PdfOptionsPageSizeEnum = "A4" ;
+export enum PdfOptionsPageSizeEnum {
+    A4 = 'A4'
+}
 

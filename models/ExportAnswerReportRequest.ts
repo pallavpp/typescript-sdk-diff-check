@@ -97,5 +97,10 @@ export class ExportAnswerReportRequest {
 }
 
 
-export type ExportAnswerReportRequestFileFormatEnum = "CSV" | "PDF" | "XLSX" | "PNG" ;
+export enum ExportAnswerReportRequestFileFormatEnum {
+    Csv = 'CSV',
+    Pdf = 'PDF',
+    Xlsx = 'XLSX',
+    Png = 'PNG'
+}
 

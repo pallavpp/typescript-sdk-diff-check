@@ -87,5 +87,10 @@ export class ImportMetadataTMLAsyncRequest {
 }
 
 
-export type ImportMetadataTMLAsyncRequestImportPolicyEnum = "PARTIAL" | "ALL_OR_NONE" | "VALIDATE_ONLY" | "PARTIAL_OBJECT" ;
+export enum ImportMetadataTMLAsyncRequestImportPolicyEnum {
+    Partial = 'PARTIAL',
+    AllOrNone = 'ALL_OR_NONE',
+    ValidateOnly = 'VALIDATE_ONLY',
+    PartialObject = 'PARTIAL_OBJECT'
+}
 

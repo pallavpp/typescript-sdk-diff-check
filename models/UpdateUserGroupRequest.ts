@@ -137,8 +137,46 @@ export class UpdateUserGroupRequest {
 }
 
 
-export type UpdateUserGroupRequestPrivilegesEnum = "ADMINISTRATION" | "AUTHORING" | "USERDATAUPLOADING" | "DATADOWNLOADING" | "USERMANAGEMENT" | "DATAMANAGEMENT" | "SHAREWITHALL" | "JOBSCHEDULING" | "A3ANALYSIS" | "EXPERIMENTALFEATUREPRIVILEGE" | "BYPASSRLS" | "RANALYSIS" | "DEVELOPER" | "USER_ADMINISTRATION" | "GROUP_ADMINISTRATION" | "SYNCMANAGEMENT" | "CAN_CREATE_CATALOG" | "DISABLE_PINBOARD_CREATION" | "LIVEBOARD_VERIFIER" | "PREVIEW_THOUGHTSPOT_SAGE" | "CAN_MANAGE_VERSION_CONTROL" | "THIRDPARTY_ANALYSIS" | "ALLOW_NON_EMBED_FULL_APP_ACCESS" | "CAN_ACCESS_ANALYST_STUDIO" | "CAN_MANAGE_ANALYST_STUDIO" | "PREVIEW_DOCUMENT_SEARCH" | "CAN_SETUP_VERSION_CONTROL" ;
-export type UpdateUserGroupRequestTypeEnum = "LOCAL_GROUP" | "LDAP_GROUP" ;
-export type UpdateUserGroupRequestVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
-export type UpdateUserGroupRequestOperationEnum = "ADD" | "REMOVE" | "REPLACE" ;
+export enum UpdateUserGroupRequestPrivilegesEnum {
+    Administration = 'ADMINISTRATION',
+    Authoring = 'AUTHORING',
+    Userdatauploading = 'USERDATAUPLOADING',
+    Datadownloading = 'DATADOWNLOADING',
+    Usermanagement = 'USERMANAGEMENT',
+    Datamanagement = 'DATAMANAGEMENT',
+    Sharewithall = 'SHAREWITHALL',
+    Jobscheduling = 'JOBSCHEDULING',
+    A3Analysis = 'A3ANALYSIS',
+    Experimentalfeatureprivilege = 'EXPERIMENTALFEATUREPRIVILEGE',
+    Bypassrls = 'BYPASSRLS',
+    Ranalysis = 'RANALYSIS',
+    Developer = 'DEVELOPER',
+    UserAdministration = 'USER_ADMINISTRATION',
+    GroupAdministration = 'GROUP_ADMINISTRATION',
+    Syncmanagement = 'SYNCMANAGEMENT',
+    CanCreateCatalog = 'CAN_CREATE_CATALOG',
+    DisablePinboardCreation = 'DISABLE_PINBOARD_CREATION',
+    LiveboardVerifier = 'LIVEBOARD_VERIFIER',
+    PreviewThoughtspotSage = 'PREVIEW_THOUGHTSPOT_SAGE',
+    CanManageVersionControl = 'CAN_MANAGE_VERSION_CONTROL',
+    ThirdpartyAnalysis = 'THIRDPARTY_ANALYSIS',
+    AllowNonEmbedFullAppAccess = 'ALLOW_NON_EMBED_FULL_APP_ACCESS',
+    CanAccessAnalystStudio = 'CAN_ACCESS_ANALYST_STUDIO',
+    CanManageAnalystStudio = 'CAN_MANAGE_ANALYST_STUDIO',
+    PreviewDocumentSearch = 'PREVIEW_DOCUMENT_SEARCH',
+    CanSetupVersionControl = 'CAN_SETUP_VERSION_CONTROL'
+}
+export enum UpdateUserGroupRequestTypeEnum {
+    LocalGroup = 'LOCAL_GROUP',
+    LdapGroup = 'LDAP_GROUP'
+}
+export enum UpdateUserGroupRequestVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
+export enum UpdateUserGroupRequestOperationEnum {
+    Add = 'ADD',
+    Remove = 'REMOVE',
+    Replace = 'REPLACE'
+}
 

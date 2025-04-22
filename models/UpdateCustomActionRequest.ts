@@ -10,18 +10,18 @@
  * Do not edit the class manually.
  */
 
+import { ActionDetailsInput } from '../models/ActionDetailsInput';
 import { AssociateMetadataInput } from '../models/AssociateMetadataInput';
-import { UpdateCustomActionRequestActionDetails } from '../models/UpdateCustomActionRequestActionDetails';
-import { UpdateCustomActionRequestDefaultActionConfig } from '../models/UpdateCustomActionRequestDefaultActionConfig';
+import { DefaultActionConfigInput } from '../models/DefaultActionConfigInput';
 import { HttpFile } from '../http/http';
 
 export class UpdateCustomActionRequest {
-    'action_details'?: UpdateCustomActionRequestActionDetails;
+    'action_details'?: ActionDetailsInput;
     /**
     * Metadata objects to which the custom action needs to be associated.
     */
     'associate_metadata'?: Array<AssociateMetadataInput>;
-    'default_action_config'?: UpdateCustomActionRequestDefaultActionConfig;
+    'default_action_config'?: DefaultActionConfigInput;
     /**
     * Unique ID or name of the groups that can view and access the custom action.
     */
@@ -41,7 +41,7 @@ export class UpdateCustomActionRequest {
         {
             "name": "action_details",
             "baseName": "action_details",
-            "type": "UpdateCustomActionRequestActionDetails",
+            "type": "ActionDetailsInput",
             "format": ""
         },
         {
@@ -53,7 +53,7 @@ export class UpdateCustomActionRequest {
         {
             "name": "default_action_config",
             "baseName": "default_action_config",
-            "type": "UpdateCustomActionRequestDefaultActionConfig",
+            "type": "DefaultActionConfigInput",
             "format": ""
         },
         {
@@ -84,5 +84,8 @@ export class UpdateCustomActionRequest {
 }
 
 
-export type UpdateCustomActionRequestOperationEnum = "ADD" | "REMOVE" ;
+export enum UpdateCustomActionRequestOperationEnum {
+    Add = 'ADD',
+    Remove = 'REMOVE'
+}
 

@@ -81,5 +81,22 @@ export class RuntimeFilters {
 }
 
 
-export type RuntimeFiltersOperatorEnum = "EQ" | "NE" | "LT" | "LE" | "GT" | "GE" | "IN" | "BW" | "CONTAINS" | "BEGINS_WITH" | "ENDS_WITH" | "BW_INC" | "BW_INC_MIN" | "BW_INC_MAX" | "LIKE" | "NOT_IN" ;
+export enum RuntimeFiltersOperatorEnum {
+    Eq = 'EQ',
+    Ne = 'NE',
+    Lt = 'LT',
+    Le = 'LE',
+    Gt = 'GT',
+    Ge = 'GE',
+    In = 'IN',
+    Bw = 'BW',
+    Contains = 'CONTAINS',
+    BeginsWith = 'BEGINS_WITH',
+    EndsWith = 'ENDS_WITH',
+    BwInc = 'BW_INC',
+    BwIncMin = 'BW_INC_MIN',
+    BwIncMax = 'BW_INC_MAX',
+    Like = 'LIKE',
+    NotIn = 'NOT_IN'
+}
 

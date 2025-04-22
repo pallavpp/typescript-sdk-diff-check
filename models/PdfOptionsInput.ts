@@ -97,5 +97,8 @@ export class PdfOptionsInput {
 }
 
 
-export type PdfOptionsInputPageOrientationEnum = "PORTRAIT" | "LANDSCAPE" ;
+export enum PdfOptionsInputPageOrientationEnum {
+    Portrait = 'PORTRAIT',
+    Landscape = 'LANDSCAPE'
+}
 
