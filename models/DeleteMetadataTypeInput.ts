@@ -50,5 +50,11 @@ export class DeleteMetadataTypeInput {
 }
 
 
-export type DeleteMetadataTypeInputTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "LOGICAL_COLUMN" | "LOGICAL_RELATIONSHIP" ;
+export enum DeleteMetadataTypeInputTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    LogicalColumn = 'LOGICAL_COLUMN',
+    LogicalRelationship = 'LOGICAL_RELATIONSHIP'
+}
 

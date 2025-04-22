@@ -127,5 +127,8 @@ export class DbtConnectionRequest {
 }
 
 
-export type DbtConnectionRequestImportTypeEnum = "DBT_CLOUD" | "ZIP_FILE" ;
+export enum DbtConnectionRequestImportTypeEnum {
+    DbtCloud = 'DBT_CLOUD',
+    ZipFile = 'ZIP_FILE'
+}
 

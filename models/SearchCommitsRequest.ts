@@ -77,5 +77,10 @@ export class SearchCommitsRequest {
 }
 
 
-export type SearchCommitsRequestMetadataTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "CUSTOM_ACTION" ;
+export enum SearchCommitsRequestMetadataTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    CustomAction = 'CUSTOM_ACTION'
+}
 

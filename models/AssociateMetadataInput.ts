@@ -55,5 +55,9 @@ export class AssociateMetadataInput {
 }
 
 
-export type AssociateMetadataInputTypeEnum = "VISUALIZATION" | "ANSWER" | "WORKSHEET" ;
+export enum AssociateMetadataInputTypeEnum {
+    Visualization = 'VISUALIZATION',
+    Answer = 'ANSWER',
+    Worksheet = 'WORKSHEET'
+}
 
