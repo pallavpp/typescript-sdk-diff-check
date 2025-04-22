@@ -161,5 +161,10 @@ export class GetCustomAccessTokenRequest {
 }
 
 
-export type GetCustomAccessTokenRequestPersistOptionEnum = "APPEND" | "NONE" | "REPLACE" | "RESET" ;
+export enum GetCustomAccessTokenRequestPersistOptionEnum {
+    Append = 'APPEND',
+    None = 'NONE',
+    Replace = 'REPLACE',
+    Reset = 'RESET'
+}
 

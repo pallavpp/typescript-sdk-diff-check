@@ -168,7 +168,23 @@ export class ImportUser {
 }
 
 
-export type ImportUserAccountTypeEnum = "LOCAL_USER" | "LDAP_USER" | "SAML_USER" | "OIDC_USER" | "REMOTE_USER" ;
-export type ImportUserAccountStatusEnum = "ACTIVE" | "INACTIVE" | "EXPIRED" | "LOCKED" | "PENDING" | "SUSPENDED" ;
-export type ImportUserVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
+export enum ImportUserAccountTypeEnum {
+    LocalUser = 'LOCAL_USER',
+    LdapUser = 'LDAP_USER',
+    SamlUser = 'SAML_USER',
+    OidcUser = 'OIDC_USER',
+    RemoteUser = 'REMOTE_USER'
+}
+export enum ImportUserAccountStatusEnum {
+    Active = 'ACTIVE',
+    Inactive = 'INACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Pending = 'PENDING',
+    Suspended = 'SUSPENDED'
+}
+export enum ImportUserVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
 

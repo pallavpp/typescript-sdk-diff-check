@@ -11,7 +11,7 @@
  */
 
 import { ConnectionInput } from '../models/ConnectionInput';
-import { SearchConnectionRequestSortOptions } from '../models/SearchConnectionRequestSortOptions';
+import { SortOptionInput } from '../models/SortOptionInput';
 import { HttpFile } from '../http/http';
 
 export class SearchConnectionRequest {
@@ -39,7 +39,7 @@ export class SearchConnectionRequest {
     * Data warehouse object type.
     */
     'data_warehouse_object_type'?: SearchConnectionRequestDataWarehouseObjectTypeEnum;
-    'sort_options'?: SearchConnectionRequestSortOptions;
+    'sort_options'?: SortOptionInput;
     /**
     * Indicates whether to include complete details of the connection objects.
     */
@@ -95,7 +95,7 @@ export class SearchConnectionRequest {
         {
             "name": "sort_options",
             "baseName": "sort_options",
-            "type": "SearchConnectionRequestSortOptions",
+            "type": "SortOptionInput",
             "format": ""
         },
         {
@@ -126,7 +126,52 @@ export class SearchConnectionRequest {
 }
 
 
-export type SearchConnectionRequestDataWarehouseTypesEnum = "SNOWFLAKE" | "AMAZON_REDSHIFT" | "GOOGLE_BIGQUERY" | "AZURE_SYNAPSE" | "TERADATA" | "SAP_HANA" | "STARBURST" | "ORACLE_ADW" | "DATABRICKS" | "DENODO" | "DREMIO" | "TRINO" | "PRESTO" | "POSTGRES" | "SQLSERVER" | "MYSQL" | "GENERIC_JDBC" | "AMAZON_RDS_POSTGRESQL" | "AMAZON_AURORA_POSTGRESQL" | "AMAZON_RDS_MYSQL" | "AMAZON_AURORA_MYSQL" | "LOOKER" | "AMAZON_ATHENA" | "SINGLESTORE" | "GCP_SQLSERVER" | "GCP_ALLOYDB_POSTGRESQL" | "GCP_POSTGRESQL" | "GCP_MYSQL" | "MODE" | "GOOGLE_SHEETS" | "FALCON" | "FALCON_ONPREM" ;
-export type SearchConnectionRequestDataWarehouseObjectTypeEnum = "DATABASE" | "SCHEMA" | "TABLE" | "COLUMN" ;
-export type SearchConnectionRequestAuthenticationTypeEnum = "SERVICE_ACCOUNT" | "OAUTH" | "IAM" | "EXTOAUTH" | "OAUTH_WITH_SERVICE_PRINCIPAL" | "PERSONAL_ACCESS_TOKEN" ;
+export enum SearchConnectionRequestDataWarehouseTypesEnum {
+    Snowflake = 'SNOWFLAKE',
+    AmazonRedshift = 'AMAZON_REDSHIFT',
+    GoogleBigquery = 'GOOGLE_BIGQUERY',
+    AzureSynapse = 'AZURE_SYNAPSE',
+    Teradata = 'TERADATA',
+    SapHana = 'SAP_HANA',
+    Starburst = 'STARBURST',
+    OracleAdw = 'ORACLE_ADW',
+    Databricks = 'DATABRICKS',
+    Denodo = 'DENODO',
+    Dremio = 'DREMIO',
+    Trino = 'TRINO',
+    Presto = 'PRESTO',
+    Postgres = 'POSTGRES',
+    Sqlserver = 'SQLSERVER',
+    Mysql = 'MYSQL',
+    GenericJdbc = 'GENERIC_JDBC',
+    AmazonRdsPostgresql = 'AMAZON_RDS_POSTGRESQL',
+    AmazonAuroraPostgresql = 'AMAZON_AURORA_POSTGRESQL',
+    AmazonRdsMysql = 'AMAZON_RDS_MYSQL',
+    AmazonAuroraMysql = 'AMAZON_AURORA_MYSQL',
+    Looker = 'LOOKER',
+    AmazonAthena = 'AMAZON_ATHENA',
+    Singlestore = 'SINGLESTORE',
+    GcpSqlserver = 'GCP_SQLSERVER',
+    GcpAlloydbPostgresql = 'GCP_ALLOYDB_POSTGRESQL',
+    GcpPostgresql = 'GCP_POSTGRESQL',
+    GcpMysql = 'GCP_MYSQL',
+    Mode = 'MODE',
+    GoogleSheets = 'GOOGLE_SHEETS',
+    Falcon = 'FALCON',
+    FalconOnprem = 'FALCON_ONPREM'
+}
+export enum SearchConnectionRequestDataWarehouseObjectTypeEnum {
+    Database = 'DATABASE',
+    Schema = 'SCHEMA',
+    Table = 'TABLE',
+    Column = 'COLUMN'
+}
+export enum SearchConnectionRequestAuthenticationTypeEnum {
+    ServiceAccount = 'SERVICE_ACCOUNT',
+    Oauth = 'OAUTH',
+    Iam = 'IAM',
+    Extoauth = 'EXTOAUTH',
+    OauthWithServicePrincipal = 'OAUTH_WITH_SERVICE_PRINCIPAL',
+    PersonalAccessToken = 'PERSONAL_ACCESS_TOKEN'
+}
 

@@ -67,6 +67,13 @@ export class DeployCommitRequest {
 }
 
 
-export type DeployCommitRequestDeployTypeEnum = "FULL" | "DELTA" ;
-export type DeployCommitRequestDeployPolicyEnum = "ALL_OR_NONE" | "PARTIAL" | "VALIDATE_ONLY" ;
+export enum DeployCommitRequestDeployTypeEnum {
+    Full = 'FULL',
+    Delta = 'DELTA'
+}
+export enum DeployCommitRequestDeployPolicyEnum {
+    AllOrNone = 'ALL_OR_NONE',
+    Partial = 'PARTIAL',
+    ValidateOnly = 'VALIDATE_ONLY'
+}
 

@@ -11,7 +11,7 @@
  */
 
 import { FavoriteMetadataInput } from '../models/FavoriteMetadataInput';
-import { SearchUsersRequestSortOptions } from '../models/SearchUsersRequestSortOptions';
+import { SortOptions } from '../models/SortOptions';
 import { HttpFile } from '../http/http';
 
 export class SearchUsersRequest {
@@ -83,7 +83,7 @@ export class SearchUsersRequest {
     * The number of records that should be included.
     */
     'record_size'?: number;
-    'sort_options'?: SearchUsersRequestSortOptions;
+    'sort_options'?: SortOptions;
     /**
     * Filters by the role assigned to the user.
     */
@@ -201,7 +201,7 @@ export class SearchUsersRequest {
         {
             "name": "sort_options",
             "baseName": "sort_options",
-            "type": "SearchUsersRequestSortOptions",
+            "type": "SortOptions",
             "format": ""
         },
         {
@@ -226,8 +226,61 @@ export class SearchUsersRequest {
 }
 
 
-export type SearchUsersRequestVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
-export type SearchUsersRequestPrivilegesEnum = "ADMINISTRATION" | "AUTHORING" | "USERDATAUPLOADING" | "DATADOWNLOADING" | "USERMANAGEMENT" | "DATAMANAGEMENT" | "SHAREWITHALL" | "JOBSCHEDULING" | "A3ANALYSIS" | "EXPERIMENTALFEATUREPRIVILEGE" | "BYPASSRLS" | "RANALYSIS" | "DEVELOPER" | "USER_ADMINISTRATION" | "GROUP_ADMINISTRATION" | "SYNCMANAGEMENT" | "CAN_CREATE_CATALOG" | "DISABLE_PINBOARD_CREATION" | "LIVEBOARD_VERIFIER" | "PREVIEW_THOUGHTSPOT_SAGE" | "APPLICATION_ADMINISTRATION" | "SYSTEM_INFO_ADMINISTRATION" | "ORG_ADMINISTRATION" | "ROLE_ADMINISTRATION" | "AUTHENTICATION_ADMINISTRATION" | "BILLING_INFO_ADMINISTRATION" | "CAN_MANAGE_CUSTOM_CALENDAR" | "CAN_CREATE_OR_EDIT_CONNECTIONS" | "CAN_MANAGE_WORKSHEET_VIEWS_TABLES" | "CAN_MANAGE_VERSION_CONTROL" | "THIRDPARTY_ANALYSIS" | "ALLOW_NON_EMBED_FULL_APP_ACCESS" | "CAN_ACCESS_ANALYST_STUDIO" | "CAN_MANAGE_ANALYST_STUDIO" | "PREVIEW_DOCUMENT_SEARCH" | "CAN_SETUP_VERSION_CONTROL" ;
-export type SearchUsersRequestAccountTypeEnum = "LOCAL_USER" | "LDAP_USER" | "SAML_USER" | "OIDC_USER" | "REMOTE_USER" ;
-export type SearchUsersRequestAccountStatusEnum = "ACTIVE" | "INACTIVE" | "EXPIRED" | "LOCKED" | "PENDING" | "SUSPENDED" ;
+export enum SearchUsersRequestVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
+export enum SearchUsersRequestPrivilegesEnum {
+    Administration = 'ADMINISTRATION',
+    Authoring = 'AUTHORING',
+    Userdatauploading = 'USERDATAUPLOADING',
+    Datadownloading = 'DATADOWNLOADING',
+    Usermanagement = 'USERMANAGEMENT',
+    Datamanagement = 'DATAMANAGEMENT',
+    Sharewithall = 'SHAREWITHALL',
+    Jobscheduling = 'JOBSCHEDULING',
+    A3Analysis = 'A3ANALYSIS',
+    Experimentalfeatureprivilege = 'EXPERIMENTALFEATUREPRIVILEGE',
+    Bypassrls = 'BYPASSRLS',
+    Ranalysis = 'RANALYSIS',
+    Developer = 'DEVELOPER',
+    UserAdministration = 'USER_ADMINISTRATION',
+    GroupAdministration = 'GROUP_ADMINISTRATION',
+    Syncmanagement = 'SYNCMANAGEMENT',
+    CanCreateCatalog = 'CAN_CREATE_CATALOG',
+    DisablePinboardCreation = 'DISABLE_PINBOARD_CREATION',
+    LiveboardVerifier = 'LIVEBOARD_VERIFIER',
+    PreviewThoughtspotSage = 'PREVIEW_THOUGHTSPOT_SAGE',
+    ApplicationAdministration = 'APPLICATION_ADMINISTRATION',
+    SystemInfoAdministration = 'SYSTEM_INFO_ADMINISTRATION',
+    OrgAdministration = 'ORG_ADMINISTRATION',
+    RoleAdministration = 'ROLE_ADMINISTRATION',
+    AuthenticationAdministration = 'AUTHENTICATION_ADMINISTRATION',
+    BillingInfoAdministration = 'BILLING_INFO_ADMINISTRATION',
+    CanManageCustomCalendar = 'CAN_MANAGE_CUSTOM_CALENDAR',
+    CanCreateOrEditConnections = 'CAN_CREATE_OR_EDIT_CONNECTIONS',
+    CanManageWorksheetViewsTables = 'CAN_MANAGE_WORKSHEET_VIEWS_TABLES',
+    CanManageVersionControl = 'CAN_MANAGE_VERSION_CONTROL',
+    ThirdpartyAnalysis = 'THIRDPARTY_ANALYSIS',
+    AllowNonEmbedFullAppAccess = 'ALLOW_NON_EMBED_FULL_APP_ACCESS',
+    CanAccessAnalystStudio = 'CAN_ACCESS_ANALYST_STUDIO',
+    CanManageAnalystStudio = 'CAN_MANAGE_ANALYST_STUDIO',
+    PreviewDocumentSearch = 'PREVIEW_DOCUMENT_SEARCH',
+    CanSetupVersionControl = 'CAN_SETUP_VERSION_CONTROL'
+}
+export enum SearchUsersRequestAccountTypeEnum {
+    LocalUser = 'LOCAL_USER',
+    LdapUser = 'LDAP_USER',
+    SamlUser = 'SAML_USER',
+    OidcUser = 'OIDC_USER',
+    RemoteUser = 'REMOTE_USER'
+}
+export enum SearchUsersRequestAccountStatusEnum {
+    Active = 'ACTIVE',
+    Inactive = 'INACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Pending = 'PENDING',
+    Suspended = 'SUSPENDED'
+}
 

@@ -58,5 +58,8 @@ export class RevertCommitRequest {
 }
 
 
-export type RevertCommitRequestRevertPolicyEnum = "ALL_OR_NONE" | "PARTIAL" ;
+export enum RevertCommitRequestRevertPolicyEnum {
+    AllOrNone = 'ALL_OR_NONE',
+    Partial = 'PARTIAL'
+}
 
