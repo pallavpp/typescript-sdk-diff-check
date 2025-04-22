@@ -88,6 +88,8 @@ export class SearchRoleResponse {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "id",
@@ -200,7 +202,56 @@ export class SearchRoleResponse {
     }
 }
 
-
-export type SearchRoleResponsePrivilegesEnum = "UNKNOWN" | "ADMINISTRATION" | "AUTHORING" | "USERDATAUPLOADING" | "DATADOWNLOADING" | "USERMANAGEMENT" | "SECURITYMANAGEMENT" | "LOGICALMODELING" | "DATAMANAGEMENT" | "TAGMANAGEMENT" | "SHAREWITHALL" | "SYSTEMMANAGEMENT" | "JOBSCHEDULING" | "A3ANALYSIS" | "EXPERIMENTALFEATUREPRIVILEGE" | "BYPASSRLS" | "RANALYSIS" | "DISABLE_PINBOARD_CREATION" | "DEVELOPER" | "APPLICATION_ADMINISTRATION" | "USER_ADMINISTRATION" | "GROUP_ADMINISTRATION" | "BACKUP_ADMINISTRATION" | "SYSTEM_INFO_ADMINISTRATION" | "ENABLESPOTAPPCREATION" | "SYNCMANAGEMENT" | "ORG_ADMINISTRATION" | "ROLE_ADMINISTRATION" | "AUTHENTICATION_ADMINISTRATION" | "BILLING_INFO_ADMINISTRATION" | "PREVIEW_THOUGHTSPOT_SAGE" | "LIVEBOARD_VERIFIER" | "CAN_MANAGE_CUSTOM_CALENDAR" | "CAN_CREATE_OR_EDIT_CONNECTIONS" | "CAN_CONFIGURE_CONNECTIONS" | "CAN_MANAGE_WORKSHEET_VIEWS_TABLES" | "CAN_MANAGE_VERSION_CONTROL" | "THIRDPARTY_ANALYSIS" | "CONTROL_TRUSTED_AUTH" | "CAN_CREATE_CATALOG" | "ALLOW_NON_EMBED_FULL_APP_ACCESS" | "CAN_ACCESS_ANALYST_STUDIO" | "CAN_MANAGE_ANALYST_STUDIO" | "PREVIEW_DOCUMENT_SEARCH" | "CAN_SETUP_VERSION_CONTROL" ;
-export type SearchRoleResponsePermissionEnum = "READ_ONLY" | "MODIFY" | "NO_ACCESS" ;
+export enum SearchRoleResponsePrivilegesEnum {
+    Unknown = 'UNKNOWN',
+    Administration = 'ADMINISTRATION',
+    Authoring = 'AUTHORING',
+    Userdatauploading = 'USERDATAUPLOADING',
+    Datadownloading = 'DATADOWNLOADING',
+    Usermanagement = 'USERMANAGEMENT',
+    Securitymanagement = 'SECURITYMANAGEMENT',
+    Logicalmodeling = 'LOGICALMODELING',
+    Datamanagement = 'DATAMANAGEMENT',
+    Tagmanagement = 'TAGMANAGEMENT',
+    Sharewithall = 'SHAREWITHALL',
+    Systemmanagement = 'SYSTEMMANAGEMENT',
+    Jobscheduling = 'JOBSCHEDULING',
+    A3Analysis = 'A3ANALYSIS',
+    Experimentalfeatureprivilege = 'EXPERIMENTALFEATUREPRIVILEGE',
+    Bypassrls = 'BYPASSRLS',
+    Ranalysis = 'RANALYSIS',
+    DisablePinboardCreation = 'DISABLE_PINBOARD_CREATION',
+    Developer = 'DEVELOPER',
+    ApplicationAdministration = 'APPLICATION_ADMINISTRATION',
+    UserAdministration = 'USER_ADMINISTRATION',
+    GroupAdministration = 'GROUP_ADMINISTRATION',
+    BackupAdministration = 'BACKUP_ADMINISTRATION',
+    SystemInfoAdministration = 'SYSTEM_INFO_ADMINISTRATION',
+    Enablespotappcreation = 'ENABLESPOTAPPCREATION',
+    Syncmanagement = 'SYNCMANAGEMENT',
+    OrgAdministration = 'ORG_ADMINISTRATION',
+    RoleAdministration = 'ROLE_ADMINISTRATION',
+    AuthenticationAdministration = 'AUTHENTICATION_ADMINISTRATION',
+    BillingInfoAdministration = 'BILLING_INFO_ADMINISTRATION',
+    PreviewThoughtspotSage = 'PREVIEW_THOUGHTSPOT_SAGE',
+    LiveboardVerifier = 'LIVEBOARD_VERIFIER',
+    CanManageCustomCalendar = 'CAN_MANAGE_CUSTOM_CALENDAR',
+    CanCreateOrEditConnections = 'CAN_CREATE_OR_EDIT_CONNECTIONS',
+    CanConfigureConnections = 'CAN_CONFIGURE_CONNECTIONS',
+    CanManageWorksheetViewsTables = 'CAN_MANAGE_WORKSHEET_VIEWS_TABLES',
+    CanManageVersionControl = 'CAN_MANAGE_VERSION_CONTROL',
+    ThirdpartyAnalysis = 'THIRDPARTY_ANALYSIS',
+    ControlTrustedAuth = 'CONTROL_TRUSTED_AUTH',
+    CanCreateCatalog = 'CAN_CREATE_CATALOG',
+    AllowNonEmbedFullAppAccess = 'ALLOW_NON_EMBED_FULL_APP_ACCESS',
+    CanAccessAnalystStudio = 'CAN_ACCESS_ANALYST_STUDIO',
+    CanManageAnalystStudio = 'CAN_MANAGE_ANALYST_STUDIO',
+    PreviewDocumentSearch = 'PREVIEW_DOCUMENT_SEARCH',
+    CanSetupVersionControl = 'CAN_SETUP_VERSION_CONTROL'
+}
+export enum SearchRoleResponsePermissionEnum {
+    ReadOnly = 'READ_ONLY',
+    Modify = 'MODIFY',
+    NoAccess = 'NO_ACCESS'
+}
 

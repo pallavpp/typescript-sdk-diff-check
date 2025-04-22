@@ -40,6 +40,8 @@ export class ImportMetadataTMLAsyncRequest {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "metadata_tmls",
@@ -86,6 +88,10 @@ export class ImportMetadataTMLAsyncRequest {
     }
 }
 
-
-export type ImportMetadataTMLAsyncRequestImportPolicyEnum = "PARTIAL" | "ALL_OR_NONE" | "VALIDATE_ONLY" | "PARTIAL_OBJECT" ;
+export enum ImportMetadataTMLAsyncRequestImportPolicyEnum {
+    Partial = 'PARTIAL',
+    AllOrNone = 'ALL_OR_NONE',
+    ValidateOnly = 'VALIDATE_ONLY',
+    PartialObject = 'PARTIAL_OBJECT'
+}
 

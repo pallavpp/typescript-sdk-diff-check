@@ -25,6 +25,8 @@ export class PermissionInput {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "principal",
@@ -47,6 +49,9 @@ export class PermissionInput {
     }
 }
 
-
-export type PermissionInputShareModeEnum = "READ_ONLY" | "MODIFY" | "NO_ACCESS" ;
+export enum PermissionInputShareModeEnum {
+    ReadOnly = 'READ_ONLY',
+    Modify = 'MODIFY',
+    NoAccess = 'NO_ACCESS'
+}
 

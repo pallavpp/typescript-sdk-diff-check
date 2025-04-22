@@ -56,6 +56,8 @@ export class CreateUserGroupRequest {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "name",
@@ -126,8 +128,41 @@ export class CreateUserGroupRequest {
     }
 }
 
-
-export type CreateUserGroupRequestPrivilegesEnum = "ADMINISTRATION" | "AUTHORING" | "USERDATAUPLOADING" | "DATADOWNLOADING" | "USERMANAGEMENT" | "DATAMANAGEMENT" | "SHAREWITHALL" | "JOBSCHEDULING" | "A3ANALYSIS" | "EXPERIMENTALFEATUREPRIVILEGE" | "BYPASSRLS" | "RANALYSIS" | "DEVELOPER" | "USER_ADMINISTRATION" | "GROUP_ADMINISTRATION" | "SYNCMANAGEMENT" | "CAN_CREATE_CATALOG" | "DISABLE_PINBOARD_CREATION" | "LIVEBOARD_VERIFIER" | "PREVIEW_THOUGHTSPOT_SAGE" | "CAN_MANAGE_VERSION_CONTROL" | "THIRDPARTY_ANALYSIS" | "ALLOW_NON_EMBED_FULL_APP_ACCESS" | "CAN_ACCESS_ANALYST_STUDIO" | "CAN_MANAGE_ANALYST_STUDIO" | "PREVIEW_DOCUMENT_SEARCH" | "CAN_SETUP_VERSION_CONTROL" ;
-export type CreateUserGroupRequestTypeEnum = "LOCAL_GROUP" | "LDAP_GROUP" ;
-export type CreateUserGroupRequestVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
+export enum CreateUserGroupRequestPrivilegesEnum {
+    Administration = 'ADMINISTRATION',
+    Authoring = 'AUTHORING',
+    Userdatauploading = 'USERDATAUPLOADING',
+    Datadownloading = 'DATADOWNLOADING',
+    Usermanagement = 'USERMANAGEMENT',
+    Datamanagement = 'DATAMANAGEMENT',
+    Sharewithall = 'SHAREWITHALL',
+    Jobscheduling = 'JOBSCHEDULING',
+    A3Analysis = 'A3ANALYSIS',
+    Experimentalfeatureprivilege = 'EXPERIMENTALFEATUREPRIVILEGE',
+    Bypassrls = 'BYPASSRLS',
+    Ranalysis = 'RANALYSIS',
+    Developer = 'DEVELOPER',
+    UserAdministration = 'USER_ADMINISTRATION',
+    GroupAdministration = 'GROUP_ADMINISTRATION',
+    Syncmanagement = 'SYNCMANAGEMENT',
+    CanCreateCatalog = 'CAN_CREATE_CATALOG',
+    DisablePinboardCreation = 'DISABLE_PINBOARD_CREATION',
+    LiveboardVerifier = 'LIVEBOARD_VERIFIER',
+    PreviewThoughtspotSage = 'PREVIEW_THOUGHTSPOT_SAGE',
+    CanManageVersionControl = 'CAN_MANAGE_VERSION_CONTROL',
+    ThirdpartyAnalysis = 'THIRDPARTY_ANALYSIS',
+    AllowNonEmbedFullAppAccess = 'ALLOW_NON_EMBED_FULL_APP_ACCESS',
+    CanAccessAnalystStudio = 'CAN_ACCESS_ANALYST_STUDIO',
+    CanManageAnalystStudio = 'CAN_MANAGE_ANALYST_STUDIO',
+    PreviewDocumentSearch = 'PREVIEW_DOCUMENT_SEARCH',
+    CanSetupVersionControl = 'CAN_SETUP_VERSION_CONTROL'
+}
+export enum CreateUserGroupRequestTypeEnum {
+    LocalGroup = 'LOCAL_GROUP',
+    LdapGroup = 'LDAP_GROUP'
+}
+export enum CreateUserGroupRequestVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
 

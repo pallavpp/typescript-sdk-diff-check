@@ -36,6 +36,8 @@ export class OrgResponse {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "id",
@@ -76,7 +78,12 @@ export class OrgResponse {
     }
 }
 
-
-export type OrgResponseStatusEnum = "ACTIVE" | "IN_ACTIVE" ;
-export type OrgResponseVisibilityEnum = "SHOW" | "HIDDEN" ;
+export enum OrgResponseStatusEnum {
+    Active = 'ACTIVE',
+    InActive = 'IN_ACTIVE'
+}
+export enum OrgResponseVisibilityEnum {
+    Show = 'SHOW',
+    Hidden = 'HIDDEN'
+}
 

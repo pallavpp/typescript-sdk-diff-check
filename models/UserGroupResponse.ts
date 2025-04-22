@@ -138,6 +138,8 @@ export class UserGroupResponse {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "author_id",
@@ -328,8 +330,16 @@ export class UserGroupResponse {
     }
 }
 
-
-export type UserGroupResponseParentTypeEnum = "USER" | "GROUP" ;
-export type UserGroupResponseTypeEnum = "LOCAL_GROUP" | "LDAP_GROUP" ;
-export type UserGroupResponseVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
+export enum UserGroupResponseParentTypeEnum {
+    User = 'USER',
+    Group = 'GROUP'
+}
+export enum UserGroupResponseTypeEnum {
+    LocalGroup = 'LOCAL_GROUP',
+    LdapGroup = 'LDAP_GROUP'
+}
+export enum UserGroupResponseVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
 
