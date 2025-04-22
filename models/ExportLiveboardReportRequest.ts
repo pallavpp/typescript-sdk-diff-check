@@ -113,5 +113,10 @@ export class ExportLiveboardReportRequest {
 }
 
 
-export type ExportLiveboardReportRequestFileFormatEnum = "CSV" | "PDF" | "XLSX" | "PNG" ;
+export enum ExportLiveboardReportRequestFileFormatEnum {
+    Csv = 'CSV',
+    Pdf = 'PDF',
+    Xlsx = 'XLSX',
+    Png = 'PNG'
+}
 

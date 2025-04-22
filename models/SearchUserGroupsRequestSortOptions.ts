@@ -50,6 +50,15 @@ export class SearchUserGroupsRequestSortOptions {
 }
 
 
-export type SearchUserGroupsRequestSortOptionsFieldNameEnum = "NAME" | "DISPLAY_NAME" | "AUTHOR" | "CREATED" | "MODIFIED" ;
-export type SearchUserGroupsRequestSortOptionsOrderEnum = "ASC" | "DESC" ;
+export enum SearchUserGroupsRequestSortOptionsFieldNameEnum {
+    Name = 'NAME',
+    DisplayName = 'DISPLAY_NAME',
+    Author = 'AUTHOR',
+    Created = 'CREATED',
+    Modified = 'MODIFIED'
+}
+export enum SearchUserGroupsRequestSortOptionsOrderEnum {
+    Asc = 'ASC',
+    Desc = 'DESC'
+}
 

@@ -474,8 +474,27 @@ export class User {
 }
 
 
-export type UserVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
-export type UserAccountTypeEnum = "LOCAL_USER" | "LDAP_USER" | "SAML_USER" | "OIDC_USER" | "REMOTE_USER" ;
-export type UserAccountStatusEnum = "ACTIVE" | "INACTIVE" | "EXPIRED" | "LOCKED" | "PENDING" | "SUSPENDED" ;
-export type UserParentTypeEnum = "USER" | "GROUP" ;
+export enum UserVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
+export enum UserAccountTypeEnum {
+    LocalUser = 'LOCAL_USER',
+    LdapUser = 'LDAP_USER',
+    SamlUser = 'SAML_USER',
+    OidcUser = 'OIDC_USER',
+    RemoteUser = 'REMOTE_USER'
+}
+export enum UserAccountStatusEnum {
+    Active = 'ACTIVE',
+    Inactive = 'INACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Pending = 'PENDING',
+    Suspended = 'SUSPENDED'
+}
+export enum UserParentTypeEnum {
+    User = 'USER',
+    Group = 'GROUP'
+}
 

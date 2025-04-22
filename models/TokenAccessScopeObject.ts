@@ -50,5 +50,7 @@ export class TokenAccessScopeObject {
 }
 
 
-export type TokenAccessScopeObjectTypeEnum = "LOGICAL_TABLE" ;
+export enum TokenAccessScopeObjectTypeEnum {
+    LogicalTable = 'LOGICAL_TABLE'
+}
 

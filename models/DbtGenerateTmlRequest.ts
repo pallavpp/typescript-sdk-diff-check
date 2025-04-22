@@ -78,5 +78,9 @@ export class DbtGenerateTmlRequest {
 }
 
 
-export type DbtGenerateTmlRequestImportWorksheetsEnum = "ALL" | "NONE" | "SELECTED" ;
+export enum DbtGenerateTmlRequestImportWorksheetsEnum {
+    All = 'ALL',
+    None = 'NONE',
+    Selected = 'SELECTED'
+}
 

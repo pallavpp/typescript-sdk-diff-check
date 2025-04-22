@@ -87,6 +87,13 @@ export class ExportMetadataTMLBatchedRequest {
 }
 
 
-export type ExportMetadataTMLBatchedRequestMetadataTypeEnum = "USER" | "USER_GROUP" | "ROLE" ;
-export type ExportMetadataTMLBatchedRequestEdocFormatEnum = "JSON" | "YAML" ;
+export enum ExportMetadataTMLBatchedRequestMetadataTypeEnum {
+    User = 'USER',
+    UserGroup = 'USER_GROUP',
+    Role = 'ROLE'
+}
+export enum ExportMetadataTMLBatchedRequestEdocFormatEnum {
+    Json = 'JSON',
+    Yaml = 'YAML'
+}
 

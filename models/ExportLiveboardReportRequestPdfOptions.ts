@@ -100,5 +100,8 @@ export class ExportLiveboardReportRequestPdfOptions {
 }
 
 
-export type ExportLiveboardReportRequestPdfOptionsPageOrientationEnum = "PORTRAIT" | "LANDSCAPE" ;
+export enum ExportLiveboardReportRequestPdfOptionsPageOrientationEnum {
+    Portrait = 'PORTRAIT',
+    Landscape = 'LANDSCAPE'
+}
 

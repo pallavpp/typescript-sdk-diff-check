@@ -236,5 +236,8 @@ export class SearchMetadataRequest {
 }
 
 
-export type SearchMetadataRequestDependentObjectVersionEnum = "V1" | "V2" ;
+export enum SearchMetadataRequestDependentObjectVersionEnum {
+    V1 = 'V1',
+    V2 = 'V2'
+}
 

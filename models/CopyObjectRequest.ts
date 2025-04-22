@@ -67,5 +67,8 @@ export class CopyObjectRequest {
 }
 
 
-export type CopyObjectRequestTypeEnum = "LIVEBOARD" | "ANSWER" ;
+export enum CopyObjectRequestTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER'
+}
 

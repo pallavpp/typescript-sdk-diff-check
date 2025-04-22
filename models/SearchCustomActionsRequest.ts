@@ -96,5 +96,8 @@ export class SearchCustomActionsRequest {
 }
 
 
-export type SearchCustomActionsRequestTypeEnum = "CALLBACK" | "URL" ;
+export enum SearchCustomActionsRequestTypeEnum {
+    Callback = 'CALLBACK',
+    Url = 'URL'
+}
 

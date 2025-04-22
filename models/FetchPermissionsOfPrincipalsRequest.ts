@@ -79,5 +79,12 @@ export class FetchPermissionsOfPrincipalsRequest {
 }
 
 
-export type FetchPermissionsOfPrincipalsRequestDefaultMetadataTypeEnum = "ALL" | "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "LOGICAL_COLUMN" | "CONNECTION" ;
+export enum FetchPermissionsOfPrincipalsRequestDefaultMetadataTypeEnum {
+    All = 'ALL',
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    LogicalColumn = 'LOGICAL_COLUMN',
+    Connection = 'CONNECTION'
+}
 

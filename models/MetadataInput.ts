@@ -41,5 +41,7 @@ export class MetadataInput {
 }
 
 
-export type MetadataInputTypeEnum = "LIVEBOARD" ;
+export enum MetadataInputTypeEnum {
+    Liveboard = 'LIVEBOARD'
+}
 
