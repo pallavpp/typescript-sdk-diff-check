@@ -72,6 +72,8 @@ export class GetCustomAccessTokenRequest {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "username",
@@ -160,6 +162,10 @@ export class GetCustomAccessTokenRequest {
     }
 }
 
-
-export type GetCustomAccessTokenRequestPersistOptionEnum = "APPEND" | "NONE" | "REPLACE" | "RESET" ;
+export enum GetCustomAccessTokenRequestPersistOptionEnum {
+    Append = 'APPEND',
+    None = 'NONE',
+    Replace = 'REPLACE',
+    Reset = 'RESET'
+}
 

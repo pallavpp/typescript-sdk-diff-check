@@ -60,6 +60,8 @@ export class UpdateDbtConnectionRequest {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "dbt_connection_identifier",
@@ -136,6 +138,8 @@ export class UpdateDbtConnectionRequest {
     }
 }
 
-
-export type UpdateDbtConnectionRequestImportTypeEnum = "DBT_CLOUD" | "ZIP_FILE" ;
+export enum UpdateDbtConnectionRequestImportTypeEnum {
+    DbtCloud = 'DBT_CLOUD',
+    ZipFile = 'ZIP_FILE'
+}
 

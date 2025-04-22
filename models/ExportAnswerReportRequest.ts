@@ -44,6 +44,8 @@ export class ExportAnswerReportRequest {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "metadata_identifier",
@@ -96,6 +98,10 @@ export class ExportAnswerReportRequest {
     }
 }
 
-
-export type ExportAnswerReportRequestFileFormatEnum = "CSV" | "PDF" | "XLSX" | "PNG" ;
+export enum ExportAnswerReportRequestFileFormatEnum {
+    Csv = 'CSV',
+    Pdf = 'PDF',
+    Xlsx = 'XLSX',
+    Png = 'PNG'
+}
 

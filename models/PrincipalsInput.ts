@@ -24,6 +24,8 @@ export class PrincipalsInput {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "identifier",
@@ -46,6 +48,8 @@ export class PrincipalsInput {
     }
 }
 
-
-export type PrincipalsInputTypeEnum = "USER" | "USER_GROUP" ;
+export enum PrincipalsInputTypeEnum {
+    User = 'USER',
+    UserGroup = 'USER_GROUP'
+}
 

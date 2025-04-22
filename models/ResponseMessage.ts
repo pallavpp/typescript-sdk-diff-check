@@ -36,6 +36,8 @@ export class ResponseMessage {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "session_identifier",
@@ -76,7 +78,12 @@ export class ResponseMessage {
     }
 }
 
-
-export type ResponseMessageMessageTypeEnum = "TSAnswer" ;
-export type ResponseMessageVisualizationTypeEnum = "Chart" | "Table" | "Undefined" ;
+export enum ResponseMessageMessageTypeEnum {
+    TsAnswer = 'TSAnswer'
+}
+export enum ResponseMessageVisualizationTypeEnum {
+    Chart = 'Chart',
+    Table = 'Table',
+    Undefined = 'Undefined'
+}
 

@@ -52,6 +52,8 @@ export class FetchLiveboardDataRequest {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "metadata_identifier",
@@ -116,6 +118,8 @@ export class FetchLiveboardDataRequest {
     }
 }
 
-
-export type FetchLiveboardDataRequestDataFormatEnum = "FULL" | "COMPACT" ;
+export enum FetchLiveboardDataRequestDataFormatEnum {
+    Full = 'FULL',
+    Compact = 'COMPACT'
+}
 

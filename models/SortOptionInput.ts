@@ -24,6 +24,8 @@ export class SortOptionInput {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "field_name",
@@ -46,7 +48,20 @@ export class SortOptionInput {
     }
 }
 
-
-export type SortOptionInputFieldNameEnum = "NAME" | "DISPLAY_NAME" | "AUTHOR" | "CREATED" | "MODIFIED" | "LAST_ACCESSED" | "SYNCED" | "VIEWS" | "USER_STATE" | "ROW_COUNT" ;
-export type SortOptionInputOrderEnum = "ASC" | "DESC" ;
+export enum SortOptionInputFieldNameEnum {
+    Name = 'NAME',
+    DisplayName = 'DISPLAY_NAME',
+    Author = 'AUTHOR',
+    Created = 'CREATED',
+    Modified = 'MODIFIED',
+    LastAccessed = 'LAST_ACCESSED',
+    Synced = 'SYNCED',
+    Views = 'VIEWS',
+    UserState = 'USER_STATE',
+    RowCount = 'ROW_COUNT'
+}
+export enum SortOptionInputOrderEnum {
+    Asc = 'ASC',
+    Desc = 'DESC'
+}
 

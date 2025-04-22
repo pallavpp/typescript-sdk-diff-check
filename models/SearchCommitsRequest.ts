@@ -36,6 +36,8 @@ export class SearchCommitsRequest {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "metadata_identifier",
@@ -76,6 +78,10 @@ export class SearchCommitsRequest {
     }
 }
 
-
-export type SearchCommitsRequestMetadataTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "CUSTOM_ACTION" ;
+export enum SearchCommitsRequestMetadataTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    CustomAction = 'CUSTOM_ACTION'
+}
 

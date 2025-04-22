@@ -27,6 +27,8 @@ export class DeleteMetadataTypeInput {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "type",
@@ -49,6 +51,11 @@ export class DeleteMetadataTypeInput {
     }
 }
 
-
-export type DeleteMetadataTypeInputTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "LOGICAL_COLUMN" | "LOGICAL_RELATIONSHIP" ;
+export enum DeleteMetadataTypeInputTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    LogicalColumn = 'LOGICAL_COLUMN',
+    LogicalRelationship = 'LOGICAL_RELATIONSHIP'
+}
 

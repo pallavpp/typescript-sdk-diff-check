@@ -27,6 +27,8 @@ export class AuthorMetadataTypeInput {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "type",
@@ -49,6 +51,9 @@ export class AuthorMetadataTypeInput {
     }
 }
 
-
-export type AuthorMetadataTypeInputTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" ;
+export enum AuthorMetadataTypeInputTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE'
+}
 

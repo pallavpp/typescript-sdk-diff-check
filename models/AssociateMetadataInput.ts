@@ -26,6 +26,8 @@ export class AssociateMetadataInput {
 
     static readonly discriminator: string | undefined = undefined;
 
+    static readonly mapping: {[index: string]: string} | undefined = undefined;
+
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
             "name": "action_config",
@@ -54,6 +56,9 @@ export class AssociateMetadataInput {
     }
 }
 
-
-export type AssociateMetadataInputTypeEnum = "VISUALIZATION" | "ANSWER" | "WORKSHEET" ;
+export enum AssociateMetadataInputTypeEnum {
+    Visualization = 'VISUALIZATION',
+    Answer = 'ANSWER',
+    Worksheet = 'WORKSHEET'
+}
 
