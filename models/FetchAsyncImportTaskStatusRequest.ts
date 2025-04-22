@@ -87,5 +87,10 @@ export class FetchAsyncImportTaskStatusRequest {
 }
 
 
-export type FetchAsyncImportTaskStatusRequestTaskStatusEnum = "COMPLETED" | "IN_QUEUE" | "IN_PROGRESS" | "FAILED" ;
+export enum FetchAsyncImportTaskStatusRequestTaskStatusEnum {
+    Completed = 'COMPLETED',
+    InQueue = 'IN_QUEUE',
+    InProgress = 'IN_PROGRESS',
+    Failed = 'FAILED'
+}
 

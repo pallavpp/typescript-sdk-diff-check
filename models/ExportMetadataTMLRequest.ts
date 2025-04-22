@@ -116,6 +116,13 @@ export class ExportMetadataTMLRequest {
 }
 
 
-export type ExportMetadataTMLRequestEdocFormatEnum = "JSON" | "YAML" ;
-export type ExportMetadataTMLRequestExportSchemaVersionEnum = "DEFAULT" | "V1" | "V2" ;
+export enum ExportMetadataTMLRequestEdocFormatEnum {
+    Json = 'JSON',
+    Yaml = 'YAML'
+}
+export enum ExportMetadataTMLRequestExportSchemaVersionEnum {
+    Default = 'DEFAULT',
+    V1 = 'V1',
+    V2 = 'V2'
+}
 

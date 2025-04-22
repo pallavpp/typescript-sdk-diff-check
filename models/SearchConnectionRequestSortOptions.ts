@@ -50,6 +50,20 @@ export class SearchConnectionRequestSortOptions {
 }
 
 
-export type SearchConnectionRequestSortOptionsFieldNameEnum = "NAME" | "DISPLAY_NAME" | "AUTHOR" | "CREATED" | "MODIFIED" | "LAST_ACCESSED" | "SYNCED" | "VIEWS" | "USER_STATE" | "ROW_COUNT" ;
-export type SearchConnectionRequestSortOptionsOrderEnum = "ASC" | "DESC" ;
+export enum SearchConnectionRequestSortOptionsFieldNameEnum {
+    Name = 'NAME',
+    DisplayName = 'DISPLAY_NAME',
+    Author = 'AUTHOR',
+    Created = 'CREATED',
+    Modified = 'MODIFIED',
+    LastAccessed = 'LAST_ACCESSED',
+    Synced = 'SYNCED',
+    Views = 'VIEWS',
+    UserState = 'USER_STATE',
+    RowCount = 'ROW_COUNT'
+}
+export enum SearchConnectionRequestSortOptionsOrderEnum {
+    Asc = 'ASC',
+    Desc = 'DESC'
+}
 

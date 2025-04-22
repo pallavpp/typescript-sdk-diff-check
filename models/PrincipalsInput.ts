@@ -47,5 +47,8 @@ export class PrincipalsInput {
 }
 
 
-export type PrincipalsInputTypeEnum = "USER" | "USER_GROUP" ;
+export enum PrincipalsInputTypeEnum {
+    User = 'USER',
+    UserGroup = 'USER_GROUP'
+}
 

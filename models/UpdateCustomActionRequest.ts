@@ -84,5 +84,8 @@ export class UpdateCustomActionRequest {
 }
 
 
-export type UpdateCustomActionRequestOperationEnum = "ADD" | "REMOVE" ;
+export enum UpdateCustomActionRequestOperationEnum {
+    Add = 'ADD',
+    Remove = 'REMOVE'
+}
 

@@ -120,5 +120,7 @@ export class UpdateScheduleRequestPdfOptions {
 }
 
 
-export type UpdateScheduleRequestPdfOptionsPageSizeEnum = "A4" ;
+export enum UpdateScheduleRequestPdfOptionsPageSizeEnum {
+    A4 = 'A4'
+}
 

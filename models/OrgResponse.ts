@@ -77,6 +77,12 @@ export class OrgResponse {
 }
 
 
-export type OrgResponseStatusEnum = "ACTIVE" | "IN_ACTIVE" ;
-export type OrgResponseVisibilityEnum = "SHOW" | "HIDDEN" ;
+export enum OrgResponseStatusEnum {
+    Active = 'ACTIVE',
+    InActive = 'IN_ACTIVE'
+}
+export enum OrgResponseVisibilityEnum {
+    Show = 'SHOW',
+    Hidden = 'HIDDEN'
+}
 
