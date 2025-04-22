@@ -50,5 +50,7 @@ export class UserObject {
 }
 
 
-export type UserObjectTypeEnum = "LOGICAL_TABLE" ;
+export enum UserObjectTypeEnum {
+    LogicalTable = 'LOGICAL_TABLE'
+}
 

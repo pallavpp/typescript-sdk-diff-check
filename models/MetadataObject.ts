@@ -47,5 +47,10 @@ export class MetadataObject {
 }
 
 
-export type MetadataObjectTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "CUSTOM_ACTION" ;
+export enum MetadataObjectTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    CustomAction = 'CUSTOM_ACTION'
+}
 

@@ -218,8 +218,45 @@ export class CreateUserRequest {
 }
 
 
-export type CreateUserRequestAccountTypeEnum = "LOCAL_USER" | "LDAP_USER" | "SAML_USER" | "OIDC_USER" | "REMOTE_USER" ;
-export type CreateUserRequestAccountStatusEnum = "ACTIVE" | "INACTIVE" | "EXPIRED" | "LOCKED" | "PENDING" | "SUSPENDED" ;
-export type CreateUserRequestVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
-export type CreateUserRequestPreferredLocaleEnum = "en-CA" | "en-GB" | "en-US" | "de-DE" | "ja-JP" | "zh-CN" | "pt-BR" | "fr-FR" | "fr-CA" | "es-US" | "da-DK" | "es-ES" | "fi-FI" | "sv-SE" | "nb-NO" | "pt-PT" | "nl-NL" | "it-IT" | "ru-RU" | "en-IN" ;
+export enum CreateUserRequestAccountTypeEnum {
+    LocalUser = 'LOCAL_USER',
+    LdapUser = 'LDAP_USER',
+    SamlUser = 'SAML_USER',
+    OidcUser = 'OIDC_USER',
+    RemoteUser = 'REMOTE_USER'
+}
+export enum CreateUserRequestAccountStatusEnum {
+    Active = 'ACTIVE',
+    Inactive = 'INACTIVE',
+    Expired = 'EXPIRED',
+    Locked = 'LOCKED',
+    Pending = 'PENDING',
+    Suspended = 'SUSPENDED'
+}
+export enum CreateUserRequestVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
+export enum CreateUserRequestPreferredLocaleEnum {
+    EnCa = 'en-CA',
+    EnGb = 'en-GB',
+    EnUs = 'en-US',
+    DeDe = 'de-DE',
+    JaJp = 'ja-JP',
+    ZhCn = 'zh-CN',
+    PtBr = 'pt-BR',
+    FrFr = 'fr-FR',
+    FrCa = 'fr-CA',
+    EsUs = 'es-US',
+    DaDk = 'da-DK',
+    EsEs = 'es-ES',
+    FiFi = 'fi-FI',
+    SvSe = 'sv-SE',
+    NbNo = 'nb-NO',
+    PtPt = 'pt-PT',
+    NlNl = 'nl-NL',
+    ItIt = 'it-IT',
+    RuRu = 'ru-RU',
+    EnIn = 'en-IN'
+}
 

@@ -67,5 +67,38 @@ export class CreateConnectionResponse {
 }
 
 
-export type CreateConnectionResponseDataWarehouseTypeEnum = "SNOWFLAKE" | "AMAZON_REDSHIFT" | "GOOGLE_BIGQUERY" | "AZURE_SYNAPSE" | "TERADATA" | "SAP_HANA" | "STARBURST" | "ORACLE_ADW" | "DATABRICKS" | "DENODO" | "DREMIO" | "TRINO" | "PRESTO" | "POSTGRES" | "SQLSERVER" | "MYSQL" | "GENERIC_JDBC" | "AMAZON_RDS_POSTGRESQL" | "AMAZON_AURORA_POSTGRESQL" | "AMAZON_RDS_MYSQL" | "AMAZON_AURORA_MYSQL" | "LOOKER" | "AMAZON_ATHENA" | "SINGLESTORE" | "GCP_SQLSERVER" | "GCP_ALLOYDB_POSTGRESQL" | "GCP_POSTGRESQL" | "GCP_MYSQL" | "MODE" | "GOOGLE_SHEETS" | "FALCON" | "FALCON_ONPREM" ;
+export enum CreateConnectionResponseDataWarehouseTypeEnum {
+    Snowflake = 'SNOWFLAKE',
+    AmazonRedshift = 'AMAZON_REDSHIFT',
+    GoogleBigquery = 'GOOGLE_BIGQUERY',
+    AzureSynapse = 'AZURE_SYNAPSE',
+    Teradata = 'TERADATA',
+    SapHana = 'SAP_HANA',
+    Starburst = 'STARBURST',
+    OracleAdw = 'ORACLE_ADW',
+    Databricks = 'DATABRICKS',
+    Denodo = 'DENODO',
+    Dremio = 'DREMIO',
+    Trino = 'TRINO',
+    Presto = 'PRESTO',
+    Postgres = 'POSTGRES',
+    Sqlserver = 'SQLSERVER',
+    Mysql = 'MYSQL',
+    GenericJdbc = 'GENERIC_JDBC',
+    AmazonRdsPostgresql = 'AMAZON_RDS_POSTGRESQL',
+    AmazonAuroraPostgresql = 'AMAZON_AURORA_POSTGRESQL',
+    AmazonRdsMysql = 'AMAZON_RDS_MYSQL',
+    AmazonAuroraMysql = 'AMAZON_AURORA_MYSQL',
+    Looker = 'LOOKER',
+    AmazonAthena = 'AMAZON_ATHENA',
+    Singlestore = 'SINGLESTORE',
+    GcpSqlserver = 'GCP_SQLSERVER',
+    GcpAlloydbPostgresql = 'GCP_ALLOYDB_POSTGRESQL',
+    GcpPostgresql = 'GCP_POSTGRESQL',
+    GcpMysql = 'GCP_MYSQL',
+    Mode = 'MODE',
+    GoogleSheets = 'GOOGLE_SHEETS',
+    Falcon = 'FALCON',
+    FalconOnprem = 'FALCON_ONPREM'
+}
 

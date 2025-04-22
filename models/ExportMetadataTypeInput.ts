@@ -50,5 +50,14 @@ export class ExportMetadataTypeInput {
 }
 
 
-export type ExportMetadataTypeInputTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "CONNECTION" | "CUSTOM_ACTION" | "USER" | "USER_GROUP" | "ROLE" ;
+export enum ExportMetadataTypeInputTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    Connection = 'CONNECTION',
+    CustomAction = 'CUSTOM_ACTION',
+    User = 'USER',
+    UserGroup = 'USER_GROUP',
+    Role = 'ROLE'
+}
 

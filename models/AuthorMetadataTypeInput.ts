@@ -50,5 +50,9 @@ export class AuthorMetadataTypeInput {
 }
 
 
-export type AuthorMetadataTypeInputTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" ;
+export enum AuthorMetadataTypeInputTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE'
+}
 

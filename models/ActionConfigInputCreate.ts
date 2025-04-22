@@ -50,5 +50,9 @@ export class ActionConfigInputCreate {
 }
 
 
-export type ActionConfigInputCreatePositionEnum = "MENU" | "PRIMARY" | "CONTEXT_MENU" ;
+export enum ActionConfigInputCreatePositionEnum {
+    Menu = 'MENU',
+    Primary = 'PRIMARY',
+    ContextMenu = 'CONTEXT_MENU'
+}
 

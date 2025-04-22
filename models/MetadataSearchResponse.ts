@@ -120,5 +120,16 @@ export class MetadataSearchResponse {
 }
 
 
-export type MetadataSearchResponseMetadataTypeEnum = "LIVEBOARD" | "ANSWER" | "LOGICAL_TABLE" | "LOGICAL_COLUMN" | "CONNECTION" | "TAG" | "USER" | "USER_GROUP" | "LOGICAL_RELATIONSHIP" | "INSIGHT_SPEC" ;
+export enum MetadataSearchResponseMetadataTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER',
+    LogicalTable = 'LOGICAL_TABLE',
+    LogicalColumn = 'LOGICAL_COLUMN',
+    Connection = 'CONNECTION',
+    Tag = 'TAG',
+    User = 'USER',
+    UserGroup = 'USER_GROUP',
+    LogicalRelationship = 'LOGICAL_RELATIONSHIP',
+    InsightSpec = 'INSIGHT_SPEC'
+}
 

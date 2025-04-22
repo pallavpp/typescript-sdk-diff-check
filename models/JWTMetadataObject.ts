@@ -44,5 +44,7 @@ export class JWTMetadataObject {
 }
 
 
-export type JWTMetadataObjectTypeEnum = "LOGICAL_TABLE" ;
+export enum JWTMetadataObjectTypeEnum {
+    LogicalTable = 'LOGICAL_TABLE'
+}
 

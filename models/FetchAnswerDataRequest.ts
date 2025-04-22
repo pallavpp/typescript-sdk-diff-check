@@ -97,5 +97,8 @@ export class FetchAnswerDataRequest {
 }
 
 
-export type FetchAnswerDataRequestDataFormatEnum = "FULL" | "COMPACT" ;
+export enum FetchAnswerDataRequestDataFormatEnum {
+    Full = 'FULL',
+    Compact = 'COMPACT'
+}
 

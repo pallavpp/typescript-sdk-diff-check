@@ -329,7 +329,16 @@ export class UserGroupResponse {
 }
 
 
-export type UserGroupResponseParentTypeEnum = "USER" | "GROUP" ;
-export type UserGroupResponseTypeEnum = "LOCAL_GROUP" | "LDAP_GROUP" ;
-export type UserGroupResponseVisibilityEnum = "SHARABLE" | "NON_SHARABLE" ;
+export enum UserGroupResponseParentTypeEnum {
+    User = 'USER',
+    Group = 'GROUP'
+}
+export enum UserGroupResponseTypeEnum {
+    LocalGroup = 'LOCAL_GROUP',
+    LdapGroup = 'LDAP_GROUP'
+}
+export enum UserGroupResponseVisibilityEnum {
+    Sharable = 'SHARABLE',
+    NonSharable = 'NON_SHARABLE'
+}
 
