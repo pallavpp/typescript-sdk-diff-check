@@ -120,5 +120,7 @@ export class SchedulesPdfOptionsInput {
 }
 
 
-export type SchedulesPdfOptionsInputPageSizeEnum = "A4" ;
+export enum SchedulesPdfOptionsInputPageSizeEnum {
+    A4 = 'A4'
+}
 

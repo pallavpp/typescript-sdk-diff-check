@@ -48,5 +48,7 @@ export class MetadataResponse {
 }
 
 
-export type MetadataResponseTypeEnum = "LIVEBOARD" ;
+export enum MetadataResponseTypeEnum {
+    Liveboard = 'LIVEBOARD'
+}
 

@@ -107,5 +107,8 @@ export class SearchDataRequest {
 }
 
 
-export type SearchDataRequestDataFormatEnum = "FULL" | "COMPACT" ;
+export enum SearchDataRequestDataFormatEnum {
+    Full = 'FULL',
+    Compact = 'COMPACT'
+}
 

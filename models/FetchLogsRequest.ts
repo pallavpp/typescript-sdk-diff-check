@@ -67,5 +67,7 @@ export class FetchLogsRequest {
 }
 
 
-export type FetchLogsRequestLogTypeEnum = "SECURITY_AUDIT" ;
+export enum FetchLogsRequestLogTypeEnum {
+    SecurityAudit = 'SECURITY_AUDIT'
+}
 

@@ -77,6 +77,12 @@ export class SearchOrgsRequest {
 }
 
 
-export type SearchOrgsRequestVisibilityEnum = "SHOW" | "HIDDEN" ;
-export type SearchOrgsRequestStatusEnum = "ACTIVE" | "IN_ACTIVE" ;
+export enum SearchOrgsRequestVisibilityEnum {
+    Show = 'SHOW',
+    Hidden = 'HIDDEN'
+}
+export enum SearchOrgsRequestStatusEnum {
+    Active = 'ACTIVE',
+    InActive = 'IN_ACTIVE'
+}
 

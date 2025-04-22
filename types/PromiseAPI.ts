@@ -1,4 +1,4 @@
-import { ResponseContext, RequestContext, HttpFile } from '../http/http';
+import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/http';
 import { Configuration} from '../configuration'
 
 import { APIKey } from '../models/APIKey';
@@ -42,15 +42,9 @@ import { CreateConnectionRequest } from '../models/CreateConnectionRequest';
 import { CreateConnectionResponse } from '../models/CreateConnectionResponse';
 import { CreateConversationRequest } from '../models/CreateConversationRequest';
 import { CreateCustomActionRequest } from '../models/CreateCustomActionRequest';
-import { CreateCustomActionRequestActionDetails } from '../models/CreateCustomActionRequestActionDetails';
-import { CreateCustomActionRequestDefaultActionConfig } from '../models/CreateCustomActionRequestDefaultActionConfig';
 import { CreateOrgRequest } from '../models/CreateOrgRequest';
 import { CreateRoleRequest } from '../models/CreateRoleRequest';
 import { CreateScheduleRequest } from '../models/CreateScheduleRequest';
-import { CreateScheduleRequestFrequency } from '../models/CreateScheduleRequestFrequency';
-import { CreateScheduleRequestLiveboardOptions } from '../models/CreateScheduleRequestLiveboardOptions';
-import { CreateScheduleRequestPdfOptions } from '../models/CreateScheduleRequestPdfOptions';
-import { CreateScheduleRequestRecipientDetails } from '../models/CreateScheduleRequestRecipientDetails';
 import { CreateTagRequest } from '../models/CreateTagRequest';
 import { CreateUserGroupRequest } from '../models/CreateUserGroupRequest';
 import { CreateUserRequest } from '../models/CreateUserRequest';
@@ -79,11 +73,8 @@ import { ErrorResponse } from '../models/ErrorResponse';
 import { ExcludeMetadataListItemInput } from '../models/ExcludeMetadataListItemInput';
 import { ExportAnswerReportRequest } from '../models/ExportAnswerReportRequest';
 import { ExportLiveboardReportRequest } from '../models/ExportLiveboardReportRequest';
-import { ExportLiveboardReportRequestPdfOptions } from '../models/ExportLiveboardReportRequestPdfOptions';
-import { ExportLiveboardReportRequestPngOptions } from '../models/ExportLiveboardReportRequestPngOptions';
 import { ExportMetadataTMLBatchedRequest } from '../models/ExportMetadataTMLBatchedRequest';
 import { ExportMetadataTMLRequest } from '../models/ExportMetadataTMLRequest';
-import { ExportMetadataTMLRequestExportOptions } from '../models/ExportMetadataTMLRequestExportOptions';
 import { ExportMetadataTypeInput } from '../models/ExportMetadataTypeInput';
 import { ExportOptions } from '../models/ExportOptions';
 import { FavoriteMetadataInput } from '../models/FavoriteMetadataInput';
@@ -107,7 +98,6 @@ import { GetAsyncImportStatusResponse } from '../models/GetAsyncImportStatusResp
 import { GetCustomAccessTokenRequest } from '../models/GetCustomAccessTokenRequest';
 import { GetFullAccessTokenRequest } from '../models/GetFullAccessTokenRequest';
 import { GetObjectAccessTokenRequest } from '../models/GetObjectAccessTokenRequest';
-import { GetObjectAccessTokenRequestUserParameters } from '../models/GetObjectAccessTokenRequestUserParameters';
 import { GetTokenResponse } from '../models/GetTokenResponse';
 import { GroupObject } from '../models/GroupObject';
 import { GroupsImportListInput } from '../models/GroupsImportListInput';
@@ -186,26 +176,18 @@ import { Scope } from '../models/Scope';
 import { SearchCommitsRequest } from '../models/SearchCommitsRequest';
 import { SearchConfigRequest } from '../models/SearchConfigRequest';
 import { SearchConnectionRequest } from '../models/SearchConnectionRequest';
-import { SearchConnectionRequestSortOptions } from '../models/SearchConnectionRequestSortOptions';
 import { SearchConnectionResponse } from '../models/SearchConnectionResponse';
 import { SearchCustomActionsRequest } from '../models/SearchCustomActionsRequest';
-import { SearchCustomActionsRequestDefaultActionConfig } from '../models/SearchCustomActionsRequestDefaultActionConfig';
 import { SearchDataRequest } from '../models/SearchDataRequest';
 import { SearchDataResponse } from '../models/SearchDataResponse';
 import { SearchMetadataRequest } from '../models/SearchMetadataRequest';
-import { SearchMetadataRequestFavoriteObjectOptions } from '../models/SearchMetadataRequestFavoriteObjectOptions';
-import { SearchMetadataRequestSortOptions } from '../models/SearchMetadataRequestSortOptions';
 import { SearchOrgsRequest } from '../models/SearchOrgsRequest';
 import { SearchRoleResponse } from '../models/SearchRoleResponse';
 import { SearchRolesRequest } from '../models/SearchRolesRequest';
 import { SearchSchedulesRequest } from '../models/SearchSchedulesRequest';
-import { SearchSchedulesRequestHistoryRunsOptions } from '../models/SearchSchedulesRequestHistoryRunsOptions';
-import { SearchSchedulesRequestSortOptions } from '../models/SearchSchedulesRequestSortOptions';
 import { SearchTagsRequest } from '../models/SearchTagsRequest';
 import { SearchUserGroupsRequest } from '../models/SearchUserGroupsRequest';
-import { SearchUserGroupsRequestSortOptions } from '../models/SearchUserGroupsRequestSortOptions';
 import { SearchUsersRequest } from '../models/SearchUsersRequest';
-import { SearchUsersRequestSortOptions } from '../models/SearchUsersRequestSortOptions';
 import { SendMessageRequest } from '../models/SendMessageRequest';
 import { ShareMetadataRequest } from '../models/ShareMetadataRequest';
 import { ShareMetadataTypeInput } from '../models/ShareMetadataTypeInput';
@@ -231,16 +213,10 @@ import { UpdateConfigRequest } from '../models/UpdateConfigRequest';
 import { UpdateConnectionRequest } from '../models/UpdateConnectionRequest';
 import { UpdateConnectionV2Request } from '../models/UpdateConnectionV2Request';
 import { UpdateCustomActionRequest } from '../models/UpdateCustomActionRequest';
-import { UpdateCustomActionRequestActionDetails } from '../models/UpdateCustomActionRequestActionDetails';
-import { UpdateCustomActionRequestDefaultActionConfig } from '../models/UpdateCustomActionRequestDefaultActionConfig';
 import { UpdateDbtConnectionRequest } from '../models/UpdateDbtConnectionRequest';
 import { UpdateOrgRequest } from '../models/UpdateOrgRequest';
 import { UpdateRoleRequest } from '../models/UpdateRoleRequest';
 import { UpdateScheduleRequest } from '../models/UpdateScheduleRequest';
-import { UpdateScheduleRequestFrequency } from '../models/UpdateScheduleRequestFrequency';
-import { UpdateScheduleRequestLiveboardOptions } from '../models/UpdateScheduleRequestLiveboardOptions';
-import { UpdateScheduleRequestPdfOptions } from '../models/UpdateScheduleRequestPdfOptions';
-import { UpdateScheduleRequestRecipientDetails } from '../models/UpdateScheduleRequestRecipientDetails';
 import { UpdateSystemConfigRequest } from '../models/UpdateSystemConfigRequest';
 import { UpdateTagRequest } from '../models/UpdateTagRequest';
 import { UpdateUserGroupRequest } from '../models/UpdateUserGroupRequest';
@@ -271,6 +247,15 @@ export class PromiseAIApi {
      *  Version: 10.4.0.cl or later   Creates a Conversation object to start an AI-driven conversation based on a specific data model.  Requires at least view access to the metadata object specified in the request.  #### Usage guidelines  This API requires the `metadata_identifier` parameter to define the context for the conversation.  You can also specify the tokens to initiate the conversation as shown in this example:  `\"tokens\": \"[tea],[sales],[type]\"`  If the API request is successful, ThoughtSpot returns the ID of the conversation.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
      * @param createConversationRequest 
      */
+    public createConversationWithHttpInfo(createConversationRequest: CreateConversationRequest, _options?: Configuration): Promise<HttpInfo<Conversation>> {
+        const result = this.api.createConversationWithHttpInfo(createConversationRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Version: 10.4.0.cl or later   Creates a Conversation object to start an AI-driven conversation based on a specific data model.  Requires at least view access to the metadata object specified in the request.  #### Usage guidelines  This API requires the `metadata_identifier` parameter to define the context for the conversation.  You can also specify the tokens to initiate the conversation as shown in this example:  `\"tokens\": \"[tea],[sales],[type]\"`  If the API request is successful, ThoughtSpot returns the ID of the conversation.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
+     * @param createConversationRequest 
+     */
     public createConversation(createConversationRequest: CreateConversationRequest, _options?: Configuration): Promise<Conversation> {
         const result = this.api.createConversation(createConversationRequest, _options);
         return result.toPromise();
@@ -281,8 +266,27 @@ export class PromiseAIApi {
      * @param conversationIdentifier Unique identifier of the conversation.
      * @param sendMessageRequest 
      */
+    public sendMessageWithHttpInfo(conversationIdentifier: string, sendMessageRequest: SendMessageRequest, _options?: Configuration): Promise<HttpInfo<Array<ResponseMessage>>> {
+        const result = this.api.sendMessageWithHttpInfo(conversationIdentifier, sendMessageRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Version: 10.4.0.cl or later   Allows sending a follow-up message to an ongoing conversation within the context of the metadata model.  Requires at least view access to the metadata object specified in the request.  #### Usage guidelines  The API requires you to specify the `conversation_identifier` in the request path, and a `metadata_identifier` and `message` string in the request body.  If the API request is successful, ThoughtSpot returns the session ID, tokens used in the conversation, and visualization type.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
+     * @param conversationIdentifier Unique identifier of the conversation.
+     * @param sendMessageRequest 
+     */
     public sendMessage(conversationIdentifier: string, sendMessageRequest: SendMessageRequest, _options?: Configuration): Promise<Array<ResponseMessage>> {
         const result = this.api.sendMessage(conversationIdentifier, sendMessageRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Version: 10.4.0.cl or later   Processes a natural language query and returns an AI-generated response based on a specified data model.  Requires at least view access to the metadata object specified in the request.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
+     * @param singleAnswerRequest 
+     */
+    public singleAnswerWithHttpInfo(singleAnswerRequest: SingleAnswerRequest, _options?: Configuration): Promise<HttpInfo<ResponseMessage>> {
+        const result = this.api.singleAnswerWithHttpInfo(singleAnswerRequest, _options);
         return result.toPromise();
     }
 
@@ -317,6 +321,14 @@ export class PromiseAuthenticationApi {
     /**
      *   Version: 9.0.0.cl or later    Gets session information for the currently logged-in user.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request. The data returned in the API response varies according to user\'s privilege and object access permissions.      
      */
+    public getCurrentUserInfoWithHttpInfo(_options?: Configuration): Promise<HttpInfo<User>> {
+        const result = this.api.getCurrentUserInfoWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Gets session information for the currently logged-in user.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request. The data returned in the API response varies according to user\'s privilege and object access permissions.      
+     */
     public getCurrentUserInfo(_options?: Configuration): Promise<User> {
         const result = this.api.getCurrentUserInfo(_options);
         return result.toPromise();
@@ -325,8 +337,25 @@ export class PromiseAuthenticationApi {
     /**
      *  Get token for the currently logged-in user.    Version: 9.4.0.cl or later   Gets token details for the currently logged-in user.  You can use this endpoint to obtain the token associated with the user\'s session.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request.      
      */
+    public getCurrentUserTokenWithHttpInfo(_options?: Configuration): Promise<HttpInfo<GetTokenResponse>> {
+        const result = this.api.getCurrentUserTokenWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Get token for the currently logged-in user.    Version: 9.4.0.cl or later   Gets token details for the currently logged-in user.  You can use this endpoint to obtain the token associated with the user\'s session.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request.      
+     */
     public getCurrentUserToken(_options?: Configuration): Promise<GetTokenResponse> {
         const result = this.api.getCurrentUserToken(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Gets an authentication token with custom rules and security attributes and creates a full session in ThoughtSpot for a given user. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  To add a new user and assign privileges during auto creation, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege and edit access to the data source is required.  To assign security attributes with filter rules and Parameters to the JWT token, you\'ll need administrator privileges and edit access to the data source (Worksheet or Model). If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege and edit access to the data source is required.  #### Usage guidelines  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret_key`.  To generate a `secret_key` on your cluster, the administrator must enable [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable) in the **Develop** > **Customizations** > **Security Settings** page.  **Note**: When both `password` and `secret_key` are included in the API request, `password` takes precedence.  ##### Attribute-Based Access Control (ABAC) with tokens  To implement Attribute-Based Access Control (ABAC) and assign security entitlements to users during session creation, you can generate a token with custom filtering rules and Parameters in the `filter_rules` and `parameter_values` array respectively. These attributes can be configured to persist on a specific set of objects for user sessions initiated using the token. Once defined, the rules are added to the user\'s `access_control_properties` object, after which all sessions will use the persisted values.   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.  For more information, see [ABAC via tokens Documentation](https://developers.thoughtspot.com/docs/api-authv2#_get_tokens_with_custom_rules_and_filter_conditions).  ##### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `groups`  Set `auto_create` to `true` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true` in the API request, the user properties such as the display name, email, Org and group assignment will not be updated with new values.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  ##### Important point to note All options in the token creation APIs that define access to the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Persist options such as  `APPEND`, `REPLACE`, `RESET` will persist security parameters on the user profile when the token is created, while Persist option `NONE` will not persist anything but will be honoured in the session.      
+     * @param getCustomAccessTokenRequest 
+     */
+    public getCustomAccessTokenWithHttpInfo(getCustomAccessTokenRequest: GetCustomAccessTokenRequest, _options?: Configuration): Promise<HttpInfo<AccessToken>> {
+        const result = this.api.getCustomAccessTokenWithHttpInfo(getCustomAccessTokenRequest, _options);
         return result.toPromise();
     }
 
@@ -343,8 +372,26 @@ export class PromiseAuthenticationApi {
      *   Version: 9.0.0.cl or later   Gets an authentication token and creates a full session in ThoughtSpot for a given user. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret_key` (for [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable)).  To generate a `secret_key` on your cluster, the administrator must enable **Trusted authentication** in the **Develop** > **Customizations** > **Security Settings** page. For more information, see [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable).  **Note**: When both `password` and `secret_key` are included in the API request, `password` takes precedence.  #### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `group_identifiers`  Set `auto_create` to `True` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true`, the API call will update user properties like display name, email and group assignment.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  To add a new user and assign privileges, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege is required.  #### Attribute-Based Access Control (ABAC) with tokens  You can define Attribute-Based Access Control (ABAC) parameters to assign security entitlements to users during session creation. For more information, see [ABAC via token](https://developers.thoughtspot.com/docs/abac-user-parameters).  #### Important point to note All options in the token creation APIs changing the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Similarly, using `user_parameters` with `persist: true` persists security parameters on the user profile when the token is created and not during authentication.   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.      
      * @param getFullAccessTokenRequest 
      */
+    public getFullAccessTokenWithHttpInfo(getFullAccessTokenRequest: GetFullAccessTokenRequest, _options?: Configuration): Promise<HttpInfo<Token>> {
+        const result = this.api.getFullAccessTokenWithHttpInfo(getFullAccessTokenRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets an authentication token and creates a full session in ThoughtSpot for a given user. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret_key` (for [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable)).  To generate a `secret_key` on your cluster, the administrator must enable **Trusted authentication** in the **Develop** > **Customizations** > **Security Settings** page. For more information, see [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable).  **Note**: When both `password` and `secret_key` are included in the API request, `password` takes precedence.  #### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `group_identifiers`  Set `auto_create` to `True` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true`, the API call will update user properties like display name, email and group assignment.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  To add a new user and assign privileges, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege is required.  #### Attribute-Based Access Control (ABAC) with tokens  You can define Attribute-Based Access Control (ABAC) parameters to assign security entitlements to users during session creation. For more information, see [ABAC via token](https://developers.thoughtspot.com/docs/abac-user-parameters).  #### Important point to note All options in the token creation APIs changing the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Similarly, using `user_parameters` with `persist: true` persists security parameters on the user profile when the token is created and not during authentication.   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.      
+     * @param getFullAccessTokenRequest 
+     */
     public getFullAccessToken(getFullAccessTokenRequest: GetFullAccessTokenRequest, _options?: Configuration): Promise<Token> {
         const result = this.api.getFullAccessToken(getFullAccessTokenRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets an authentication token that provides access to a specific metadata object. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret key` (for [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable)).  To generate a `secret_key` on your cluster, the administrator must enable **Trusted authentication** in the **Develop** > **Customizations** > **Security Settings** page.  **Note**: When both `password` and `secret_key` are included in the API request,  `password` takes precedence.  #### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `group_identifiers`  Set `auto_create` to `True` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true`, the API call will update user properties like display name, email and group assignment.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  To add a new user and assign privileges, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege is required.  #### Attribute-Based Access Control (ABAC) with tokens  You can define Attribute-Based Access Control (ABAC) parameters to assign security entitlements to users during session creation. For more information, see [ABAC via token](https://developers.thoughtspot.com/docs/abac-user-parameters).   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.  #### Important point to note All options in the token creation APIs changing the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Similarly, using `user_parameters` with `persist: true` persists security parameters on the user profile when the token is created and not during authentication.      
+     * @param getObjectAccessTokenRequest 
+     */
+    public getObjectAccessTokenWithHttpInfo(getObjectAccessTokenRequest: GetObjectAccessTokenRequest, _options?: Configuration): Promise<HttpInfo<Token>> {
+        const result = this.api.getObjectAccessTokenWithHttpInfo(getObjectAccessTokenRequest, _options);
         return result.toPromise();
     }
 
@@ -361,8 +408,25 @@ export class PromiseAuthenticationApi {
      *   Version: 9.0.0.cl or later    Creates a login session for a ThoughtSpot user with Basic authentication.  In Basic authentication method, REST clients log in to ThoughtSpot using `username` and `password` attributes. On a multi-tenant cluster with Orgs, users can pass the ID of the Org in the API request to log in to a specific Org context.  A successful login returns a session cookie that can be used in your subsequent API requests.      
      * @param loginRequest 
      */
+    public loginWithHttpInfo(loginRequest: LoginRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.loginWithHttpInfo(loginRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Creates a login session for a ThoughtSpot user with Basic authentication.  In Basic authentication method, REST clients log in to ThoughtSpot using `username` and `password` attributes. On a multi-tenant cluster with Orgs, users can pass the ID of the Org in the API request to log in to a specific Org context.  A successful login returns a session cookie that can be used in your subsequent API requests.      
+     * @param loginRequest 
+     */
     public login(loginRequest: LoginRequest, _options?: Configuration): Promise<void> {
         const result = this.api.login(loginRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Logs out a user from their current session.      
+     */
+    public logoutWithHttpInfo(_options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.logoutWithHttpInfo(_options);
         return result.toPromise();
     }
 
@@ -378,8 +442,26 @@ export class PromiseAuthenticationApi {
      *   Version: 9.0.0.cl or later    Revokes the authentication token issued for current user session.  The token of your current session expires when you make a call to the `/api/rest/2.0/auth/token/revoke` endpoint. the users will not be able to access ThoughtSpot objects until a new token is obtained.  To restart your session, request for a new token from ThoughtSpot. See [Get Full Access Token](#/http/api-endpoints/authentication/get-full-access-token).      
      * @param revokeTokenRequest 
      */
+    public revokeTokenWithHttpInfo(revokeTokenRequest: RevokeTokenRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.revokeTokenWithHttpInfo(revokeTokenRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Revokes the authentication token issued for current user session.  The token of your current session expires when you make a call to the `/api/rest/2.0/auth/token/revoke` endpoint. the users will not be able to access ThoughtSpot objects until a new token is obtained.  To restart your session, request for a new token from ThoughtSpot. See [Get Full Access Token](#/http/api-endpoints/authentication/get-full-access-token).      
+     * @param revokeTokenRequest 
+     */
     public revokeToken(revokeTokenRequest: RevokeTokenRequest, _options?: Configuration): Promise<void> {
         const result = this.api.revokeToken(revokeTokenRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.12.0.cl or later    Validates the authentication token specified in the API request.  If your token is not valid, [Get a new token](#/http/api-endpoints/authentication/get-full-access-token).      
+     * @param validateTokenRequest 
+     */
+    public validateTokenWithHttpInfo(validateTokenRequest: ValidateTokenRequest, _options?: Configuration): Promise<HttpInfo<TokenValidationResponse>> {
+        const result = this.api.validateTokenWithHttpInfo(validateTokenRequest, _options);
         return result.toPromise();
     }
 
@@ -415,8 +497,26 @@ export class PromiseConnectionsApi {
      *   Version: 9.2.0.cl or later   Creates a connection to a data warehouse for live query services.    Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  #### Create a connection without tables  To create a connection without tables:  1. Pass these parameters in your API request.  * Name of the connection.  * Type of the data warehouse to connect to.  * A JSON map of configuration attributes in `data_warehouse_config`. The following example shows the configuration attributes for a SnowFlake connection:   ```   {      \"configuration\":{         \"accountName\":\"thoughtspot_partner\",         \"user\":\"tsadmin\",         \"password\":\"TestConn123\",         \"role\":\"sysadmin\",         \"warehouse\":\"MEDIUM_WH\"      },      \"externalDatabases\":[       ]   }   ``` 2. Set `validate` to `false`.  #### Create a connection with tables  To create a connection with tables:  1. Pass these parameters in your API request.  * Name of the connection.  * Type of the data warehouse to connect to.  * A JSON map of configuration attributes, database details, and table properties in `data_warehouse_config` as shown in the following example:   ```   {      \"configuration\":{         \"accountName\":\"thoughtspot_partner\",         \"user\":\"tsadmin\",         \"password\":\"TestConn123\",         \"role\":\"sysadmin\",         \"warehouse\":\"MEDIUM_WH\"      },      \"externalDatabases\":[         {            \"name\":\"AllDatatypes\",            \"isAutoCreated\":false,            \"schemas\":[               {                  \"name\":\"alldatatypes\",                  \"tables\":[                     {                        \"name\":\"allDatatypes\",                        \"type\":\"TABLE\",                        \"description\":\"\",                        \"selected\":true,                        \"linked\":true,                        \"columns\":[                           {                              \"name\":\"CNUMBER\",                              \"type\":\"INT64\",                              \"canImport\":true,                              \"selected\":true,                              \"isLinkedActive\":true,                              \"isImported\":false,                              \"tableName\":\"allDatatypes\",                              \"schemaName\":\"alldatatypes\",                              \"dbName\":\"AllDatatypes\"                           },                           {                              \"name\":\"CDECIMAL\",                              \"type\":\"INT64\",                              \"canImport\":true,                              \"selected\":true,                              \"isLinkedActive\":true,                              \"isImported\":false,                              \"tableName\":\"allDatatypes\",                              \"schemaName\":\"alldatatypes\",                              \"dbName\":\"AllDatatypes\"                           }                        ]                     }                  ]               }            ]         }      ]   }   ``` 2. Set `validate` to `true`.      
      * @param createConnectionRequest 
      */
+    public createConnectionWithHttpInfo(createConnectionRequest: CreateConnectionRequest, _options?: Configuration): Promise<HttpInfo<CreateConnectionResponse>> {
+        const result = this.api.createConnectionWithHttpInfo(createConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Creates a connection to a data warehouse for live query services.    Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  #### Create a connection without tables  To create a connection without tables:  1. Pass these parameters in your API request.  * Name of the connection.  * Type of the data warehouse to connect to.  * A JSON map of configuration attributes in `data_warehouse_config`. The following example shows the configuration attributes for a SnowFlake connection:   ```   {      \"configuration\":{         \"accountName\":\"thoughtspot_partner\",         \"user\":\"tsadmin\",         \"password\":\"TestConn123\",         \"role\":\"sysadmin\",         \"warehouse\":\"MEDIUM_WH\"      },      \"externalDatabases\":[       ]   }   ``` 2. Set `validate` to `false`.  #### Create a connection with tables  To create a connection with tables:  1. Pass these parameters in your API request.  * Name of the connection.  * Type of the data warehouse to connect to.  * A JSON map of configuration attributes, database details, and table properties in `data_warehouse_config` as shown in the following example:   ```   {      \"configuration\":{         \"accountName\":\"thoughtspot_partner\",         \"user\":\"tsadmin\",         \"password\":\"TestConn123\",         \"role\":\"sysadmin\",         \"warehouse\":\"MEDIUM_WH\"      },      \"externalDatabases\":[         {            \"name\":\"AllDatatypes\",            \"isAutoCreated\":false,            \"schemas\":[               {                  \"name\":\"alldatatypes\",                  \"tables\":[                     {                        \"name\":\"allDatatypes\",                        \"type\":\"TABLE\",                        \"description\":\"\",                        \"selected\":true,                        \"linked\":true,                        \"columns\":[                           {                              \"name\":\"CNUMBER\",                              \"type\":\"INT64\",                              \"canImport\":true,                              \"selected\":true,                              \"isLinkedActive\":true,                              \"isImported\":false,                              \"tableName\":\"allDatatypes\",                              \"schemaName\":\"alldatatypes\",                              \"dbName\":\"AllDatatypes\"                           },                           {                              \"name\":\"CDECIMAL\",                              \"type\":\"INT64\",                              \"canImport\":true,                              \"selected\":true,                              \"isLinkedActive\":true,                              \"isImported\":false,                              \"tableName\":\"allDatatypes\",                              \"schemaName\":\"alldatatypes\",                              \"dbName\":\"AllDatatypes\"                           }                        ]                     }                  ]               }            ]         }      ]   }   ``` 2. Set `validate` to `true`.      
+     * @param createConnectionRequest 
+     */
     public createConnection(createConnectionRequest: CreateConnectionRequest, _options?: Configuration): Promise<CreateConnectionResponse> {
         const result = this.api.createConnection(createConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Deletes a connection object.  **Note**: If a connection has dependent objects, make sure you remove its associations before the delete operation.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.      
+     * @param deleteConnectionRequest 
+     */
+    public deleteConnectionWithHttpInfo(deleteConnectionRequest: DeleteConnectionRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteConnectionWithHttpInfo(deleteConnectionRequest, _options);
         return result.toPromise();
     }
 
@@ -433,8 +533,26 @@ export class PromiseConnectionsApi {
      *   Version: 10.4.0.cl or later   Deletes a connection object.  **Note**: If a connection has dependent objects, make sure you remove its associations before the delete operation.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.      
      * @param connectionIdentifier Unique ID or name of the connection.
      */
+    public deleteConnectionV2WithHttpInfo(connectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteConnectionV2WithHttpInfo(connectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Deletes a connection object.  **Note**: If a connection has dependent objects, make sure you remove its associations before the delete operation.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.      
+     * @param connectionIdentifier Unique ID or name of the connection.
+     */
     public deleteConnectionV2(connectionIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteConnectionV2(connectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Exports the difference in connection metadata between CDW and ThoughtSpot  Requires `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:   - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  To download the connection metadata difference between ThoughtSpot and CDW, pass the connection GUID as `connection_identifier` in the API request.      
+     * @param connectionIdentifier GUID of the connection
+     */
+    public downloadConnectionMetadataChangesWithHttpInfo(connectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<HttpFile>> {
+        const result = this.api.downloadConnectionMetadataChangesWithHttpInfo(connectionIdentifier, _options);
         return result.toPromise();
     }
 
@@ -451,8 +569,26 @@ export class PromiseConnectionsApi {
      *   Version: 9.9.0.cl or later   Validates the difference in connection metadata between CDW and ThoughtSpot.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  Returns a boolean indicating whether there is any difference between the connection metadata at ThoughtSpot and CDW.  To get the connection metadata difference status, pass the connection GUID as `connection_identifier` in the API request.      
      * @param connectionIdentifier GUID of the connection
      */
+    public fetchConnectionDiffStatusWithHttpInfo(connectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<FetchConnectionDiffStatusResponse>> {
+        const result = this.api.fetchConnectionDiffStatusWithHttpInfo(connectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Validates the difference in connection metadata between CDW and ThoughtSpot.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  Returns a boolean indicating whether there is any difference between the connection metadata at ThoughtSpot and CDW.  To get the connection metadata difference status, pass the connection GUID as `connection_identifier` in the API request.      
+     * @param connectionIdentifier GUID of the connection
+     */
     public fetchConnectionDiffStatus(connectionIdentifier: string, _options?: Configuration): Promise<FetchConnectionDiffStatusResponse> {
         const result = this.api.fetchConnectionDiffStatus(connectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets connection objects. Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  - To get a list of all connections available in the ThoughtSpot system, send the API request without any attributes in the request body. - To get the connection objects for a specific type of data warehouse, specify the type in `data_warehouse_types`. - To fetch details of a connection object, specify the connection object GUID or name. The `name_pattern` attribute allows passing partial text with `%` for a wildcard match. - To get details of the database, schemas, tables, or columns from a data connection object, specify `data_warehouse_object_type`. - To get a specific database, schema, table, or column from a connection object, define the object type in `data_warehouse_object_type` and object properties in the `data_warehouse_objects` array. For example, to search for a column, you must pass the database, schema, and table names in the API request.   Note that in the following example, object properties are set in a hierarchical order (`database` > `schema` > `table` > `column`).  ``` {   \"connections\": [     {       \"identifier\": \"b9d1f2ef-fa65-4a4b-994e-30fa2d57b0c2\",       \"data_warehouse_objects\": [         {           \"database\": \"NEBULADEV\",           \"schema\": \"INFORMATION_SCHEMA\",           \"table\": \"APPLICABLE_ROLES\",           \"column\": \"ROLE_NAME\"         }       ]     }   ],   \"data_warehouse_object_type\": \"COLUMN\" } ```  - To fetch data by `configuration`, specify `data_warehouse_object_type`. For example, to fetch columns from the `DEVELOPMENT` database, specify the `data_warehouse_object_type` as `DATABASE` and define the `configuration` string as `{\"database\":\"DEVELOPMENT\"}`. To get column data for a specific table, specify the table, for example,`{\"database\":\"RETAILAPPAREL\",\"table\":\"PIPES\"}`. - To query connections by `authentication_type`, specify `data_warehouse_object_type`. Supported values for `authentication_type` are:   - `SERVICE_ACCOUNT`: For connections that require service account credentials to authenticate to the Cloud Data Warehouse and fetch data.   - `OAUTH`: For connections that require OAuth credentials to authenticate to the Cloud Data Warehouse and fetch data. Teradata, Oracle, and Presto Cloud Data Warehouses do not support the OAuth authentication type.   - `IAM`: For connections that have the IAM OAuth set up. This authentication type is supported on Amazon Redshift connections only.   - `EXTOAUTH`: For connections that have external OAuth set up. ThoughtSpot supports external [OAuth with Microsoft Azure Active Directory (AD)](https://docs.thoughtspot.com/cloud/latest/ connections-snowflake-azure-ad-oauth) and [Okta for Snowflake data connections](https://docs.thoughtspot.com/cloud/latest/connections-snowflake-okta-oauth). - To include more details about connection objects in the API response, set `include_details` to `true`. - You can also sort the output by field names and filter connections by tags.  **NOTE**: When filtering connection records by parameters other than `data_warehouse_types` or `tag_identifiers`, ensure that you set `record_size` to `-1` and `record_offset` to `0` for precise results.      
+     * @param searchConnectionRequest 
+     */
+    public searchConnectionWithHttpInfo(searchConnectionRequest: SearchConnectionRequest, _options?: Configuration): Promise<HttpInfo<Array<SearchConnectionResponse>>> {
+        const result = this.api.searchConnectionWithHttpInfo(searchConnectionRequest, _options);
         return result.toPromise();
     }
 
@@ -469,8 +605,27 @@ export class PromiseConnectionsApi {
      *   Version: 9.2.0.cl or later   Updates a connection object.    Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  To update a connection object, pass these parameters in your API request:  1. GUID of the connection object. 2. If you are updating tables or database schema of a connection object:    a. Add the updated JSON map of metadata with database, schema, and tables in `data_warehouse_config`.    b. Set `validate` to `true`. 3. If you are updating a configuration attribute, connection name, or description, you can set `validate` to `false`.      
      * @param updateConnectionRequest 
      */
+    public updateConnectionWithHttpInfo(updateConnectionRequest: UpdateConnectionRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateConnectionWithHttpInfo(updateConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Updates a connection object.    Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  To update a connection object, pass these parameters in your API request:  1. GUID of the connection object. 2. If you are updating tables or database schema of a connection object:    a. Add the updated JSON map of metadata with database, schema, and tables in `data_warehouse_config`.    b. Set `validate` to `true`. 3. If you are updating a configuration attribute, connection name, or description, you can set `validate` to `false`.      
+     * @param updateConnectionRequest 
+     */
     public updateConnection(updateConnectionRequest: UpdateConnectionRequest, _options?: Configuration): Promise<void> {
         const result = this.api.updateConnection(updateConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Updates a connection object.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  To update a connection object, pass these parameters in your API request:  1. GUID of the connection object. 2. If you are updating tables or database schema of a connection object:    a. Add the updated JSON map of metadata with database, schema, and tables in `data_warehouse_config`.    b. Set `validate` to `true`. 3. If you are updating a configuration attribute, connection name, or description, you can set `validate` to `false`.      
+     * @param connectionIdentifier Unique ID or name of the connection.
+     * @param updateConnectionV2Request 
+     */
+    public updateConnectionV2WithHttpInfo(connectionIdentifier: string, updateConnectionV2Request: UpdateConnectionV2Request, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateConnectionV2WithHttpInfo(connectionIdentifier, updateConnectionV2Request, _options);
         return result.toPromise();
     }
 
@@ -507,8 +662,26 @@ export class PromiseCustomActionApi {
      *   Version: 9.6.0.cl or later   Creates a custom action that appears as a menu action on a saved Answer or Liveboard visualization.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.  #### Usage Guidelines  The API lets you create the following types of custom actions:  * URL-based action        Allows pushing data to an external URL. * Callback action           Triggers a callback to the host application and initiates a response payload on an embedded ThoughtSpot instance.  By default, custom actions are visible to only administrator or developer users. To make a custom action available to other users, and specify the groups in `group_identifiers`.  By default, the custom action is set as a _global_ action on all visualizations and saved Answers. To assign a custom action to specific Liveboard visualization, saved Answer, or Worksheet, set `visibility` to `false` in `default_action_config` property and specify the GUID or name of the object in `associate_metadata`.  For more information, see [Custom actions](https://developers.thoughtspot.com/docs/custom-action-intro).      
      * @param createCustomActionRequest 
      */
+    public createCustomActionWithHttpInfo(createCustomActionRequest: CreateCustomActionRequest, _options?: Configuration): Promise<HttpInfo<ResponseCustomAction>> {
+        const result = this.api.createCustomActionWithHttpInfo(createCustomActionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Creates a custom action that appears as a menu action on a saved Answer or Liveboard visualization.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.  #### Usage Guidelines  The API lets you create the following types of custom actions:  * URL-based action        Allows pushing data to an external URL. * Callback action           Triggers a callback to the host application and initiates a response payload on an embedded ThoughtSpot instance.  By default, custom actions are visible to only administrator or developer users. To make a custom action available to other users, and specify the groups in `group_identifiers`.  By default, the custom action is set as a _global_ action on all visualizations and saved Answers. To assign a custom action to specific Liveboard visualization, saved Answer, or Worksheet, set `visibility` to `false` in `default_action_config` property and specify the GUID or name of the object in `associate_metadata`.  For more information, see [Custom actions](https://developers.thoughtspot.com/docs/custom-action-intro).      
+     * @param createCustomActionRequest 
+     */
     public createCustomAction(createCustomActionRequest: CreateCustomActionRequest, _options?: Configuration): Promise<ResponseCustomAction> {
         const result = this.api.createCustomAction(createCustomActionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Removes the custom action specified in the API request.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.      
+     * @param customActionIdentifier Unique ID or name of the custom action.
+     */
+    public deleteCustomActionWithHttpInfo(customActionIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteCustomActionWithHttpInfo(customActionIdentifier, _options);
         return result.toPromise();
     }
 
@@ -525,8 +698,27 @@ export class PromiseCustomActionApi {
      *   Version: 9.6.0.cl or later   Gets custom actions configured on the cluster.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.      
      * @param searchCustomActionsRequest 
      */
+    public searchCustomActionsWithHttpInfo(searchCustomActionsRequest: SearchCustomActionsRequest, _options?: Configuration): Promise<HttpInfo<Array<ResponseCustomAction>>> {
+        const result = this.api.searchCustomActionsWithHttpInfo(searchCustomActionsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Gets custom actions configured on the cluster.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.      
+     * @param searchCustomActionsRequest 
+     */
     public searchCustomActions(searchCustomActionsRequest: SearchCustomActionsRequest, _options?: Configuration): Promise<Array<ResponseCustomAction>> {
         const result = this.api.searchCustomActions(searchCustomActionsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Updates a custom action.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.  #### Usage Guidelines  The API allows you to modify the following properties:  * Name of the custom action * Action availability to groups * Association to metadata objects * Authentication settings for a URL-based action  For more information, see [Custom actions](https://developers.thoughtspot.com/docs/custom-action-intro).      
+     * @param customActionIdentifier Unique ID or name of the custom action.
+     * @param updateCustomActionRequest 
+     */
+    public updateCustomActionWithHttpInfo(customActionIdentifier: string, updateCustomActionRequest: UpdateCustomActionRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateCustomActionWithHttpInfo(customActionIdentifier, updateCustomActionRequest, _options);
         return result.toPromise();
     }
 
@@ -563,8 +755,26 @@ export class PromiseDBTApi {
      *   Version: 9.9.0.cl or later   Creates a DBT connection object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About create DBT connection DBT connection in ThoughtSpot is used by the user to define DBT credentials for cloud . The API needs  embrace connection, embrace database name, DBT url, import type, DBT account identifier, DBT project identifier, DBT access token and environment details (or) embrace connection, embrace database name, import type, file_content to create a connection object. To know more about DBT, see ThoughtSpot Product Documentation.      
      * @param dbtConnectionRequest 
      */
+    public dbtConnectionWithHttpInfo(dbtConnectionRequest: DbtConnectionRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.dbtConnectionWithHttpInfo(dbtConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Creates a DBT connection object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About create DBT connection DBT connection in ThoughtSpot is used by the user to define DBT credentials for cloud . The API needs  embrace connection, embrace database name, DBT url, import type, DBT account identifier, DBT project identifier, DBT access token and environment details (or) embrace connection, embrace database name, import type, file_content to create a connection object. To know more about DBT, see ThoughtSpot Product Documentation.      
+     * @param dbtConnectionRequest 
+     */
     public dbtConnection(dbtConnectionRequest: DbtConnectionRequest, _options?: Configuration): Promise<any> {
         const result = this.api.dbtConnection(dbtConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Resynchronize the existing list of models, tables, worksheet tml’s and import them to Thoughtspot based on the DBT connection object.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)      
+     * @param dbtGenerateSyncTmlRequest 
+     */
+    public dbtGenerateSyncTmlWithHttpInfo(dbtGenerateSyncTmlRequest: DbtGenerateSyncTmlRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.dbtGenerateSyncTmlWithHttpInfo(dbtGenerateSyncTmlRequest, _options);
         return result.toPromise();
     }
 
@@ -581,8 +791,25 @@ export class PromiseDBTApi {
      *   Version: 9.9.0.cl or later   Generate required table and worksheet and import them.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About generate TML Models and Worksheets to be imported can be selected by the user as part of the API.      
      * @param dbtGenerateTmlRequest 
      */
+    public dbtGenerateTmlWithHttpInfo(dbtGenerateTmlRequest: DbtGenerateTmlRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.dbtGenerateTmlWithHttpInfo(dbtGenerateTmlRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Generate required table and worksheet and import them.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About generate TML Models and Worksheets to be imported can be selected by the user as part of the API.      
+     * @param dbtGenerateTmlRequest 
+     */
     public dbtGenerateTml(dbtGenerateTmlRequest: DbtGenerateTmlRequest, _options?: Configuration): Promise<any> {
         const result = this.api.dbtGenerateTml(dbtGenerateTmlRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Gets a list of DBT connection objects by user and organization, available on the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About search DBT connection To get details of a specific DBT connection identifier, database connection identifier, database connection name, database name, project name, project identifier, environment identifier , import type and author.      
+     */
+    public dbtSearchWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<DbtSearchResponse>>> {
+        const result = this.api.dbtSearchWithHttpInfo(_options);
         return result.toPromise();
     }
 
@@ -598,8 +825,26 @@ export class PromiseDBTApi {
      *   Version: 9.9.0.cl or later   Removes the specified DBT connection object from the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) or `DATAMANAGEMENT` (**Can manage data ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)      
      * @param dbtConnectionIdentifier Unique ID of the DBT Connection.
      */
+    public deleteDbtConnectionWithHttpInfo(dbtConnectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteDbtConnectionWithHttpInfo(dbtConnectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Removes the specified DBT connection object from the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) or `DATAMANAGEMENT` (**Can manage data ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)      
+     * @param dbtConnectionIdentifier Unique ID of the DBT Connection.
+     */
     public deleteDbtConnection(dbtConnectionIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteDbtConnection(dbtConnectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Updates a DBT connection object.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data ThoughtSpot**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About update DBT connection You can modify DBT connection object properties such as embrace connection name, embrace database name, import type, account identifier, access token, project identifier and environment (or) embrace connection, embrace database name, import type, file_content settings.      
+     * @param updateDbtConnectionRequest 
+     */
+    public updateDbtConnectionWithHttpInfo(updateDbtConnectionRequest: UpdateDbtConnectionRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.updateDbtConnectionWithHttpInfo(updateDbtConnectionRequest, _options);
         return result.toPromise();
     }
 
@@ -635,6 +880,15 @@ export class PromiseDataApi {
      *   Version: 9.0.0.cl or later   Fetches data from a saved Answer.  Requires at least view access to the saved Answer and the `DATADOWNLOADING` privilege.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_apis).     
      * @param fetchAnswerDataRequest 
      */
+    public fetchAnswerDataWithHttpInfo(fetchAnswerDataRequest: FetchAnswerDataRequest, _options?: Configuration): Promise<HttpInfo<AnswerDataResponse>> {
+        const result = this.api.fetchAnswerDataWithHttpInfo(fetchAnswerDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches data from a saved Answer.  Requires at least view access to the saved Answer and the `DATADOWNLOADING` privilege.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_apis).     
+     * @param fetchAnswerDataRequest 
+     */
     public fetchAnswerData(fetchAnswerDataRequest: FetchAnswerDataRequest, _options?: Configuration): Promise<AnswerDataResponse> {
         const result = this.api.fetchAnswerData(fetchAnswerDataRequest, _options);
         return result.toPromise();
@@ -644,8 +898,26 @@ export class PromiseDataApi {
      *   Version: 9.0.0.cl or later   Gets data from a Liveboard object and its visualization.    Requires at least view access to the Liveboard and the `DATADOWNLOADING` privilege.  #### Usage guidelines  In the request body, specify the GUID or name of the Liveboard. To get data for specific visualizations, add the GUIDs or names of the visualizations in the API request.  To include unsaved changes in the report, pass the `transient_pinboard_content` script generated from the `getExportRequestForCurrentPinboard` method in the Visual Embed SDK. Upon successful execution, the API returns the report with unsaved changes. If the new Liveboard experience mode, the transient content includes ad hoc changes to visualizations such as sorting, toggling of legends, and data drill down.  For more information, and see [Liveboard data API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_fetch_liveboard_data_api).     
      * @param fetchLiveboardDataRequest 
      */
+    public fetchLiveboardDataWithHttpInfo(fetchLiveboardDataRequest: FetchLiveboardDataRequest, _options?: Configuration): Promise<HttpInfo<LiveboardDataResponse>> {
+        const result = this.api.fetchLiveboardDataWithHttpInfo(fetchLiveboardDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets data from a Liveboard object and its visualization.    Requires at least view access to the Liveboard and the `DATADOWNLOADING` privilege.  #### Usage guidelines  In the request body, specify the GUID or name of the Liveboard. To get data for specific visualizations, add the GUIDs or names of the visualizations in the API request.  To include unsaved changes in the report, pass the `transient_pinboard_content` script generated from the `getExportRequestForCurrentPinboard` method in the Visual Embed SDK. Upon successful execution, the API returns the report with unsaved changes. If the new Liveboard experience mode, the transient content includes ad hoc changes to visualizations such as sorting, toggling of legends, and data drill down.  For more information, and see [Liveboard data API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_fetch_liveboard_data_api).     
+     * @param fetchLiveboardDataRequest 
+     */
     public fetchLiveboardData(fetchLiveboardDataRequest: FetchLiveboardDataRequest, _options?: Configuration): Promise<LiveboardDataResponse> {
         const result = this.api.fetchLiveboardData(fetchLiveboardDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Generates an Answer from a given data source.  Requires at least view access to the data source object (Worksheet or View) and the `DATADOWNLOADING` privilege.  #### Usage guidelines  To search data, specify the data source GUID in `logical_table_identifier`. The data source can be a Worksheet, View, Table, or SQL view.  Pass search tokens in the `query_string` attribute in the API request as shown in the following example:  ``` {   \"query_string\": \"[sales] by [store]\",   \"logical_table_identifier\": \"cd252e5c-b552-49a8-821d-3eadaa049cca\", } ```  For more information about the `query_string` format and data source attribute, see [Search data API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_search_data_api).    The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_api).     
+     * @param searchDataRequest 
+     */
+    public searchDataWithHttpInfo(searchDataRequest: SearchDataRequest, _options?: Configuration): Promise<HttpInfo<SearchDataResponse>> {
+        const result = this.api.searchDataWithHttpInfo(searchDataRequest, _options);
         return result.toPromise();
     }
 
@@ -681,8 +953,26 @@ export class PromiseGroupsApi {
      *   Version: 9.0.0.cl or later   Creates a group object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  #### About groups Groups in ThoughtSpot are used by the administrators to define privileges and organize users based on their roles and access requirements. To know more about groups and privileges, see [ThoughtSpot Product Documentation](https://docs.thoughtspot.com/cloud/latest/groups-privileges).  #### Supported operations  The API endpoint lets you perform the following operations:  * Assign privileges * Add users * Define sharing visibility * Add sub-groups * Assign a default Liveboard      
      * @param createUserGroupRequest 
      */
+    public createUserGroupWithHttpInfo(createUserGroupRequest: CreateUserGroupRequest, _options?: Configuration): Promise<HttpInfo<UserGroupResponse>> {
+        const result = this.api.createUserGroupWithHttpInfo(createUserGroupRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates a group object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  #### About groups Groups in ThoughtSpot are used by the administrators to define privileges and organize users based on their roles and access requirements. To know more about groups and privileges, see [ThoughtSpot Product Documentation](https://docs.thoughtspot.com/cloud/latest/groups-privileges).  #### Supported operations  The API endpoint lets you perform the following operations:  * Assign privileges * Add users * Define sharing visibility * Add sub-groups * Assign a default Liveboard      
+     * @param createUserGroupRequest 
+     */
     public createUserGroup(createUserGroupRequest: CreateUserGroupRequest, _options?: Configuration): Promise<UserGroupResponse> {
         const result = this.api.createUserGroup(createUserGroupRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Removes the specified group object from the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.      
+     * @param groupIdentifier GUID or name of the group.
+     */
+    public deleteUserGroupWithHttpInfo(groupIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteUserGroupWithHttpInfo(groupIdentifier, _options);
         return result.toPromise();
     }
 
@@ -699,6 +989,15 @@ export class PromiseGroupsApi {
      *   Version: 9.0.0.cl or later   Imports group objects from external databases into ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  During the import operation:  * If the specified group is not available in ThoughtSpot, it will be added to ThoughtSpot. * If `delete_unspecified_groups` is set to `true`, the groups not specified in the API request, excluding administrator and system user groups, are deleted. * If the specified groups are already available in ThoughtSpot, the object properties of these groups are modified and synchronized as per the input data in the API request.  A successful API call returns the object that represents the changes made in the ThoughtSpot system.      
      * @param importUserGroupsRequest 
      */
+    public importUserGroupsWithHttpInfo(importUserGroupsRequest: ImportUserGroupsRequest, _options?: Configuration): Promise<HttpInfo<ImportUserGroupsResponse>> {
+        const result = this.api.importUserGroupsWithHttpInfo(importUserGroupsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Imports group objects from external databases into ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  During the import operation:  * If the specified group is not available in ThoughtSpot, it will be added to ThoughtSpot. * If `delete_unspecified_groups` is set to `true`, the groups not specified in the API request, excluding administrator and system user groups, are deleted. * If the specified groups are already available in ThoughtSpot, the object properties of these groups are modified and synchronized as per the input data in the API request.  A successful API call returns the object that represents the changes made in the ThoughtSpot system.      
+     * @param importUserGroupsRequest 
+     */
     public importUserGroups(importUserGroupsRequest: ImportUserGroupsRequest, _options?: Configuration): Promise<ImportUserGroupsResponse> {
         const result = this.api.importUserGroups(importUserGroupsRequest, _options);
         return result.toPromise();
@@ -708,8 +1007,27 @@ export class PromiseGroupsApi {
      *   Version: 9.0.0.cl or later   Gets a list of user group objects from the ThoughtSpot system.  To get details of a specific user group, specify the user group GUID or name. You can also filter the API response based on User ID, Org ID, Role ID, type of group, sharing visibility, privileges assigned to the group, and the Liveboard IDs assigned to the users in the group.  Available to all users. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view all users properties.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  **NOTE**: If you do not get precise results, try setting `record_size` to `-1` and `record_offset` to `0`.      
      * @param searchUserGroupsRequest 
      */
+    public searchUserGroupsWithHttpInfo(searchUserGroupsRequest: SearchUserGroupsRequest, _options?: Configuration): Promise<HttpInfo<Array<UserGroupResponse>>> {
+        const result = this.api.searchUserGroupsWithHttpInfo(searchUserGroupsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of user group objects from the ThoughtSpot system.  To get details of a specific user group, specify the user group GUID or name. You can also filter the API response based on User ID, Org ID, Role ID, type of group, sharing visibility, privileges assigned to the group, and the Liveboard IDs assigned to the users in the group.  Available to all users. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view all users properties.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  **NOTE**: If you do not get precise results, try setting `record_size` to `-1` and `record_offset` to `0`.      
+     * @param searchUserGroupsRequest 
+     */
     public searchUserGroups(searchUserGroupsRequest: SearchUserGroupsRequest, _options?: Configuration): Promise<Array<UserGroupResponse>> {
         const result = this.api.searchUserGroups(searchUserGroupsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates the properties of a group object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  #### Supported operations  This API endpoint lets you perform the following operations in a single API request:  * Edit [privileges](https://developers.thoughtspot.com/docs/?pageid=api-user-management#group-privileges) * Add or remove users * Change sharing visibility settings * Add or remove sub-groups * Assign a default Liveboard  or update the existing settings      
+     * @param groupIdentifier GUID or name of the group.
+     * @param updateUserGroupRequest 
+     */
+    public updateUserGroupWithHttpInfo(groupIdentifier: string, updateUserGroupRequest: UpdateUserGroupRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateUserGroupWithHttpInfo(groupIdentifier, updateUserGroupRequest, _options);
         return result.toPromise();
     }
 
@@ -746,6 +1064,15 @@ export class PromiseLogApi {
      *   Version: 9.0.0.cl or later   Fetches security audit logs.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the [Admin Control](https://developers.thoughtspot.com/docs/rbac#_admin_control) privileges are required.   #### Usage guidelines  By default, the API retrieves logs for the last 24 hours. You can set a custom duration in EPOCH time. Make sure the log duration specified in your API request doesn’t exceed 24 hours. If you must fetch logs for a longer time range, modify the duration and make multiple sequential API requests.  Upon successful execution, the API returns logs with the following information: * timestamp of the event * event ID * event type * name and GUID of the user * IP address of ThoughtSpot instance  For more information see [Audit logs Documentation](https://developers.thoughtspot.com/docs/audit-logs).      
      * @param fetchLogsRequest 
      */
+    public fetchLogsWithHttpInfo(fetchLogsRequest: FetchLogsRequest, _options?: Configuration): Promise<HttpInfo<Array<LogResponse>>> {
+        const result = this.api.fetchLogsWithHttpInfo(fetchLogsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches security audit logs.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the [Admin Control](https://developers.thoughtspot.com/docs/rbac#_admin_control) privileges are required.   #### Usage guidelines  By default, the API retrieves logs for the last 24 hours. You can set a custom duration in EPOCH time. Make sure the log duration specified in your API request doesn’t exceed 24 hours. If you must fetch logs for a longer time range, modify the duration and make multiple sequential API requests.  Upon successful execution, the API returns logs with the following information: * timestamp of the event * event ID * event type * name and GUID of the user * IP address of ThoughtSpot instance  For more information see [Audit logs Documentation](https://developers.thoughtspot.com/docs/audit-logs).      
+     * @param fetchLogsRequest 
+     */
     public fetchLogs(fetchLogsRequest: FetchLogsRequest, _options?: Configuration): Promise<Array<LogResponse>> {
         const result = this.api.fetchLogs(fetchLogsRequest, _options);
         return result.toPromise();
@@ -774,8 +1101,26 @@ export class PromiseMetadataApi {
      *  Makes a copy of an Answer or Liveboard saved in Atlas    Version: 10.3.0.cl or later   Creates a copy of a metadata object.  Requires at least view access to the metadata object being copied.  Upon successful execution, the API creates a copy of the metadata object specified in the API request and returns the ID of the new object.      
      * @param copyObjectRequest 
      */
+    public copyObjectWithHttpInfo(copyObjectRequest: CopyObjectRequest, _options?: Configuration): Promise<HttpInfo<ResponseCopyObject>> {
+        const result = this.api.copyObjectWithHttpInfo(copyObjectRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Makes a copy of an Answer or Liveboard saved in Atlas    Version: 10.3.0.cl or later   Creates a copy of a metadata object.  Requires at least view access to the metadata object being copied.  Upon successful execution, the API creates a copy of the metadata object specified in the API request and returns the ID of the new object.      
+     * @param copyObjectRequest 
+     */
     public copyObject(copyObjectRequest: CopyObjectRequest, _options?: Configuration): Promise<ResponseCopyObject> {
         const result = this.api.copyObject(copyObjectRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Removes the specified metadata object from the ThoughtSpot system.  Requires edit access to the metadata object.       
+     * @param deleteMetadataRequest 
+     */
+    public deleteMetadataWithHttpInfo(deleteMetadataRequest: DeleteMetadataRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteMetadataWithHttpInfo(deleteMetadataRequest, _options);
         return result.toPromise();
     }
 
@@ -792,8 +1137,26 @@ export class PromiseMetadataApi {
      *   Version: 9.0.0.cl or later   Exports the [TML](https://docs.thoughtspot.com/cloud/latest/tml) representation of metadata objects in JSON or YAML format.  Requires `DATADOWNLOADING` (**Can download Data**) and at least view access to the metadata object.  #### Usage guidelines  * You can export one or several objects by passing metadata object GUIDs in the `metadata` array. * When exporting TML content for a Liveboard or Answer object, you can set `export_associated` to `true` to retrieve TML content for underlying Worksheets, Tables, or Views, including the GUID of each object within the headers. When   `export_associated` is set to `true`, consider retrieving one metadata object at a time. * Set `export_fqns` to `true` to add FQNs of the referenced objects in the TML content. For example, if you send an API request to retrieve TML for a Liveboard and its associated objects, the API returns the TML content with FQNs of the referenced Worksheet. Exporting TML with FQNs is useful if ThoughtSpot has multiple objects with the same name and you want to eliminate ambiguity when importing TML files into ThoughtSpot. It eliminates the need for adding FQNs of the referenced objects manually during the import operation.  For more information, see [TML Documentation](https://developers.thoughtspot.com/docs/tml#_export_a_tml).      
      * @param exportMetadataTMLRequest 
      */
+    public exportMetadataTMLWithHttpInfo(exportMetadataTMLRequest: ExportMetadataTMLRequest, _options?: Configuration): Promise<HttpInfo<Array<any>>> {
+        const result = this.api.exportMetadataTMLWithHttpInfo(exportMetadataTMLRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Exports the [TML](https://docs.thoughtspot.com/cloud/latest/tml) representation of metadata objects in JSON or YAML format.  Requires `DATADOWNLOADING` (**Can download Data**) and at least view access to the metadata object.  #### Usage guidelines  * You can export one or several objects by passing metadata object GUIDs in the `metadata` array. * When exporting TML content for a Liveboard or Answer object, you can set `export_associated` to `true` to retrieve TML content for underlying Worksheets, Tables, or Views, including the GUID of each object within the headers. When   `export_associated` is set to `true`, consider retrieving one metadata object at a time. * Set `export_fqns` to `true` to add FQNs of the referenced objects in the TML content. For example, if you send an API request to retrieve TML for a Liveboard and its associated objects, the API returns the TML content with FQNs of the referenced Worksheet. Exporting TML with FQNs is useful if ThoughtSpot has multiple objects with the same name and you want to eliminate ambiguity when importing TML files into ThoughtSpot. It eliminates the need for adding FQNs of the referenced objects manually during the import operation.  For more information, see [TML Documentation](https://developers.thoughtspot.com/docs/tml#_export_a_tml).      
+     * @param exportMetadataTMLRequest 
+     */
     public exportMetadataTML(exportMetadataTMLRequest: ExportMetadataTMLRequest, _options?: Configuration): Promise<Array<any>> {
         const result = this.api.exportMetadataTML(exportMetadataTMLRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.1.0.cl or later   Exports the [TML](https://docs.thoughtspot.com/cloud/latest/tml) representation of metadata objects in JSON or YAML format.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  #### Usage guidelines  * You can export one or several objects by passing metadata object GUIDs in the `metadata` array. * When exporting TML content for a Liveboard or Answer object, you can set `export_associated` to `true` to retrieve TML content for underlying Worksheets, Tables, or Views, including the GUID of each object within the headers. When   `export_associated` is set to `true`, consider retrieving one metadata object at a time. * Set `export_fqns` to `true` to add FQNs of the referenced objects in the TML content. For example, if you send an API request to retrieve TML for a Liveboard and its associated objects, the API returns the TML content with FQNs of the referenced Worksheet. Exporting TML with FQNs is useful if ThoughtSpot has multiple objects with the same name and you want to eliminate ambiguity when importing TML files into ThoughtSpot. It eliminates the need for adding FQNs of the referenced objects manually during the import operation.      
+     * @param exportMetadataTMLBatchedRequest 
+     */
+    public exportMetadataTMLBatchedWithHttpInfo(exportMetadataTMLBatchedRequest: ExportMetadataTMLBatchedRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.exportMetadataTMLBatchedWithHttpInfo(exportMetadataTMLBatchedRequest, _options);
         return result.toPromise();
     }
 
@@ -810,8 +1173,26 @@ export class PromiseMetadataApi {
      *   Version: 9.0.0.cl or later   Fetches the underlying SQL query data for an Answer object.  Requires at least view access to the Answer object.  Upon successful execution, the API returns the SQL queries for the specified object as shown in this example: ``` {    \"metadata_id\":\"8fbe44a8-46ad-4b16-8d39-184b2fada490\",    \"metadata_name\":\"Total sales\",    \"metadata_type\":\"ANSWER\",    \"sql_queries\":[       {          \"metadata_id\":\"8fbe44a8-46ad-4b16-8d39-184b2fada490\",          \"metadata_name\":\"Total sales -test\",          \"sql_query\":\"SELECT \\n  \\\"ta_1\\\".\\\"REGION\\\" \\\"ca_1\\\", \\n  \\\"ta_2\\\".\\\"PRODUCTNAME\\\" \\\"ca_2\\\", \\n  \\\"ta_1\\\".\\\"STORENAME\\\" \\\"ca_3\\\", \\n  CASE\\n    WHEN sum(\\\"ta_3\\\".\\\"SALES\\\") IS NOT NULL THEN sum(\\\"ta_3\\\".\\\"SALES\\\")\\n    ELSE 0\\n  END \\\"ca_4\\\", \\n  CASE\\n    WHEN sum(\\\"ta_3\\\".\\\"QUANTITYPURCHASED\\\") IS NOT NULL THEN sum(\\\"ta_3\\\".\\\"QUANTITYPURCHASED\\\")\\n    ELSE 0\\n  END \\\"ca_5\\\"\\nFROM \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"FACT_RETAPP_SALES\\\" \\\"ta_3\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_STORES\\\" \\\"ta_1\\\"\\n    ON \\\"ta_3\\\".\\\"STOREID\\\" = \\\"ta_1\\\".\\\"STOREID\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_PRODUCTS\\\" \\\"ta_2\\\"\\n    ON \\\"ta_3\\\".\\\"PRODUCTID\\\" = \\\"ta_2\\\".\\\"PRODUCTID\\\"\\nGROUP BY \\n  \\\"ca_1\\\", \\n  \\\"ca_2\\\", \\n  \\\"ca_3\\\"\\n\"       }    ] } ```      
      * @param fetchAnswerSqlQueryRequest 
      */
+    public fetchAnswerSqlQueryWithHttpInfo(fetchAnswerSqlQueryRequest: FetchAnswerSqlQueryRequest, _options?: Configuration): Promise<HttpInfo<SqlQueryResponse>> {
+        const result = this.api.fetchAnswerSqlQueryWithHttpInfo(fetchAnswerSqlQueryRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches the underlying SQL query data for an Answer object.  Requires at least view access to the Answer object.  Upon successful execution, the API returns the SQL queries for the specified object as shown in this example: ``` {    \"metadata_id\":\"8fbe44a8-46ad-4b16-8d39-184b2fada490\",    \"metadata_name\":\"Total sales\",    \"metadata_type\":\"ANSWER\",    \"sql_queries\":[       {          \"metadata_id\":\"8fbe44a8-46ad-4b16-8d39-184b2fada490\",          \"metadata_name\":\"Total sales -test\",          \"sql_query\":\"SELECT \\n  \\\"ta_1\\\".\\\"REGION\\\" \\\"ca_1\\\", \\n  \\\"ta_2\\\".\\\"PRODUCTNAME\\\" \\\"ca_2\\\", \\n  \\\"ta_1\\\".\\\"STORENAME\\\" \\\"ca_3\\\", \\n  CASE\\n    WHEN sum(\\\"ta_3\\\".\\\"SALES\\\") IS NOT NULL THEN sum(\\\"ta_3\\\".\\\"SALES\\\")\\n    ELSE 0\\n  END \\\"ca_4\\\", \\n  CASE\\n    WHEN sum(\\\"ta_3\\\".\\\"QUANTITYPURCHASED\\\") IS NOT NULL THEN sum(\\\"ta_3\\\".\\\"QUANTITYPURCHASED\\\")\\n    ELSE 0\\n  END \\\"ca_5\\\"\\nFROM \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"FACT_RETAPP_SALES\\\" \\\"ta_3\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_STORES\\\" \\\"ta_1\\\"\\n    ON \\\"ta_3\\\".\\\"STOREID\\\" = \\\"ta_1\\\".\\\"STOREID\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_PRODUCTS\\\" \\\"ta_2\\\"\\n    ON \\\"ta_3\\\".\\\"PRODUCTID\\\" = \\\"ta_2\\\".\\\"PRODUCTID\\\"\\nGROUP BY \\n  \\\"ca_1\\\", \\n  \\\"ca_2\\\", \\n  \\\"ca_3\\\"\\n\"       }    ] } ```      
+     * @param fetchAnswerSqlQueryRequest 
+     */
     public fetchAnswerSqlQuery(fetchAnswerSqlQueryRequest: FetchAnswerSqlQueryRequest, _options?: Configuration): Promise<SqlQueryResponse> {
         const result = this.api.fetchAnswerSqlQuery(fetchAnswerSqlQueryRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Gets information about the status of the TML async import task scheduled using the `/api/rest/2.0/metadata/tml/async/import` API call.  To fetch the task details, specify the ID of the TML async import task.    Requires access to the task ID. The API allows users who initiated the asynchronous TML import via `/api/rest/2.0/metadata/tml/async/import` to view the status of their tasks.  Users with administration privilege can view the status of all import tasks initiated by the users in their Org.  #### Usage guidelines  See [TML API Documentation](https://developers.thoughtspot.com/docs/tml#_fetch_status_of_the_tml_import_task) for usage guidelines.     
+     * @param fetchAsyncImportTaskStatusRequest 
+     */
+    public fetchAsyncImportTaskStatusWithHttpInfo(fetchAsyncImportTaskStatusRequest: FetchAsyncImportTaskStatusRequest, _options?: Configuration): Promise<HttpInfo<GetAsyncImportStatusResponse>> {
+        const result = this.api.fetchAsyncImportTaskStatusWithHttpInfo(fetchAsyncImportTaskStatusRequest, _options);
         return result.toPromise();
     }
 
@@ -828,8 +1209,26 @@ export class PromiseMetadataApi {
      *   Version: 9.0.0.cl or later   Fetches the underlying SQL query data for a Liveboard object and its visualizations.  Requires at least view access to the Liveboard object.  To get SQL query data for a Liveboard, specify the GUID of the Liveboard. Optionally, you can add an array of visualization GUIDs to retrieve the SQL query data for visualizations in the Liveboard.  Upon successful execution, the API returns the SQL queries for the specified object as shown in this example: ``` {   \"metadata_id\": \"fa68ae91-7588-4136-bacd-d71fb12dda69\",   \"metadata_name\": \"Total Sales\",   \"metadata_type\": \"LIVEBOARD\",   \"sql_queries\": [     {       \"metadata_id\": \"b3b6d2b9-089a-490c-8e16-b144650b7843\",       \"metadata_name\": \"Total quantity purchased, Total sales by region\",       \"sql_query\": \"SELECT \\n  \\\"ta_1\\\".\\\"REGION\\\" \\\"ca_1\\\", \\n  CASE\\n    WHEN sum(\\\"ta_2\\\".\\\"QUANTITYPURCHASED\\\") IS NOT NULL THEN sum(\\\"ta_2\\\".\\\"QUANTITYPURCHASED\\\")\\n    ELSE 0\\n  END \\\"ca_2\\\", \\n  CASE\\n    WHEN sum(\\\"ta_2\\\".\\\"SALES\\\") IS NOT NULL THEN sum(\\\"ta_2\\\".\\\"SALES\\\")\\n    ELSE 0\\n  END \\\"ca_3\\\"\\nFROM \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"FACT_RETAPP_SALES\\\" \\\"ta_2\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_STORES\\\" \\\"ta_1\\\"\\n    ON \\\"ta_2\\\".\\\"STOREID\\\" = \\\"ta_1\\\".\\\"STOREID\\\"\\nGROUP BY \\\"ca_1\\\"\"     }   ] } ```      
      * @param fetchLiveboardSqlQueryRequest 
      */
+    public fetchLiveboardSqlQueryWithHttpInfo(fetchLiveboardSqlQueryRequest: FetchLiveboardSqlQueryRequest, _options?: Configuration): Promise<HttpInfo<SqlQueryResponse>> {
+        const result = this.api.fetchLiveboardSqlQueryWithHttpInfo(fetchLiveboardSqlQueryRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches the underlying SQL query data for a Liveboard object and its visualizations.  Requires at least view access to the Liveboard object.  To get SQL query data for a Liveboard, specify the GUID of the Liveboard. Optionally, you can add an array of visualization GUIDs to retrieve the SQL query data for visualizations in the Liveboard.  Upon successful execution, the API returns the SQL queries for the specified object as shown in this example: ``` {   \"metadata_id\": \"fa68ae91-7588-4136-bacd-d71fb12dda69\",   \"metadata_name\": \"Total Sales\",   \"metadata_type\": \"LIVEBOARD\",   \"sql_queries\": [     {       \"metadata_id\": \"b3b6d2b9-089a-490c-8e16-b144650b7843\",       \"metadata_name\": \"Total quantity purchased, Total sales by region\",       \"sql_query\": \"SELECT \\n  \\\"ta_1\\\".\\\"REGION\\\" \\\"ca_1\\\", \\n  CASE\\n    WHEN sum(\\\"ta_2\\\".\\\"QUANTITYPURCHASED\\\") IS NOT NULL THEN sum(\\\"ta_2\\\".\\\"QUANTITYPURCHASED\\\")\\n    ELSE 0\\n  END \\\"ca_2\\\", \\n  CASE\\n    WHEN sum(\\\"ta_2\\\".\\\"SALES\\\") IS NOT NULL THEN sum(\\\"ta_2\\\".\\\"SALES\\\")\\n    ELSE 0\\n  END \\\"ca_3\\\"\\nFROM \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"FACT_RETAPP_SALES\\\" \\\"ta_2\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_STORES\\\" \\\"ta_1\\\"\\n    ON \\\"ta_2\\\".\\\"STOREID\\\" = \\\"ta_1\\\".\\\"STOREID\\\"\\nGROUP BY \\\"ca_1\\\"\"     }   ] } ```      
+     * @param fetchLiveboardSqlQueryRequest 
+     */
     public fetchLiveboardSqlQuery(fetchLiveboardSqlQueryRequest: FetchLiveboardSqlQueryRequest, _options?: Configuration): Promise<SqlQueryResponse> {
         const result = this.api.fetchLiveboardSqlQuery(fetchLiveboardSqlQueryRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Imports [TML](https://docs.thoughtspot.com/cloud/latest/tml) files into ThoughtSpot.  Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtsSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required: - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### Usage guidelines  *  Import all related objects in a single TML Import API call. For example, Tables that use the same Connection object and Worksheets connected to these Tables. * Include the `fqn` property to distinguish objects that have the same name.   For example, if you have multiple Connections or Worksheets with the same name on ThoughtSpot and the Connection or Worksheet referenced in your TML file does not have a unique name to distinguish, it may result in invalid object references.   Adding `fqn` helps ThoughtSpot differentiate a Table from another with the same name.   We recommend [exporting TML with FQNs](#/http/api-endpoints/metadata/export-metadata-tml) and using these during the import operation. * You can upload multiple TML files at a time.   If you import a Worksheet along with Liveboards, Answers, and other dependent objects in a single API call, the imported objects will be immediately available for use.   When you import only a Worksheet object, it may take some time for the Worksheet to become available in the ThoughtSpot system. Please wait for a few minutes, and then proceed to create an Answer and Liveboard from the newly imported Worksheet.  For more information, see [TML Documentation](https://developers.thoughtspot.com/docs/tml#_import_a_tml).      
+     * @param importMetadataTMLRequest 
+     */
+    public importMetadataTMLWithHttpInfo(importMetadataTMLRequest: ImportMetadataTMLRequest, _options?: Configuration): Promise<HttpInfo<Array<any>>> {
+        const result = this.api.importMetadataTMLWithHttpInfo(importMetadataTMLRequest, _options);
         return result.toPromise();
     }
 
@@ -846,8 +1245,26 @@ export class PromiseMetadataApi {
      *   Version: 10.4.0.cl or later   Schedules a task to import [TML](https://docs.thoughtspot.com/cloud/latest/tml) files into ThoughtSpot. You can use this API endpoint to process TML objects asynchronously when importing TMLs of large and complex metadata objects into ThoughtSpot. Unlike the synchronous import TML operation, the API processes TML data in the background and returns a task ID, which can be used to check the status of the import task via `/api/rest/2.0/metadata/tml/async/status` API endpoint.  Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtsSpot**) privilege, and edit access to the TML objects.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required: - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### Usage guidelines  See [Async TML API Documentation](https://developers.thoughtspot.com/docs/tml#_import_tml_objects_asynchronously) for usage guidelines.      
      * @param importMetadataTMLAsyncRequest 
      */
+    public importMetadataTMLAsyncWithHttpInfo(importMetadataTMLAsyncRequest: ImportMetadataTMLAsyncRequest, _options?: Configuration): Promise<HttpInfo<ImportEPackAsyncTaskStatus>> {
+        const result = this.api.importMetadataTMLAsyncWithHttpInfo(importMetadataTMLAsyncRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Schedules a task to import [TML](https://docs.thoughtspot.com/cloud/latest/tml) files into ThoughtSpot. You can use this API endpoint to process TML objects asynchronously when importing TMLs of large and complex metadata objects into ThoughtSpot. Unlike the synchronous import TML operation, the API processes TML data in the background and returns a task ID, which can be used to check the status of the import task via `/api/rest/2.0/metadata/tml/async/status` API endpoint.  Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtsSpot**) privilege, and edit access to the TML objects.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required: - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### Usage guidelines  See [Async TML API Documentation](https://developers.thoughtspot.com/docs/tml#_import_tml_objects_asynchronously) for usage guidelines.      
+     * @param importMetadataTMLAsyncRequest 
+     */
     public importMetadataTMLAsync(importMetadataTMLAsyncRequest: ImportMetadataTMLAsyncRequest, _options?: Configuration): Promise<ImportEPackAsyncTaskStatus> {
         const result = this.api.importMetadataTMLAsync(importMetadataTMLAsyncRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of metadata objects available on the ThoughtSpot system.  This API endpoint is available to all users who have view access to the object. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view data for all metadata objects, including users and groups.  #### Usage guidelines  - To get all metadata objects, send the API request without any attributes. - To get metadata objects of a specific type, set the `type` attribute. For example, to fetch a Worksheet, set the type as `LOGICAL_TABLE`. - To get a specific metadata object, specify the GUID. - To customize your search and filter the API response, you can use several parameters.   You can search for objects created or modified by specific users, by tags applied to the objects, or by using the include parameters like `include_auto_created_objects`, `include_dependent_objects`, `include_headers`, `include_incomplete_objects`, and so on.   You can also define sorting options to sort the data retrieved in the API response.  **NOTE**: The following parameters support pagination of metadata records:  - `tag_identifiers` - `type` - `created_by_user_identifiers` - `modified_by_user_identifiers` - `owned_by_user_identifiers` - `exclude_objects` - `include_auto_created_objects` - `favorite_object_options` If you are using other parameters to search metadata, set `record_size` to `-1` and `record_offset` to `0`.      
+     * @param searchMetadataRequest 
+     */
+    public searchMetadataWithHttpInfo(searchMetadataRequest: SearchMetadataRequest, _options?: Configuration): Promise<HttpInfo<Array<MetadataSearchResponse>>> {
+        const result = this.api.searchMetadataWithHttpInfo(searchMetadataRequest, _options);
         return result.toPromise();
     }
 
@@ -883,8 +1300,26 @@ export class PromiseOrgsApi {
      *   Version: 9.0.0.cl or later   Creates an Org object.  To use this API, the [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview) feature must be enabled in your cluster.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
      * @param createOrgRequest 
      */
+    public createOrgWithHttpInfo(createOrgRequest: CreateOrgRequest, _options?: Configuration): Promise<HttpInfo<OrgResponse>> {
+        const result = this.api.createOrgWithHttpInfo(createOrgRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates an Org object.  To use this API, the [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview) feature must be enabled in your cluster.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
+     * @param createOrgRequest 
+     */
     public createOrg(createOrgRequest: CreateOrgRequest, _options?: Configuration): Promise<OrgResponse> {
         const result = this.api.createOrg(createOrgRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Deletes an Org object from the ThoughtSpot system.  Requires cluster administration (**Can administer Org**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.  When you delete an Org, all its users and objects created in that Org context are removed. However, if the users in the deleted Org also exists in other Orgs, they are removed only from the deleted Org.      
+     * @param orgIdentifier ID or name of the Org
+     */
+    public deleteOrgWithHttpInfo(orgIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteOrgWithHttpInfo(orgIdentifier, _options);
         return result.toPromise();
     }
 
@@ -901,8 +1336,27 @@ export class PromiseOrgsApi {
      *   Version: 9.0.0.cl or later   Gets a list of Orgs configured on the ThoughtSpot system. To get details of a specific Org, specify the Org ID or name. You can also pass parameters such as status, visibility, and user identifiers to get a specific list of Orgs.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
      * @param searchOrgsRequest 
      */
+    public searchOrgsWithHttpInfo(searchOrgsRequest: SearchOrgsRequest, _options?: Configuration): Promise<HttpInfo<Array<OrgResponse>>> {
+        const result = this.api.searchOrgsWithHttpInfo(searchOrgsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of Orgs configured on the ThoughtSpot system. To get details of a specific Org, specify the Org ID or name. You can also pass parameters such as status, visibility, and user identifiers to get a specific list of Orgs.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
+     * @param searchOrgsRequest 
+     */
     public searchOrgs(searchOrgsRequest: SearchOrgsRequest, _options?: Configuration): Promise<Array<OrgResponse>> {
         const result = this.api.searchOrgs(searchOrgsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates an Org object. You can modify Org properties such as name, description, and user associations.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
+     * @param orgIdentifier ID or name of the Org
+     * @param updateOrgRequest 
+     */
+    public updateOrgWithHttpInfo(orgIdentifier: string, updateOrgRequest: UpdateOrgRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateOrgWithHttpInfo(orgIdentifier, updateOrgRequest, _options);
         return result.toPromise();
     }
 
@@ -939,8 +1393,26 @@ export class PromiseReportsApi {
      *   Version: 9.0.0.cl or later   Exports an Answer in the given file format. You can download the Answer data as a PDF, PNG, CSV, or XLSX file.  Requires `DATADOWNLOADING` (**Can download data**) privilege and view access to the Answer.  #### Usage guidelines  In the request body, the GUID or name of the Answer and set `file_format`. The default file format is CSV.  **NOTE**: * The downloadable file returned in API response file is extensionless. Please rename the downloaded file by typing in the relevant extension. * HTML rendering is not supported for PDF exports of Answers with tables.  Optionally, you can define [runtime overrides](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_runtime_overrides) to apply to the Answer data.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_api).     
      * @param exportAnswerReportRequest 
      */
+    public exportAnswerReportWithHttpInfo(exportAnswerReportRequest: ExportAnswerReportRequest, _options?: Configuration): Promise<HttpInfo<HttpFile>> {
+        const result = this.api.exportAnswerReportWithHttpInfo(exportAnswerReportRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Exports an Answer in the given file format. You can download the Answer data as a PDF, PNG, CSV, or XLSX file.  Requires `DATADOWNLOADING` (**Can download data**) privilege and view access to the Answer.  #### Usage guidelines  In the request body, the GUID or name of the Answer and set `file_format`. The default file format is CSV.  **NOTE**: * The downloadable file returned in API response file is extensionless. Please rename the downloaded file by typing in the relevant extension. * HTML rendering is not supported for PDF exports of Answers with tables.  Optionally, you can define [runtime overrides](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_runtime_overrides) to apply to the Answer data.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_api).     
+     * @param exportAnswerReportRequest 
+     */
     public exportAnswerReport(exportAnswerReportRequest: ExportAnswerReportRequest, _options?: Configuration): Promise<HttpFile> {
         const result = this.api.exportAnswerReport(exportAnswerReportRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Exports the data from a Liveboard and its visualization in a given file format. You can download the Liveboard data as a PDF, PNG, CSV, or XLSX file.  Requires `DATADOWNLOADING` (**Can download data**) privilege and view access to the Liveboard.  #### Usage guidelines  In the request body, specify the GUID or name of the Liveboard. To generate a Liveboard report with specific visualizations, add GUIDs or names of the visualizations.  The default `file_format` is CSV. For PDF file format, you can specify additional parameters to customize the page orientation and include or exclude the cover page, logo, footer text, and page numbers. Similar customization options are also available for PNG output.  **NOTE**: The downloadable file returned in API response file is extensionless. Please rename the downloaded file by typing in the relevant extension.  Optionally, you can define [runtime overrides](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_runtime_overrides) to apply to the Answer data.  To include unsaved changes in the report, pass the `transient_pinboard_content` script generated from the `getExportRequestForCurrentPinboard` method in the Visual Embed SDK. Upon successful execution, the API returns the report with unsaved changes, including ad hoc changes to visualizations. For more information, see [Liveboard Report API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_liveboard_report_api).     
+     * @param exportLiveboardReportRequest 
+     */
+    public exportLiveboardReportWithHttpInfo(exportLiveboardReportRequest: ExportLiveboardReportRequest, _options?: Configuration): Promise<HttpInfo<HttpFile>> {
+        const result = this.api.exportLiveboardReportWithHttpInfo(exportLiveboardReportRequest, _options);
         return result.toPromise();
     }
 
@@ -976,8 +1448,26 @@ export class PromiseRolesApi {
      *  Creates a Role. Requires cluster Administration or Role Administration privileges.    Version: 9.5.0.cl or later   Creates a Role object in ThoughtSpot.  Available only if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To create a Role, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.      
      * @param createRoleRequest 
      */
+    public createRoleWithHttpInfo(createRoleRequest: CreateRoleRequest, _options?: Configuration): Promise<HttpInfo<RoleResponse>> {
+        const result = this.api.createRoleWithHttpInfo(createRoleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Creates a Role. Requires cluster Administration or Role Administration privileges.    Version: 9.5.0.cl or later   Creates a Role object in ThoughtSpot.  Available only if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To create a Role, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.      
+     * @param createRoleRequest 
+     */
     public createRole(createRoleRequest: CreateRoleRequest, _options?: Configuration): Promise<RoleResponse> {
         const result = this.api.createRole(createRoleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Deletes a Role. Requires cluster Administration or Role Administration privileges.    Version: 9.5.0.cl or later   Deletes a Role object from the ThoughtSpot system.  Available only if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To delete a Role, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.      
+     * @param roleIdentifier Unique ID or name of the Role.
+     */
+    public deleteRoleWithHttpInfo(roleIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteRoleWithHttpInfo(roleIdentifier, _options);
         return result.toPromise();
     }
 
@@ -994,8 +1484,27 @@ export class PromiseRolesApi {
      *  Gets Roles configured on a ThoughtSpot instance. Requires cluster Administration, Role Administration or Group Administration privileges.    Version: 9.5.0.cl or later   Gets a list of Role objects from the ThoughtSpot system.  Available if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To search for Roles, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.  To get details of a specific Role object, specify the GUID or name. You can also filter the API response based on user group and Org identifiers, privileges assigned to the Role, and deprecation status.      
      * @param searchRolesRequest 
      */
+    public searchRolesWithHttpInfo(searchRolesRequest: SearchRolesRequest, _options?: Configuration): Promise<HttpInfo<Array<SearchRoleResponse>>> {
+        const result = this.api.searchRolesWithHttpInfo(searchRolesRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Gets Roles configured on a ThoughtSpot instance. Requires cluster Administration, Role Administration or Group Administration privileges.    Version: 9.5.0.cl or later   Gets a list of Role objects from the ThoughtSpot system.  Available if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To search for Roles, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.  To get details of a specific Role object, specify the GUID or name. You can also filter the API response based on user group and Org identifiers, privileges assigned to the Role, and deprecation status.      
+     * @param searchRolesRequest 
+     */
     public searchRoles(searchRolesRequest: SearchRolesRequest, _options?: Configuration): Promise<Array<SearchRoleResponse>> {
         const result = this.api.searchRoles(searchRolesRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Updates a Role. Requires cluster Administration or Role Administration privileges.    Version: 9.5.0.cl or later   Updates the properties of a Role object.  Available only if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To update a Role, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.      
+     * @param roleIdentifier Unique ID or name of the Role.
+     * @param updateRoleRequest 
+     */
+    public updateRoleWithHttpInfo(roleIdentifier: string, updateRoleRequest: UpdateRoleRequest, _options?: Configuration): Promise<HttpInfo<RoleResponse>> {
+        const result = this.api.updateRoleWithHttpInfo(roleIdentifier, updateRoleRequest, _options);
         return result.toPromise();
     }
 
@@ -1032,8 +1541,26 @@ export class PromiseSchedulesApi {
      *  Create schedule.    Version: 9.4.0.cl or later   Creates a Liveboard schedule job.  Requires at least edit access to Liveboards. To create a schedule on behalf of another user, you need  `ADMINISTRATION` (**Can administer Org**) or `JOBSCHEDULING` (**Can schedule for others**) privilege and edit access to the Liveboard. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.  #### Usage guidelines  * The description text is mandatory.  The description text appears as **Description: <your content>** in the Liveboard schedule email notifications. * For Liveboards with both charts and tables, schedule creation is only supported in PDF and XLS formats. Schedules created in CSV formats for such Liveboards will fail to run. If `PDF` is set as the `file_format`, enable `pdf_options` to get the correct attachment. Not doing so may cause the attachment to be rendered empty. * To include only specific visualizations, specify the visualization GUIDs in the `visualization_identifiers` array. * You can schedule a Liveboard job to run periodically by setting frequency parameters. You can set the schedule to run daily, weekly, monthly or every n minutes or hours. The scheduled job can also be configured to run at a specific time of the day or on specific days of the week or month. Please ensure that when setting the schedule frequency for _minute of the object_, only values that are multiples of 5 are included. * If the `frequency` parameters are defined, you can set the time zone to a value that matches your server\'s time zone. For example, `US/Central`, `Etc/UTC`, `CET`. The default time zone is `America/Los_Angeles`.  For more information about Liveboard jobs, see [ThoughtSpot Product Documentation](https://docs.thoughtspot.com/cloud/latest/liveboard-schedule).     
      * @param createScheduleRequest 
      */
+    public createScheduleWithHttpInfo(createScheduleRequest: CreateScheduleRequest, _options?: Configuration): Promise<HttpInfo<ResponseSchedule>> {
+        const result = this.api.createScheduleWithHttpInfo(createScheduleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Create schedule.    Version: 9.4.0.cl or later   Creates a Liveboard schedule job.  Requires at least edit access to Liveboards. To create a schedule on behalf of another user, you need  `ADMINISTRATION` (**Can administer Org**) or `JOBSCHEDULING` (**Can schedule for others**) privilege and edit access to the Liveboard. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.  #### Usage guidelines  * The description text is mandatory.  The description text appears as **Description: <your content>** in the Liveboard schedule email notifications. * For Liveboards with both charts and tables, schedule creation is only supported in PDF and XLS formats. Schedules created in CSV formats for such Liveboards will fail to run. If `PDF` is set as the `file_format`, enable `pdf_options` to get the correct attachment. Not doing so may cause the attachment to be rendered empty. * To include only specific visualizations, specify the visualization GUIDs in the `visualization_identifiers` array. * You can schedule a Liveboard job to run periodically by setting frequency parameters. You can set the schedule to run daily, weekly, monthly or every n minutes or hours. The scheduled job can also be configured to run at a specific time of the day or on specific days of the week or month. Please ensure that when setting the schedule frequency for _minute of the object_, only values that are multiples of 5 are included. * If the `frequency` parameters are defined, you can set the time zone to a value that matches your server\'s time zone. For example, `US/Central`, `Etc/UTC`, `CET`. The default time zone is `America/Los_Angeles`.  For more information about Liveboard jobs, see [ThoughtSpot Product Documentation](https://docs.thoughtspot.com/cloud/latest/liveboard-schedule).     
+     * @param createScheduleRequest 
+     */
     public createSchedule(createScheduleRequest: CreateScheduleRequest, _options?: Configuration): Promise<ResponseSchedule> {
         const result = this.api.createSchedule(createScheduleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Deletes a scheduled job.    Version: 9.4.0.cl or later   Deletes a scheduled Liveboard job.  Requires at least edit access to Liveboard or `ADMINISTRATION` (**Can administer Org**) privilege.    If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.      
+     * @param scheduleIdentifier Unique ID or name of the scheduled job.
+     */
+    public deleteScheduleWithHttpInfo(scheduleIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteScheduleWithHttpInfo(scheduleIdentifier, _options);
         return result.toPromise();
     }
 
@@ -1050,8 +1577,27 @@ export class PromiseSchedulesApi {
      *  Search Schedules    Version: 9.4.0.cl or later   Gets a list of scheduled jobs configured for a Liveboard.  To get details of a specific scheduled job, specify the name or GUID of the scheduled job.  Requires at least view access to Liveboards.  **NOTE**: When filtering schedules by parameters other than `metadata`, set `record_size` to `-1` and `record_offset` to `0` for accurate results.      
      * @param searchSchedulesRequest 
      */
+    public searchSchedulesWithHttpInfo(searchSchedulesRequest: SearchSchedulesRequest, _options?: Configuration): Promise<HttpInfo<Array<ResponseSchedule>>> {
+        const result = this.api.searchSchedulesWithHttpInfo(searchSchedulesRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Search Schedules    Version: 9.4.0.cl or later   Gets a list of scheduled jobs configured for a Liveboard.  To get details of a specific scheduled job, specify the name or GUID of the scheduled job.  Requires at least view access to Liveboards.  **NOTE**: When filtering schedules by parameters other than `metadata`, set `record_size` to `-1` and `record_offset` to `0` for accurate results.      
+     * @param searchSchedulesRequest 
+     */
     public searchSchedules(searchSchedulesRequest: SearchSchedulesRequest, _options?: Configuration): Promise<Array<ResponseSchedule>> {
         const result = this.api.searchSchedules(searchSchedulesRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Update schedule.    Version: 9.4.0.cl or later   Updates a scheduled Liveboard job.  Requires at least edit access to Liveboards. To update a schedule on behalf of another user, you need `ADMINISTRATION` (**Can administer Org**) or `JOBSCHEDULING` (**Can schedule for others**) privilege and edit access to the Liveboard. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.  The API endpoint allows you to pause a scheduled job, change the status of a paused job. You can also edit the recipients list, frequency of the job, format of the file to send to the recipients in email notifications, PDF options, and time zone setting.      
+     * @param scheduleIdentifier Unique ID or name of the schedule.
+     * @param updateScheduleRequest 
+     */
+    public updateScheduleWithHttpInfo(scheduleIdentifier: string, updateScheduleRequest: UpdateScheduleRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateScheduleWithHttpInfo(scheduleIdentifier, updateScheduleRequest, _options);
         return result.toPromise();
     }
 
@@ -1088,8 +1634,26 @@ export class PromiseSecurityApi {
      *   Version: 9.0.0.cl or later   Transfers the ownership of one or several objects from one user to another.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege and edit access to the objects are required.      
      * @param assignChangeAuthorRequest 
      */
+    public assignChangeAuthorWithHttpInfo(assignChangeAuthorRequest: AssignChangeAuthorRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.assignChangeAuthorWithHttpInfo(assignChangeAuthorRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Transfers the ownership of one or several objects from one user to another.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege and edit access to the objects are required.      
+     * @param assignChangeAuthorRequest 
+     */
     public assignChangeAuthor(assignChangeAuthorRequest: AssignChangeAuthorRequest, _options?: Configuration): Promise<void> {
         const result = this.api.assignChangeAuthor(assignChangeAuthorRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches object permission details for a given principal object such as a user and group.  Requires view access to the metadata object.   #### Usage guidelines  * To get a list of all metadata objects that a user or group can access, specify the `type` and GUID or name of the principal. * To get permission details for a specific object, add the `type` and GUID or name of the metadata object to your API request.  Upon successful execution, the API returns a list of metadata objects and permission details for each object.        
+     * @param fetchPermissionsOfPrincipalsRequest 
+     */
+    public fetchPermissionsOfPrincipalsWithHttpInfo(fetchPermissionsOfPrincipalsRequest: FetchPermissionsOfPrincipalsRequest, _options?: Configuration): Promise<HttpInfo<PermissionOfPrincipalsResponse>> {
+        const result = this.api.fetchPermissionsOfPrincipalsWithHttpInfo(fetchPermissionsOfPrincipalsRequest, _options);
         return result.toPromise();
     }
 
@@ -1106,8 +1670,26 @@ export class PromiseSecurityApi {
      *   Version: 9.0.0.cl or later   Fetches permission details for a given metadata object.  Requires view access to the metadata object.  #### Usage guidelines  * To fetch a list of users and groups for a metadata object, specify `type` and GUID or name of the metadata object. * To get permission details for a specific user or group, add `type` and GUID or name of the principal object to your API request.  Upon successful execution, the API returns permission details and principal information for the object specified in the API request.      
      * @param fetchPermissionsOnMetadataRequest 
      */
+    public fetchPermissionsOnMetadataWithHttpInfo(fetchPermissionsOnMetadataRequest: FetchPermissionsOnMetadataRequest, _options?: Configuration): Promise<HttpInfo<PermissionOfMetadataResponse>> {
+        const result = this.api.fetchPermissionsOnMetadataWithHttpInfo(fetchPermissionsOnMetadataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches permission details for a given metadata object.  Requires view access to the metadata object.  #### Usage guidelines  * To fetch a list of users and groups for a metadata object, specify `type` and GUID or name of the metadata object. * To get permission details for a specific user or group, add `type` and GUID or name of the principal object to your API request.  Upon successful execution, the API returns permission details and principal information for the object specified in the API request.      
+     * @param fetchPermissionsOnMetadataRequest 
+     */
     public fetchPermissionsOnMetadata(fetchPermissionsOnMetadataRequest: FetchPermissionsOnMetadataRequest, _options?: Configuration): Promise<PermissionOfMetadataResponse> {
         const result = this.api.fetchPermissionsOnMetadata(fetchPermissionsOnMetadataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Allows sharing one or several metadata objects with users and groups in ThoughtSpot.  Requires edit access to the metadata object.  The API endpoint allows sharing only the following types of metadata objects: * Liveboards * Visualizations * Answers * Worksheets * Views  You can provide `READ_ONLY` or `MODIFY` access when sharing an object with another user or group. With `READ_ONLY` access grants view access to the shared object, whereas `MODIFY` provides edit access.  To prevent a user or group from accessing the shared object, specify the GUID or name of the principal and set `shareMode` to `NO_ACCESS`.      
+     * @param shareMetadataRequest 
+     */
+    public shareMetadataWithHttpInfo(shareMetadataRequest: ShareMetadataRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.shareMetadataWithHttpInfo(shareMetadataRequest, _options);
         return result.toPromise();
     }
 
@@ -1142,8 +1724,24 @@ export class PromiseSystemApi {
     /**
      *   Version: 9.0.0.cl or later   Retrieves the current configuration details of the cluster. If the request is successful, the API returns a list configuration settings applied on the cluster.  Requires `ADMINISTRATION`(**Can administer ThoughtSpot**) privilege to view these complete configuration settings of the cluster. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `SYSTEM_INFO_ADMINISTRATION` (**Can view system activities**) privilege is required.  This API does not require any parameters to be passed in the request.      
      */
+    public getSystemConfigWithHttpInfo(_options?: Configuration): Promise<HttpInfo<SystemConfig>> {
+        const result = this.api.getSystemConfigWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Retrieves the current configuration details of the cluster. If the request is successful, the API returns a list configuration settings applied on the cluster.  Requires `ADMINISTRATION`(**Can administer ThoughtSpot**) privilege to view these complete configuration settings of the cluster. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `SYSTEM_INFO_ADMINISTRATION` (**Can view system activities**) privilege is required.  This API does not require any parameters to be passed in the request.      
+     */
     public getSystemConfig(_options?: Configuration): Promise<SystemConfig> {
         const result = this.api.getSystemConfig(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets system information such as the release version, locale, time zone, deployment environment, date format, and date time format of the cluster.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `SYSTEM_INFO_ADMINISTRATION` (**Can view system activities**) privilege is required.  This API does not require any parameters to be passed in the request.        
+     */
+    public getSystemInformationWithHttpInfo(_options?: Configuration): Promise<HttpInfo<SystemInfo>> {
+        const result = this.api.getSystemInformationWithHttpInfo(_options);
         return result.toPromise();
     }
 
@@ -1158,8 +1756,25 @@ export class PromiseSystemApi {
     /**
      *   Version: 9.2.0.cl or later   Gets a list of configuration overrides applied on the cluster.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `APPLICATION_ADMINISTRATION` (**Can manage application settings**) privilege is required.  This API does not require any parameters to be passed in the request.        
      */
+    public getSystemOverrideInfoWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.getSystemOverrideInfoWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets a list of configuration overrides applied on the cluster.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `APPLICATION_ADMINISTRATION` (**Can manage application settings**) privilege is required.  This API does not require any parameters to be passed in the request.        
+     */
     public getSystemOverrideInfo(_options?: Configuration): Promise<any> {
         const result = this.api.getSystemOverrideInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Updates the current configuration of the cluster. You must send the configuration data in JSON format.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `APPLICATION_ADMINISTRATION` (**Can manage application settings**) privilege is required.      
+     * @param updateSystemConfigRequest 
+     */
+    public updateSystemConfigWithHttpInfo(updateSystemConfigRequest: UpdateSystemConfigRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateSystemConfigWithHttpInfo(updateSystemConfigRequest, _options);
         return result.toPromise();
     }
 
@@ -1195,8 +1810,26 @@ export class PromiseTagsApi {
      *   Version: 9.0.0.cl or later   Assigns tags to Liveboards, Answers, Tables, and Worksheets.  Requires edit access to the metadata object.      
      * @param assignTagRequest 
      */
+    public assignTagWithHttpInfo(assignTagRequest: AssignTagRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.assignTagWithHttpInfo(assignTagRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Assigns tags to Liveboards, Answers, Tables, and Worksheets.  Requires edit access to the metadata object.      
+     * @param assignTagRequest 
+     */
     public assignTag(assignTagRequest: AssignTagRequest, _options?: Configuration): Promise<void> {
         const result = this.api.assignTag(assignTagRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates a tag object.  Tags are labels that identify a metadata object. For example, you can create a tag to designate subject areas, such as sales, HR, marketing, and finance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `TAGMANAGEMENT` (**Can manage tags**) privilege is required to create, edit, and delete tags.      
+     * @param createTagRequest 
+     */
+    public createTagWithHttpInfo(createTagRequest: CreateTagRequest, _options?: Configuration): Promise<HttpInfo<Tag>> {
+        const result = this.api.createTagWithHttpInfo(createTagRequest, _options);
         return result.toPromise();
     }
 
@@ -1213,8 +1846,26 @@ export class PromiseTagsApi {
      *   Version: 9.0.0.cl or later   Deletes a tag object from the ThoughtSpot system  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `TAGMANAGEMENT` (**Can manage tags**) privilege is required to create, edit, and delete tags.      
      * @param tagIdentifier Tag identifier Tag name or Tag id.
      */
+    public deleteTagWithHttpInfo(tagIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteTagWithHttpInfo(tagIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Deletes a tag object from the ThoughtSpot system  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `TAGMANAGEMENT` (**Can manage tags**) privilege is required to create, edit, and delete tags.      
+     * @param tagIdentifier Tag identifier Tag name or Tag id.
+     */
     public deleteTag(tagIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteTag(tagIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of tag objects available on the ThoughtSpot system. To get details of a specific tag object, specify the GUID or name.  Any authenticated user can search for tag objects.      
+     * @param searchTagsRequest 
+     */
+    public searchTagsWithHttpInfo(searchTagsRequest: SearchTagsRequest, _options?: Configuration): Promise<HttpInfo<Array<Tag>>> {
+        const result = this.api.searchTagsWithHttpInfo(searchTagsRequest, _options);
         return result.toPromise();
     }
 
@@ -1231,8 +1882,27 @@ export class PromiseTagsApi {
      *   Version: 9.0.0.cl or later   Removes the tags applied to a Liveboard, Answer, Table, or Worksheet.  Requires edit access to the metadata object.      
      * @param assignTagRequest 
      */
+    public unassignTagWithHttpInfo(assignTagRequest: AssignTagRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.unassignTagWithHttpInfo(assignTagRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Removes the tags applied to a Liveboard, Answer, Table, or Worksheet.  Requires edit access to the metadata object.      
+     * @param assignTagRequest 
+     */
     public unassignTag(assignTagRequest: AssignTagRequest, _options?: Configuration): Promise<void> {
         const result = this.api.unassignTag(assignTagRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates a tag object.  You can modify the `name` and `color` properties of a tag object.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `TAGMANAGEMENT` (**Can manage tags**) privilege is required to create, edit, and delete tags.      
+     * @param tagIdentifier Name or Id of the tag.
+     * @param updateTagRequest 
+     */
+    public updateTagWithHttpInfo(tagIdentifier: string, updateTagRequest: UpdateTagRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateTagWithHttpInfo(tagIdentifier, updateTagRequest, _options);
         return result.toPromise();
     }
 
@@ -1269,8 +1939,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.7.0.cl or later   Activates a deactivated user account.  Requires `ADMINISTRATION` (**Can administer Thoughtspot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  To activate an inactive user account, the API request body must include the following information:  - Username or the GUID of the user account. - Auth token generated for the deactivated user. The auth token is sent in the API response when a user is deactivated. - Password for the user account.      
      * @param activateUserRequest 
      */
+    public activateUserWithHttpInfo(activateUserRequest: ActivateUserRequest, _options?: Configuration): Promise<HttpInfo<User>> {
+        const result = this.api.activateUserWithHttpInfo(activateUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.7.0.cl or later   Activates a deactivated user account.  Requires `ADMINISTRATION` (**Can administer Thoughtspot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  To activate an inactive user account, the API request body must include the following information:  - Username or the GUID of the user account. - Auth token generated for the deactivated user. The auth token is sent in the API response when a user is deactivated. - Password for the user account.      
+     * @param activateUserRequest 
+     */
     public activateUser(activateUserRequest: ActivateUserRequest, _options?: Configuration): Promise<User> {
         const result = this.api.activateUser(activateUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Transfers the ownership of one or several objects from one user to another.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege and edit access to the objects are required.      
+     * @param assignChangeAuthorRequest 
+     */
+    public assignChangeAuthorWithHttpInfo(assignChangeAuthorRequest: AssignChangeAuthorRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.assignChangeAuthorWithHttpInfo(assignChangeAuthorRequest, _options);
         return result.toPromise();
     }
 
@@ -1287,8 +1975,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Assigns tags to Liveboards, Answers, Tables, and Worksheets.  Requires edit access to the metadata object.      
      * @param assignTagRequest 
      */
+    public assignTagWithHttpInfo(assignTagRequest: AssignTagRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.assignTagWithHttpInfo(assignTagRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Assigns tags to Liveboards, Answers, Tables, and Worksheets.  Requires edit access to the metadata object.      
+     * @param assignTagRequest 
+     */
     public assignTag(assignTagRequest: AssignTagRequest, _options?: Configuration): Promise<void> {
         const result = this.api.assignTag(assignTagRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates the current password of the user.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param changeUserPasswordRequest 
+     */
+    public changeUserPasswordWithHttpInfo(changeUserPasswordRequest: ChangeUserPasswordRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.changeUserPasswordWithHttpInfo(changeUserPasswordRequest, _options);
         return result.toPromise();
     }
 
@@ -1305,8 +2011,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Commits TML files of metadata objects to the Git branch configured on your instance.  Requires at least edit access to objects used in the commit operation.  Before using this endpoint to push your commits:  * Enable Git integration on your instance. * Make sure the Git repository and branch details are configured on your instance.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
      * @param commitBranchRequest 
      */
+    public commitBranchWithHttpInfo(commitBranchRequest: CommitBranchRequest, _options?: Configuration): Promise<HttpInfo<CommitResponse>> {
+        const result = this.api.commitBranchWithHttpInfo(commitBranchRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Commits TML files of metadata objects to the Git branch configured on your instance.  Requires at least edit access to objects used in the commit operation.  Before using this endpoint to push your commits:  * Enable Git integration on your instance. * Make sure the Git repository and branch details are configured on your instance.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
+     * @param commitBranchRequest 
+     */
     public commitBranch(commitBranchRequest: CommitBranchRequest, _options?: Configuration): Promise<CommitResponse> {
         const result = this.api.commitBranch(commitBranchRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Makes a copy of an Answer or Liveboard saved in Atlas    Version: 10.3.0.cl or later   Creates a copy of a metadata object.  Requires at least view access to the metadata object being copied.  Upon successful execution, the API creates a copy of the metadata object specified in the API request and returns the ID of the new object.      
+     * @param copyObjectRequest 
+     */
+    public copyObjectWithHttpInfo(copyObjectRequest: CopyObjectRequest, _options?: Configuration): Promise<HttpInfo<ResponseCopyObject>> {
+        const result = this.api.copyObjectWithHttpInfo(copyObjectRequest, _options);
         return result.toPromise();
     }
 
@@ -1323,8 +2047,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Allows you to connect a ThoughtSpot instance to a Git repository.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.  You can use this API endpoint to connect your ThoughtSpot development and production environments to the development and production branches of a Git repository.  Before using this endpoint to connect your ThoughtSpot instance to a Git repository, check the following prerequisites:  * You have a Git repository. If you are using GitHub, make sure you have a valid account and an access token to connect ThoughtSpot to GitHub. For information about generating a token, see [GitHub Documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).  * Your access token has `repo` scope that grants full access to public and private repositories. * Your Git repository has a branch that can be configured as a default branch in ThoughtSpot.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/?pageid=git-integration).  **Note**: ThoughtSpot supports only GitHub / GitHub Enterprise for CI/CD.      
      * @param createConfigRequest 
      */
+    public createConfigWithHttpInfo(createConfigRequest: CreateConfigRequest, _options?: Configuration): Promise<HttpInfo<RepoConfigObject>> {
+        const result = this.api.createConfigWithHttpInfo(createConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Allows you to connect a ThoughtSpot instance to a Git repository.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.  You can use this API endpoint to connect your ThoughtSpot development and production environments to the development and production branches of a Git repository.  Before using this endpoint to connect your ThoughtSpot instance to a Git repository, check the following prerequisites:  * You have a Git repository. If you are using GitHub, make sure you have a valid account and an access token to connect ThoughtSpot to GitHub. For information about generating a token, see [GitHub Documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).  * Your access token has `repo` scope that grants full access to public and private repositories. * Your Git repository has a branch that can be configured as a default branch in ThoughtSpot.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/?pageid=git-integration).  **Note**: ThoughtSpot supports only GitHub / GitHub Enterprise for CI/CD.      
+     * @param createConfigRequest 
+     */
     public createConfig(createConfigRequest: CreateConfigRequest, _options?: Configuration): Promise<RepoConfigObject> {
         const result = this.api.createConfig(createConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Creates a connection to a data warehouse for live query services.    Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  #### Create a connection without tables  To create a connection without tables:  1. Pass these parameters in your API request.  * Name of the connection.  * Type of the data warehouse to connect to.  * A JSON map of configuration attributes in `data_warehouse_config`. The following example shows the configuration attributes for a SnowFlake connection:   ```   {      \"configuration\":{         \"accountName\":\"thoughtspot_partner\",         \"user\":\"tsadmin\",         \"password\":\"TestConn123\",         \"role\":\"sysadmin\",         \"warehouse\":\"MEDIUM_WH\"      },      \"externalDatabases\":[       ]   }   ``` 2. Set `validate` to `false`.  #### Create a connection with tables  To create a connection with tables:  1. Pass these parameters in your API request.  * Name of the connection.  * Type of the data warehouse to connect to.  * A JSON map of configuration attributes, database details, and table properties in `data_warehouse_config` as shown in the following example:   ```   {      \"configuration\":{         \"accountName\":\"thoughtspot_partner\",         \"user\":\"tsadmin\",         \"password\":\"TestConn123\",         \"role\":\"sysadmin\",         \"warehouse\":\"MEDIUM_WH\"      },      \"externalDatabases\":[         {            \"name\":\"AllDatatypes\",            \"isAutoCreated\":false,            \"schemas\":[               {                  \"name\":\"alldatatypes\",                  \"tables\":[                     {                        \"name\":\"allDatatypes\",                        \"type\":\"TABLE\",                        \"description\":\"\",                        \"selected\":true,                        \"linked\":true,                        \"columns\":[                           {                              \"name\":\"CNUMBER\",                              \"type\":\"INT64\",                              \"canImport\":true,                              \"selected\":true,                              \"isLinkedActive\":true,                              \"isImported\":false,                              \"tableName\":\"allDatatypes\",                              \"schemaName\":\"alldatatypes\",                              \"dbName\":\"AllDatatypes\"                           },                           {                              \"name\":\"CDECIMAL\",                              \"type\":\"INT64\",                              \"canImport\":true,                              \"selected\":true,                              \"isLinkedActive\":true,                              \"isImported\":false,                              \"tableName\":\"allDatatypes\",                              \"schemaName\":\"alldatatypes\",                              \"dbName\":\"AllDatatypes\"                           }                        ]                     }                  ]               }            ]         }      ]   }   ``` 2. Set `validate` to `true`.      
+     * @param createConnectionRequest 
+     */
+    public createConnectionWithHttpInfo(createConnectionRequest: CreateConnectionRequest, _options?: Configuration): Promise<HttpInfo<CreateConnectionResponse>> {
+        const result = this.api.createConnectionWithHttpInfo(createConnectionRequest, _options);
         return result.toPromise();
     }
 
@@ -1341,8 +2083,26 @@ export class PromiseThoughtSpotRestApi {
      *  Version: 10.4.0.cl or later   Creates a Conversation object to start an AI-driven conversation based on a specific data model.  Requires at least view access to the metadata object specified in the request.  #### Usage guidelines  This API requires the `metadata_identifier` parameter to define the context for the conversation.  You can also specify the tokens to initiate the conversation as shown in this example:  `\"tokens\": \"[tea],[sales],[type]\"`  If the API request is successful, ThoughtSpot returns the ID of the conversation.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
      * @param createConversationRequest 
      */
+    public createConversationWithHttpInfo(createConversationRequest: CreateConversationRequest, _options?: Configuration): Promise<HttpInfo<Conversation>> {
+        const result = this.api.createConversationWithHttpInfo(createConversationRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Version: 10.4.0.cl or later   Creates a Conversation object to start an AI-driven conversation based on a specific data model.  Requires at least view access to the metadata object specified in the request.  #### Usage guidelines  This API requires the `metadata_identifier` parameter to define the context for the conversation.  You can also specify the tokens to initiate the conversation as shown in this example:  `\"tokens\": \"[tea],[sales],[type]\"`  If the API request is successful, ThoughtSpot returns the ID of the conversation.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
+     * @param createConversationRequest 
+     */
     public createConversation(createConversationRequest: CreateConversationRequest, _options?: Configuration): Promise<Conversation> {
         const result = this.api.createConversation(createConversationRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Creates a custom action that appears as a menu action on a saved Answer or Liveboard visualization.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.  #### Usage Guidelines  The API lets you create the following types of custom actions:  * URL-based action        Allows pushing data to an external URL. * Callback action           Triggers a callback to the host application and initiates a response payload on an embedded ThoughtSpot instance.  By default, custom actions are visible to only administrator or developer users. To make a custom action available to other users, and specify the groups in `group_identifiers`.  By default, the custom action is set as a _global_ action on all visualizations and saved Answers. To assign a custom action to specific Liveboard visualization, saved Answer, or Worksheet, set `visibility` to `false` in `default_action_config` property and specify the GUID or name of the object in `associate_metadata`.  For more information, see [Custom actions](https://developers.thoughtspot.com/docs/custom-action-intro).      
+     * @param createCustomActionRequest 
+     */
+    public createCustomActionWithHttpInfo(createCustomActionRequest: CreateCustomActionRequest, _options?: Configuration): Promise<HttpInfo<ResponseCustomAction>> {
+        const result = this.api.createCustomActionWithHttpInfo(createCustomActionRequest, _options);
         return result.toPromise();
     }
 
@@ -1359,8 +2119,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Creates an Org object.  To use this API, the [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview) feature must be enabled in your cluster.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
      * @param createOrgRequest 
      */
+    public createOrgWithHttpInfo(createOrgRequest: CreateOrgRequest, _options?: Configuration): Promise<HttpInfo<OrgResponse>> {
+        const result = this.api.createOrgWithHttpInfo(createOrgRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates an Org object.  To use this API, the [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview) feature must be enabled in your cluster.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
+     * @param createOrgRequest 
+     */
     public createOrg(createOrgRequest: CreateOrgRequest, _options?: Configuration): Promise<OrgResponse> {
         const result = this.api.createOrg(createOrgRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Creates a Role. Requires cluster Administration or Role Administration privileges.    Version: 9.5.0.cl or later   Creates a Role object in ThoughtSpot.  Available only if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To create a Role, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.      
+     * @param createRoleRequest 
+     */
+    public createRoleWithHttpInfo(createRoleRequest: CreateRoleRequest, _options?: Configuration): Promise<HttpInfo<RoleResponse>> {
+        const result = this.api.createRoleWithHttpInfo(createRoleRequest, _options);
         return result.toPromise();
     }
 
@@ -1377,8 +2155,26 @@ export class PromiseThoughtSpotRestApi {
      *  Create schedule.    Version: 9.4.0.cl or later   Creates a Liveboard schedule job.  Requires at least edit access to Liveboards. To create a schedule on behalf of another user, you need  `ADMINISTRATION` (**Can administer Org**) or `JOBSCHEDULING` (**Can schedule for others**) privilege and edit access to the Liveboard. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.  #### Usage guidelines  * The description text is mandatory.  The description text appears as **Description: <your content>** in the Liveboard schedule email notifications. * For Liveboards with both charts and tables, schedule creation is only supported in PDF and XLS formats. Schedules created in CSV formats for such Liveboards will fail to run. If `PDF` is set as the `file_format`, enable `pdf_options` to get the correct attachment. Not doing so may cause the attachment to be rendered empty. * To include only specific visualizations, specify the visualization GUIDs in the `visualization_identifiers` array. * You can schedule a Liveboard job to run periodically by setting frequency parameters. You can set the schedule to run daily, weekly, monthly or every n minutes or hours. The scheduled job can also be configured to run at a specific time of the day or on specific days of the week or month. Please ensure that when setting the schedule frequency for _minute of the object_, only values that are multiples of 5 are included. * If the `frequency` parameters are defined, you can set the time zone to a value that matches your server\'s time zone. For example, `US/Central`, `Etc/UTC`, `CET`. The default time zone is `America/Los_Angeles`.  For more information about Liveboard jobs, see [ThoughtSpot Product Documentation](https://docs.thoughtspot.com/cloud/latest/liveboard-schedule).     
      * @param createScheduleRequest 
      */
+    public createScheduleWithHttpInfo(createScheduleRequest: CreateScheduleRequest, _options?: Configuration): Promise<HttpInfo<ResponseSchedule>> {
+        const result = this.api.createScheduleWithHttpInfo(createScheduleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Create schedule.    Version: 9.4.0.cl or later   Creates a Liveboard schedule job.  Requires at least edit access to Liveboards. To create a schedule on behalf of another user, you need  `ADMINISTRATION` (**Can administer Org**) or `JOBSCHEDULING` (**Can schedule for others**) privilege and edit access to the Liveboard. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.  #### Usage guidelines  * The description text is mandatory.  The description text appears as **Description: <your content>** in the Liveboard schedule email notifications. * For Liveboards with both charts and tables, schedule creation is only supported in PDF and XLS formats. Schedules created in CSV formats for such Liveboards will fail to run. If `PDF` is set as the `file_format`, enable `pdf_options` to get the correct attachment. Not doing so may cause the attachment to be rendered empty. * To include only specific visualizations, specify the visualization GUIDs in the `visualization_identifiers` array. * You can schedule a Liveboard job to run periodically by setting frequency parameters. You can set the schedule to run daily, weekly, monthly or every n minutes or hours. The scheduled job can also be configured to run at a specific time of the day or on specific days of the week or month. Please ensure that when setting the schedule frequency for _minute of the object_, only values that are multiples of 5 are included. * If the `frequency` parameters are defined, you can set the time zone to a value that matches your server\'s time zone. For example, `US/Central`, `Etc/UTC`, `CET`. The default time zone is `America/Los_Angeles`.  For more information about Liveboard jobs, see [ThoughtSpot Product Documentation](https://docs.thoughtspot.com/cloud/latest/liveboard-schedule).     
+     * @param createScheduleRequest 
+     */
     public createSchedule(createScheduleRequest: CreateScheduleRequest, _options?: Configuration): Promise<ResponseSchedule> {
         const result = this.api.createSchedule(createScheduleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates a tag object.  Tags are labels that identify a metadata object. For example, you can create a tag to designate subject areas, such as sales, HR, marketing, and finance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `TAGMANAGEMENT` (**Can manage tags**) privilege is required to create, edit, and delete tags.      
+     * @param createTagRequest 
+     */
+    public createTagWithHttpInfo(createTagRequest: CreateTagRequest, _options?: Configuration): Promise<HttpInfo<Tag>> {
+        const result = this.api.createTagWithHttpInfo(createTagRequest, _options);
         return result.toPromise();
     }
 
@@ -1395,8 +2191,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Creates a user in ThoughtSpot.  The API endpoint allows you to configure several user properties such as email address, account status, share notification preferences, and sharing visibility. You can provision the user to [groups](https://docs.thoughtspot.com/cloud/latest/groups-privileges) and [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview). You can also add Liveboard, Answer, and Worksheet objects to the user’s favorites list, assign a default Liveboard for the user, and set user preferences.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
      * @param createUserRequest 
      */
+    public createUserWithHttpInfo(createUserRequest: CreateUserRequest, _options?: Configuration): Promise<HttpInfo<User>> {
+        const result = this.api.createUserWithHttpInfo(createUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates a user in ThoughtSpot.  The API endpoint allows you to configure several user properties such as email address, account status, share notification preferences, and sharing visibility. You can provision the user to [groups](https://docs.thoughtspot.com/cloud/latest/groups-privileges) and [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview). You can also add Liveboard, Answer, and Worksheet objects to the user’s favorites list, assign a default Liveboard for the user, and set user preferences.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param createUserRequest 
+     */
     public createUser(createUserRequest: CreateUserRequest, _options?: Configuration): Promise<User> {
         const result = this.api.createUser(createUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates a group object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  #### About groups Groups in ThoughtSpot are used by the administrators to define privileges and organize users based on their roles and access requirements. To know more about groups and privileges, see [ThoughtSpot Product Documentation](https://docs.thoughtspot.com/cloud/latest/groups-privileges).  #### Supported operations  The API endpoint lets you perform the following operations:  * Assign privileges * Add users * Define sharing visibility * Add sub-groups * Assign a default Liveboard      
+     * @param createUserGroupRequest 
+     */
+    public createUserGroupWithHttpInfo(createUserGroupRequest: CreateUserGroupRequest, _options?: Configuration): Promise<HttpInfo<UserGroupResponse>> {
+        const result = this.api.createUserGroupWithHttpInfo(createUserGroupRequest, _options);
         return result.toPromise();
     }
 
@@ -1413,8 +2227,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.9.0.cl or later   Creates a DBT connection object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About create DBT connection DBT connection in ThoughtSpot is used by the user to define DBT credentials for cloud . The API needs  embrace connection, embrace database name, DBT url, import type, DBT account identifier, DBT project identifier, DBT access token and environment details (or) embrace connection, embrace database name, import type, file_content to create a connection object. To know more about DBT, see ThoughtSpot Product Documentation.      
      * @param dbtConnectionRequest 
      */
+    public dbtConnectionWithHttpInfo(dbtConnectionRequest: DbtConnectionRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.dbtConnectionWithHttpInfo(dbtConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Creates a DBT connection object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About create DBT connection DBT connection in ThoughtSpot is used by the user to define DBT credentials for cloud . The API needs  embrace connection, embrace database name, DBT url, import type, DBT account identifier, DBT project identifier, DBT access token and environment details (or) embrace connection, embrace database name, import type, file_content to create a connection object. To know more about DBT, see ThoughtSpot Product Documentation.      
+     * @param dbtConnectionRequest 
+     */
     public dbtConnection(dbtConnectionRequest: DbtConnectionRequest, _options?: Configuration): Promise<any> {
         const result = this.api.dbtConnection(dbtConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Resynchronize the existing list of models, tables, worksheet tml’s and import them to Thoughtspot based on the DBT connection object.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)      
+     * @param dbtGenerateSyncTmlRequest 
+     */
+    public dbtGenerateSyncTmlWithHttpInfo(dbtGenerateSyncTmlRequest: DbtGenerateSyncTmlRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.dbtGenerateSyncTmlWithHttpInfo(dbtGenerateSyncTmlRequest, _options);
         return result.toPromise();
     }
 
@@ -1431,6 +2263,15 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.9.0.cl or later   Generate required table and worksheet and import them.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About generate TML Models and Worksheets to be imported can be selected by the user as part of the API.      
      * @param dbtGenerateTmlRequest 
      */
+    public dbtGenerateTmlWithHttpInfo(dbtGenerateTmlRequest: DbtGenerateTmlRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.dbtGenerateTmlWithHttpInfo(dbtGenerateTmlRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Generate required table and worksheet and import them.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About generate TML Models and Worksheets to be imported can be selected by the user as part of the API.      
+     * @param dbtGenerateTmlRequest 
+     */
     public dbtGenerateTml(dbtGenerateTmlRequest: DbtGenerateTmlRequest, _options?: Configuration): Promise<any> {
         const result = this.api.dbtGenerateTml(dbtGenerateTmlRequest, _options);
         return result.toPromise();
@@ -1439,8 +2280,25 @@ export class PromiseThoughtSpotRestApi {
     /**
      *   Version: 9.9.0.cl or later   Gets a list of DBT connection objects by user and organization, available on the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About search DBT connection To get details of a specific DBT connection identifier, database connection identifier, database connection name, database name, project name, project identifier, environment identifier , import type and author.      
      */
+    public dbtSearchWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<DbtSearchResponse>>> {
+        const result = this.api.dbtSearchWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Gets a list of DBT connection objects by user and organization, available on the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About search DBT connection To get details of a specific DBT connection identifier, database connection identifier, database connection name, database name, project name, project identifier, environment identifier , import type and author.      
+     */
     public dbtSearch(_options?: Configuration): Promise<Array<DbtSearchResponse>> {
         const result = this.api.dbtSearch(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.7.0.cl or later   Deactivates a user account.  Requires `ADMINISTRATION` (**Can administer Thoughtspot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  To deactivate a user account, the API request body must include the following information:  - Username or the GUID of the user account - Base URL of the ThoughtSpot instance  If the API request is successful, ThoughtSpot returns the activation URL in the response. The activation URL is valid for 14 days and can be used to re-activate the account and reset the password of the deactivated account.      
+     * @param deactivateUserRequest 
+     */
+    public deactivateUserWithHttpInfo(deactivateUserRequest: DeactivateUserRequest, _options?: Configuration): Promise<HttpInfo<ResponseActivationURL>> {
+        const result = this.api.deactivateUserWithHttpInfo(deactivateUserRequest, _options);
         return result.toPromise();
     }
 
@@ -1457,8 +2315,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Deletes Git repository configuration from your ThoughtSpot instance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
      * @param deleteConfigRequest 
      */
+    public deleteConfigWithHttpInfo(deleteConfigRequest: DeleteConfigRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteConfigWithHttpInfo(deleteConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Deletes Git repository configuration from your ThoughtSpot instance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
+     * @param deleteConfigRequest 
+     */
     public deleteConfig(deleteConfigRequest: DeleteConfigRequest, _options?: Configuration): Promise<void> {
         const result = this.api.deleteConfig(deleteConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Deletes a connection object.  **Note**: If a connection has dependent objects, make sure you remove its associations before the delete operation.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.      
+     * @param deleteConnectionRequest 
+     */
+    public deleteConnectionWithHttpInfo(deleteConnectionRequest: DeleteConnectionRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteConnectionWithHttpInfo(deleteConnectionRequest, _options);
         return result.toPromise();
     }
 
@@ -1475,8 +2351,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 10.4.0.cl or later   Deletes a connection object.  **Note**: If a connection has dependent objects, make sure you remove its associations before the delete operation.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.      
      * @param connectionIdentifier Unique ID or name of the connection.
      */
+    public deleteConnectionV2WithHttpInfo(connectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteConnectionV2WithHttpInfo(connectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Deletes a connection object.  **Note**: If a connection has dependent objects, make sure you remove its associations before the delete operation.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.      
+     * @param connectionIdentifier Unique ID or name of the connection.
+     */
     public deleteConnectionV2(connectionIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteConnectionV2(connectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Removes the custom action specified in the API request.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.      
+     * @param customActionIdentifier Unique ID or name of the custom action.
+     */
+    public deleteCustomActionWithHttpInfo(customActionIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteCustomActionWithHttpInfo(customActionIdentifier, _options);
         return result.toPromise();
     }
 
@@ -1493,8 +2387,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.9.0.cl or later   Removes the specified DBT connection object from the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) or `DATAMANAGEMENT` (**Can manage data ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)      
      * @param dbtConnectionIdentifier Unique ID of the DBT Connection.
      */
+    public deleteDbtConnectionWithHttpInfo(dbtConnectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteDbtConnectionWithHttpInfo(dbtConnectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Removes the specified DBT connection object from the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) or `DATAMANAGEMENT` (**Can manage data ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)      
+     * @param dbtConnectionIdentifier Unique ID of the DBT Connection.
+     */
     public deleteDbtConnection(dbtConnectionIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteDbtConnection(dbtConnectionIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Removes the specified metadata object from the ThoughtSpot system.  Requires edit access to the metadata object.       
+     * @param deleteMetadataRequest 
+     */
+    public deleteMetadataWithHttpInfo(deleteMetadataRequest: DeleteMetadataRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteMetadataWithHttpInfo(deleteMetadataRequest, _options);
         return result.toPromise();
     }
 
@@ -1511,8 +2423,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Deletes an Org object from the ThoughtSpot system.  Requires cluster administration (**Can administer Org**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.  When you delete an Org, all its users and objects created in that Org context are removed. However, if the users in the deleted Org also exists in other Orgs, they are removed only from the deleted Org.      
      * @param orgIdentifier ID or name of the Org
      */
+    public deleteOrgWithHttpInfo(orgIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteOrgWithHttpInfo(orgIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Deletes an Org object from the ThoughtSpot system.  Requires cluster administration (**Can administer Org**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.  When you delete an Org, all its users and objects created in that Org context are removed. However, if the users in the deleted Org also exists in other Orgs, they are removed only from the deleted Org.      
+     * @param orgIdentifier ID or name of the Org
+     */
     public deleteOrg(orgIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteOrg(orgIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Deletes a Role. Requires cluster Administration or Role Administration privileges.    Version: 9.5.0.cl or later   Deletes a Role object from the ThoughtSpot system.  Available only if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To delete a Role, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.      
+     * @param roleIdentifier Unique ID or name of the Role.
+     */
+    public deleteRoleWithHttpInfo(roleIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteRoleWithHttpInfo(roleIdentifier, _options);
         return result.toPromise();
     }
 
@@ -1529,8 +2459,26 @@ export class PromiseThoughtSpotRestApi {
      *  Deletes a scheduled job.    Version: 9.4.0.cl or later   Deletes a scheduled Liveboard job.  Requires at least edit access to Liveboard or `ADMINISTRATION` (**Can administer Org**) privilege.    If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.      
      * @param scheduleIdentifier Unique ID or name of the scheduled job.
      */
+    public deleteScheduleWithHttpInfo(scheduleIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteScheduleWithHttpInfo(scheduleIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Deletes a scheduled job.    Version: 9.4.0.cl or later   Deletes a scheduled Liveboard job.  Requires at least edit access to Liveboard or `ADMINISTRATION` (**Can administer Org**) privilege.    If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.      
+     * @param scheduleIdentifier Unique ID or name of the scheduled job.
+     */
     public deleteSchedule(scheduleIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteSchedule(scheduleIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Deletes a tag object from the ThoughtSpot system  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `TAGMANAGEMENT` (**Can manage tags**) privilege is required to create, edit, and delete tags.      
+     * @param tagIdentifier Tag identifier Tag name or Tag id.
+     */
+    public deleteTagWithHttpInfo(tagIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteTagWithHttpInfo(tagIdentifier, _options);
         return result.toPromise();
     }
 
@@ -1547,8 +2495,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Deletes a user from the ThoughtSpot system.  If you want to remove a user from a specific Org but not from ThoughtSpot, update the group and Org mapping properties of the user object via a POST API call to the [/api/rest/2.0/users/{user_identifier}/update](#/http/api-endpoints/users/update-user) endpoint.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
      * @param userIdentifier GUID / name of the user
      */
+    public deleteUserWithHttpInfo(userIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteUserWithHttpInfo(userIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Deletes a user from the ThoughtSpot system.  If you want to remove a user from a specific Org but not from ThoughtSpot, update the group and Org mapping properties of the user object via a POST API call to the [/api/rest/2.0/users/{user_identifier}/update](#/http/api-endpoints/users/update-user) endpoint.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param userIdentifier GUID / name of the user
+     */
     public deleteUser(userIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteUser(userIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Removes the specified group object from the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.      
+     * @param groupIdentifier GUID or name of the group.
+     */
+    public deleteUserGroupWithHttpInfo(groupIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteUserGroupWithHttpInfo(groupIdentifier, _options);
         return result.toPromise();
     }
 
@@ -1565,8 +2531,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Allows you to deploy a commit and publish TML content to your ThoughtSpot instance.  Requires at least edit access to the objects used in the deploy operation.  The API deploys the head of the branch unless a `commit_id` is specified in the API request. If the branch name is not defined in the request, the default branch is considered for deploying commits.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
      * @param deployCommitRequest 
      */
+    public deployCommitWithHttpInfo(deployCommitRequest: DeployCommitRequest, _options?: Configuration): Promise<HttpInfo<Array<DeployResponse>>> {
+        const result = this.api.deployCommitWithHttpInfo(deployCommitRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Allows you to deploy a commit and publish TML content to your ThoughtSpot instance.  Requires at least edit access to the objects used in the deploy operation.  The API deploys the head of the branch unless a `commit_id` is specified in the API request. If the branch name is not defined in the request, the default branch is considered for deploying commits.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
+     * @param deployCommitRequest 
+     */
     public deployCommit(deployCommitRequest: DeployCommitRequest, _options?: Configuration): Promise<Array<DeployResponse>> {
         const result = this.api.deployCommit(deployCommitRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Exports the difference in connection metadata between CDW and ThoughtSpot  Requires `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:   - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  To download the connection metadata difference between ThoughtSpot and CDW, pass the connection GUID as `connection_identifier` in the API request.      
+     * @param connectionIdentifier GUID of the connection
+     */
+    public downloadConnectionMetadataChangesWithHttpInfo(connectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<HttpFile>> {
+        const result = this.api.downloadConnectionMetadataChangesWithHttpInfo(connectionIdentifier, _options);
         return result.toPromise();
     }
 
@@ -1583,8 +2567,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Exports an Answer in the given file format. You can download the Answer data as a PDF, PNG, CSV, or XLSX file.  Requires `DATADOWNLOADING` (**Can download data**) privilege and view access to the Answer.  #### Usage guidelines  In the request body, the GUID or name of the Answer and set `file_format`. The default file format is CSV.  **NOTE**: * The downloadable file returned in API response file is extensionless. Please rename the downloaded file by typing in the relevant extension. * HTML rendering is not supported for PDF exports of Answers with tables.  Optionally, you can define [runtime overrides](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_runtime_overrides) to apply to the Answer data.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_api).     
      * @param exportAnswerReportRequest 
      */
+    public exportAnswerReportWithHttpInfo(exportAnswerReportRequest: ExportAnswerReportRequest, _options?: Configuration): Promise<HttpInfo<HttpFile>> {
+        const result = this.api.exportAnswerReportWithHttpInfo(exportAnswerReportRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Exports an Answer in the given file format. You can download the Answer data as a PDF, PNG, CSV, or XLSX file.  Requires `DATADOWNLOADING` (**Can download data**) privilege and view access to the Answer.  #### Usage guidelines  In the request body, the GUID or name of the Answer and set `file_format`. The default file format is CSV.  **NOTE**: * The downloadable file returned in API response file is extensionless. Please rename the downloaded file by typing in the relevant extension. * HTML rendering is not supported for PDF exports of Answers with tables.  Optionally, you can define [runtime overrides](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_runtime_overrides) to apply to the Answer data.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_api).     
+     * @param exportAnswerReportRequest 
+     */
     public exportAnswerReport(exportAnswerReportRequest: ExportAnswerReportRequest, _options?: Configuration): Promise<HttpFile> {
         const result = this.api.exportAnswerReport(exportAnswerReportRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Exports the data from a Liveboard and its visualization in a given file format. You can download the Liveboard data as a PDF, PNG, CSV, or XLSX file.  Requires `DATADOWNLOADING` (**Can download data**) privilege and view access to the Liveboard.  #### Usage guidelines  In the request body, specify the GUID or name of the Liveboard. To generate a Liveboard report with specific visualizations, add GUIDs or names of the visualizations.  The default `file_format` is CSV. For PDF file format, you can specify additional parameters to customize the page orientation and include or exclude the cover page, logo, footer text, and page numbers. Similar customization options are also available for PNG output.  **NOTE**: The downloadable file returned in API response file is extensionless. Please rename the downloaded file by typing in the relevant extension.  Optionally, you can define [runtime overrides](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_runtime_overrides) to apply to the Answer data.  To include unsaved changes in the report, pass the `transient_pinboard_content` script generated from the `getExportRequestForCurrentPinboard` method in the Visual Embed SDK. Upon successful execution, the API returns the report with unsaved changes, including ad hoc changes to visualizations. For more information, see [Liveboard Report API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_liveboard_report_api).     
+     * @param exportLiveboardReportRequest 
+     */
+    public exportLiveboardReportWithHttpInfo(exportLiveboardReportRequest: ExportLiveboardReportRequest, _options?: Configuration): Promise<HttpInfo<HttpFile>> {
+        const result = this.api.exportLiveboardReportWithHttpInfo(exportLiveboardReportRequest, _options);
         return result.toPromise();
     }
 
@@ -1601,8 +2603,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Exports the [TML](https://docs.thoughtspot.com/cloud/latest/tml) representation of metadata objects in JSON or YAML format.  Requires `DATADOWNLOADING` (**Can download Data**) and at least view access to the metadata object.  #### Usage guidelines  * You can export one or several objects by passing metadata object GUIDs in the `metadata` array. * When exporting TML content for a Liveboard or Answer object, you can set `export_associated` to `true` to retrieve TML content for underlying Worksheets, Tables, or Views, including the GUID of each object within the headers. When   `export_associated` is set to `true`, consider retrieving one metadata object at a time. * Set `export_fqns` to `true` to add FQNs of the referenced objects in the TML content. For example, if you send an API request to retrieve TML for a Liveboard and its associated objects, the API returns the TML content with FQNs of the referenced Worksheet. Exporting TML with FQNs is useful if ThoughtSpot has multiple objects with the same name and you want to eliminate ambiguity when importing TML files into ThoughtSpot. It eliminates the need for adding FQNs of the referenced objects manually during the import operation.  For more information, see [TML Documentation](https://developers.thoughtspot.com/docs/tml#_export_a_tml).      
      * @param exportMetadataTMLRequest 
      */
+    public exportMetadataTMLWithHttpInfo(exportMetadataTMLRequest: ExportMetadataTMLRequest, _options?: Configuration): Promise<HttpInfo<Array<any>>> {
+        const result = this.api.exportMetadataTMLWithHttpInfo(exportMetadataTMLRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Exports the [TML](https://docs.thoughtspot.com/cloud/latest/tml) representation of metadata objects in JSON or YAML format.  Requires `DATADOWNLOADING` (**Can download Data**) and at least view access to the metadata object.  #### Usage guidelines  * You can export one or several objects by passing metadata object GUIDs in the `metadata` array. * When exporting TML content for a Liveboard or Answer object, you can set `export_associated` to `true` to retrieve TML content for underlying Worksheets, Tables, or Views, including the GUID of each object within the headers. When   `export_associated` is set to `true`, consider retrieving one metadata object at a time. * Set `export_fqns` to `true` to add FQNs of the referenced objects in the TML content. For example, if you send an API request to retrieve TML for a Liveboard and its associated objects, the API returns the TML content with FQNs of the referenced Worksheet. Exporting TML with FQNs is useful if ThoughtSpot has multiple objects with the same name and you want to eliminate ambiguity when importing TML files into ThoughtSpot. It eliminates the need for adding FQNs of the referenced objects manually during the import operation.  For more information, see [TML Documentation](https://developers.thoughtspot.com/docs/tml#_export_a_tml).      
+     * @param exportMetadataTMLRequest 
+     */
     public exportMetadataTML(exportMetadataTMLRequest: ExportMetadataTMLRequest, _options?: Configuration): Promise<Array<any>> {
         const result = this.api.exportMetadataTML(exportMetadataTMLRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.1.0.cl or later   Exports the [TML](https://docs.thoughtspot.com/cloud/latest/tml) representation of metadata objects in JSON or YAML format.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  #### Usage guidelines  * You can export one or several objects by passing metadata object GUIDs in the `metadata` array. * When exporting TML content for a Liveboard or Answer object, you can set `export_associated` to `true` to retrieve TML content for underlying Worksheets, Tables, or Views, including the GUID of each object within the headers. When   `export_associated` is set to `true`, consider retrieving one metadata object at a time. * Set `export_fqns` to `true` to add FQNs of the referenced objects in the TML content. For example, if you send an API request to retrieve TML for a Liveboard and its associated objects, the API returns the TML content with FQNs of the referenced Worksheet. Exporting TML with FQNs is useful if ThoughtSpot has multiple objects with the same name and you want to eliminate ambiguity when importing TML files into ThoughtSpot. It eliminates the need for adding FQNs of the referenced objects manually during the import operation.      
+     * @param exportMetadataTMLBatchedRequest 
+     */
+    public exportMetadataTMLBatchedWithHttpInfo(exportMetadataTMLBatchedRequest: ExportMetadataTMLBatchedRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.exportMetadataTMLBatchedWithHttpInfo(exportMetadataTMLBatchedRequest, _options);
         return result.toPromise();
     }
 
@@ -1619,8 +2639,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Fetches data from a saved Answer.  Requires at least view access to the saved Answer and the `DATADOWNLOADING` privilege.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_apis).     
      * @param fetchAnswerDataRequest 
      */
+    public fetchAnswerDataWithHttpInfo(fetchAnswerDataRequest: FetchAnswerDataRequest, _options?: Configuration): Promise<HttpInfo<AnswerDataResponse>> {
+        const result = this.api.fetchAnswerDataWithHttpInfo(fetchAnswerDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches data from a saved Answer.  Requires at least view access to the saved Answer and the `DATADOWNLOADING` privilege.  The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_apis).     
+     * @param fetchAnswerDataRequest 
+     */
     public fetchAnswerData(fetchAnswerDataRequest: FetchAnswerDataRequest, _options?: Configuration): Promise<AnswerDataResponse> {
         const result = this.api.fetchAnswerData(fetchAnswerDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches the underlying SQL query data for an Answer object.  Requires at least view access to the Answer object.  Upon successful execution, the API returns the SQL queries for the specified object as shown in this example: ``` {    \"metadata_id\":\"8fbe44a8-46ad-4b16-8d39-184b2fada490\",    \"metadata_name\":\"Total sales\",    \"metadata_type\":\"ANSWER\",    \"sql_queries\":[       {          \"metadata_id\":\"8fbe44a8-46ad-4b16-8d39-184b2fada490\",          \"metadata_name\":\"Total sales -test\",          \"sql_query\":\"SELECT \\n  \\\"ta_1\\\".\\\"REGION\\\" \\\"ca_1\\\", \\n  \\\"ta_2\\\".\\\"PRODUCTNAME\\\" \\\"ca_2\\\", \\n  \\\"ta_1\\\".\\\"STORENAME\\\" \\\"ca_3\\\", \\n  CASE\\n    WHEN sum(\\\"ta_3\\\".\\\"SALES\\\") IS NOT NULL THEN sum(\\\"ta_3\\\".\\\"SALES\\\")\\n    ELSE 0\\n  END \\\"ca_4\\\", \\n  CASE\\n    WHEN sum(\\\"ta_3\\\".\\\"QUANTITYPURCHASED\\\") IS NOT NULL THEN sum(\\\"ta_3\\\".\\\"QUANTITYPURCHASED\\\")\\n    ELSE 0\\n  END \\\"ca_5\\\"\\nFROM \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"FACT_RETAPP_SALES\\\" \\\"ta_3\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_STORES\\\" \\\"ta_1\\\"\\n    ON \\\"ta_3\\\".\\\"STOREID\\\" = \\\"ta_1\\\".\\\"STOREID\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_PRODUCTS\\\" \\\"ta_2\\\"\\n    ON \\\"ta_3\\\".\\\"PRODUCTID\\\" = \\\"ta_2\\\".\\\"PRODUCTID\\\"\\nGROUP BY \\n  \\\"ca_1\\\", \\n  \\\"ca_2\\\", \\n  \\\"ca_3\\\"\\n\"       }    ] } ```      
+     * @param fetchAnswerSqlQueryRequest 
+     */
+    public fetchAnswerSqlQueryWithHttpInfo(fetchAnswerSqlQueryRequest: FetchAnswerSqlQueryRequest, _options?: Configuration): Promise<HttpInfo<SqlQueryResponse>> {
+        const result = this.api.fetchAnswerSqlQueryWithHttpInfo(fetchAnswerSqlQueryRequest, _options);
         return result.toPromise();
     }
 
@@ -1637,8 +2675,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 10.4.0.cl or later   Gets information about the status of the TML async import task scheduled using the `/api/rest/2.0/metadata/tml/async/import` API call.  To fetch the task details, specify the ID of the TML async import task.    Requires access to the task ID. The API allows users who initiated the asynchronous TML import via `/api/rest/2.0/metadata/tml/async/import` to view the status of their tasks.  Users with administration privilege can view the status of all import tasks initiated by the users in their Org.  #### Usage guidelines  See [TML API Documentation](https://developers.thoughtspot.com/docs/tml#_fetch_status_of_the_tml_import_task) for usage guidelines.     
      * @param fetchAsyncImportTaskStatusRequest 
      */
+    public fetchAsyncImportTaskStatusWithHttpInfo(fetchAsyncImportTaskStatusRequest: FetchAsyncImportTaskStatusRequest, _options?: Configuration): Promise<HttpInfo<GetAsyncImportStatusResponse>> {
+        const result = this.api.fetchAsyncImportTaskStatusWithHttpInfo(fetchAsyncImportTaskStatusRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Gets information about the status of the TML async import task scheduled using the `/api/rest/2.0/metadata/tml/async/import` API call.  To fetch the task details, specify the ID of the TML async import task.    Requires access to the task ID. The API allows users who initiated the asynchronous TML import via `/api/rest/2.0/metadata/tml/async/import` to view the status of their tasks.  Users with administration privilege can view the status of all import tasks initiated by the users in their Org.  #### Usage guidelines  See [TML API Documentation](https://developers.thoughtspot.com/docs/tml#_fetch_status_of_the_tml_import_task) for usage guidelines.     
+     * @param fetchAsyncImportTaskStatusRequest 
+     */
     public fetchAsyncImportTaskStatus(fetchAsyncImportTaskStatusRequest: FetchAsyncImportTaskStatusRequest, _options?: Configuration): Promise<GetAsyncImportStatusResponse> {
         const result = this.api.fetchAsyncImportTaskStatus(fetchAsyncImportTaskStatusRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Validates the difference in connection metadata between CDW and ThoughtSpot.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  Returns a boolean indicating whether there is any difference between the connection metadata at ThoughtSpot and CDW.  To get the connection metadata difference status, pass the connection GUID as `connection_identifier` in the API request.      
+     * @param connectionIdentifier GUID of the connection
+     */
+    public fetchConnectionDiffStatusWithHttpInfo(connectionIdentifier: string, _options?: Configuration): Promise<HttpInfo<FetchConnectionDiffStatusResponse>> {
+        const result = this.api.fetchConnectionDiffStatusWithHttpInfo(connectionIdentifier, _options);
         return result.toPromise();
     }
 
@@ -1655,8 +2711,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Gets data from a Liveboard object and its visualization.    Requires at least view access to the Liveboard and the `DATADOWNLOADING` privilege.  #### Usage guidelines  In the request body, specify the GUID or name of the Liveboard. To get data for specific visualizations, add the GUIDs or names of the visualizations in the API request.  To include unsaved changes in the report, pass the `transient_pinboard_content` script generated from the `getExportRequestForCurrentPinboard` method in the Visual Embed SDK. Upon successful execution, the API returns the report with unsaved changes. If the new Liveboard experience mode, the transient content includes ad hoc changes to visualizations such as sorting, toggling of legends, and data drill down.  For more information, and see [Liveboard data API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_fetch_liveboard_data_api).     
      * @param fetchLiveboardDataRequest 
      */
+    public fetchLiveboardDataWithHttpInfo(fetchLiveboardDataRequest: FetchLiveboardDataRequest, _options?: Configuration): Promise<HttpInfo<LiveboardDataResponse>> {
+        const result = this.api.fetchLiveboardDataWithHttpInfo(fetchLiveboardDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets data from a Liveboard object and its visualization.    Requires at least view access to the Liveboard and the `DATADOWNLOADING` privilege.  #### Usage guidelines  In the request body, specify the GUID or name of the Liveboard. To get data for specific visualizations, add the GUIDs or names of the visualizations in the API request.  To include unsaved changes in the report, pass the `transient_pinboard_content` script generated from the `getExportRequestForCurrentPinboard` method in the Visual Embed SDK. Upon successful execution, the API returns the report with unsaved changes. If the new Liveboard experience mode, the transient content includes ad hoc changes to visualizations such as sorting, toggling of legends, and data drill down.  For more information, and see [Liveboard data API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_fetch_liveboard_data_api).     
+     * @param fetchLiveboardDataRequest 
+     */
     public fetchLiveboardData(fetchLiveboardDataRequest: FetchLiveboardDataRequest, _options?: Configuration): Promise<LiveboardDataResponse> {
         const result = this.api.fetchLiveboardData(fetchLiveboardDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches the underlying SQL query data for a Liveboard object and its visualizations.  Requires at least view access to the Liveboard object.  To get SQL query data for a Liveboard, specify the GUID of the Liveboard. Optionally, you can add an array of visualization GUIDs to retrieve the SQL query data for visualizations in the Liveboard.  Upon successful execution, the API returns the SQL queries for the specified object as shown in this example: ``` {   \"metadata_id\": \"fa68ae91-7588-4136-bacd-d71fb12dda69\",   \"metadata_name\": \"Total Sales\",   \"metadata_type\": \"LIVEBOARD\",   \"sql_queries\": [     {       \"metadata_id\": \"b3b6d2b9-089a-490c-8e16-b144650b7843\",       \"metadata_name\": \"Total quantity purchased, Total sales by region\",       \"sql_query\": \"SELECT \\n  \\\"ta_1\\\".\\\"REGION\\\" \\\"ca_1\\\", \\n  CASE\\n    WHEN sum(\\\"ta_2\\\".\\\"QUANTITYPURCHASED\\\") IS NOT NULL THEN sum(\\\"ta_2\\\".\\\"QUANTITYPURCHASED\\\")\\n    ELSE 0\\n  END \\\"ca_2\\\", \\n  CASE\\n    WHEN sum(\\\"ta_2\\\".\\\"SALES\\\") IS NOT NULL THEN sum(\\\"ta_2\\\".\\\"SALES\\\")\\n    ELSE 0\\n  END \\\"ca_3\\\"\\nFROM \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"FACT_RETAPP_SALES\\\" \\\"ta_2\\\"\\n  JOIN \\\"RETAILAPPAREL\\\".\\\"PUBLIC\\\".\\\"DIM_RETAPP_STORES\\\" \\\"ta_1\\\"\\n    ON \\\"ta_2\\\".\\\"STOREID\\\" = \\\"ta_1\\\".\\\"STOREID\\\"\\nGROUP BY \\\"ca_1\\\"\"     }   ] } ```      
+     * @param fetchLiveboardSqlQueryRequest 
+     */
+    public fetchLiveboardSqlQueryWithHttpInfo(fetchLiveboardSqlQueryRequest: FetchLiveboardSqlQueryRequest, _options?: Configuration): Promise<HttpInfo<SqlQueryResponse>> {
+        const result = this.api.fetchLiveboardSqlQueryWithHttpInfo(fetchLiveboardSqlQueryRequest, _options);
         return result.toPromise();
     }
 
@@ -1673,8 +2747,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Fetches security audit logs.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the [Admin Control](https://developers.thoughtspot.com/docs/rbac#_admin_control) privileges are required.   #### Usage guidelines  By default, the API retrieves logs for the last 24 hours. You can set a custom duration in EPOCH time. Make sure the log duration specified in your API request doesn’t exceed 24 hours. If you must fetch logs for a longer time range, modify the duration and make multiple sequential API requests.  Upon successful execution, the API returns logs with the following information: * timestamp of the event * event ID * event type * name and GUID of the user * IP address of ThoughtSpot instance  For more information see [Audit logs Documentation](https://developers.thoughtspot.com/docs/audit-logs).      
      * @param fetchLogsRequest 
      */
+    public fetchLogsWithHttpInfo(fetchLogsRequest: FetchLogsRequest, _options?: Configuration): Promise<HttpInfo<Array<LogResponse>>> {
+        const result = this.api.fetchLogsWithHttpInfo(fetchLogsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches security audit logs.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the [Admin Control](https://developers.thoughtspot.com/docs/rbac#_admin_control) privileges are required.   #### Usage guidelines  By default, the API retrieves logs for the last 24 hours. You can set a custom duration in EPOCH time. Make sure the log duration specified in your API request doesn’t exceed 24 hours. If you must fetch logs for a longer time range, modify the duration and make multiple sequential API requests.  Upon successful execution, the API returns logs with the following information: * timestamp of the event * event ID * event type * name and GUID of the user * IP address of ThoughtSpot instance  For more information see [Audit logs Documentation](https://developers.thoughtspot.com/docs/audit-logs).      
+     * @param fetchLogsRequest 
+     */
     public fetchLogs(fetchLogsRequest: FetchLogsRequest, _options?: Configuration): Promise<Array<LogResponse>> {
         const result = this.api.fetchLogs(fetchLogsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches object permission details for a given principal object such as a user and group.  Requires view access to the metadata object.   #### Usage guidelines  * To get a list of all metadata objects that a user or group can access, specify the `type` and GUID or name of the principal. * To get permission details for a specific object, add the `type` and GUID or name of the metadata object to your API request.  Upon successful execution, the API returns a list of metadata objects and permission details for each object.        
+     * @param fetchPermissionsOfPrincipalsRequest 
+     */
+    public fetchPermissionsOfPrincipalsWithHttpInfo(fetchPermissionsOfPrincipalsRequest: FetchPermissionsOfPrincipalsRequest, _options?: Configuration): Promise<HttpInfo<PermissionOfPrincipalsResponse>> {
+        const result = this.api.fetchPermissionsOfPrincipalsWithHttpInfo(fetchPermissionsOfPrincipalsRequest, _options);
         return result.toPromise();
     }
 
@@ -1691,8 +2783,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Fetches permission details for a given metadata object.  Requires view access to the metadata object.  #### Usage guidelines  * To fetch a list of users and groups for a metadata object, specify `type` and GUID or name of the metadata object. * To get permission details for a specific user or group, add `type` and GUID or name of the principal object to your API request.  Upon successful execution, the API returns permission details and principal information for the object specified in the API request.      
      * @param fetchPermissionsOnMetadataRequest 
      */
+    public fetchPermissionsOnMetadataWithHttpInfo(fetchPermissionsOnMetadataRequest: FetchPermissionsOnMetadataRequest, _options?: Configuration): Promise<HttpInfo<PermissionOfMetadataResponse>> {
+        const result = this.api.fetchPermissionsOnMetadataWithHttpInfo(fetchPermissionsOnMetadataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Fetches permission details for a given metadata object.  Requires view access to the metadata object.  #### Usage guidelines  * To fetch a list of users and groups for a metadata object, specify `type` and GUID or name of the metadata object. * To get permission details for a specific user or group, add `type` and GUID or name of the principal object to your API request.  Upon successful execution, the API returns permission details and principal information for the object specified in the API request.      
+     * @param fetchPermissionsOnMetadataRequest 
+     */
     public fetchPermissionsOnMetadata(fetchPermissionsOnMetadataRequest: FetchPermissionsOnMetadataRequest, _options?: Configuration): Promise<PermissionOfMetadataResponse> {
         const result = this.api.fetchPermissionsOnMetadata(fetchPermissionsOnMetadataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Enforces logout on current user sessions.    Use this API with caution as it may invalidate active user sessions and force users to re-login. Make sure you specify the usernames or GUIDs. If you pass null values in the API call, all user sessions on your cluster become invalid, and the users are forced to re-login.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param forceLogoutUsersRequest 
+     */
+    public forceLogoutUsersWithHttpInfo(forceLogoutUsersRequest: ForceLogoutUsersRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.forceLogoutUsersWithHttpInfo(forceLogoutUsersRequest, _options);
         return result.toPromise();
     }
 
@@ -1708,6 +2818,14 @@ export class PromiseThoughtSpotRestApi {
     /**
      *   Version: 9.0.0.cl or later    Gets session information for the currently logged-in user.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request. The data returned in the API response varies according to user\'s privilege and object access permissions.      
      */
+    public getCurrentUserInfoWithHttpInfo(_options?: Configuration): Promise<HttpInfo<User>> {
+        const result = this.api.getCurrentUserInfoWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Gets session information for the currently logged-in user.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request. The data returned in the API response varies according to user\'s privilege and object access permissions.      
+     */
     public getCurrentUserInfo(_options?: Configuration): Promise<User> {
         const result = this.api.getCurrentUserInfo(_options);
         return result.toPromise();
@@ -1716,8 +2834,25 @@ export class PromiseThoughtSpotRestApi {
     /**
      *  Get token for the currently logged-in user.    Version: 9.4.0.cl or later   Gets token details for the currently logged-in user.  You can use this endpoint to obtain the token associated with the user\'s session.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request.      
      */
+    public getCurrentUserTokenWithHttpInfo(_options?: Configuration): Promise<HttpInfo<GetTokenResponse>> {
+        const result = this.api.getCurrentUserTokenWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Get token for the currently logged-in user.    Version: 9.4.0.cl or later   Gets token details for the currently logged-in user.  You can use this endpoint to obtain the token associated with the user\'s session.  This API does not require any parameters to be passed in the request.    Any ThoughtSpot user can access this endpoint and send an API request.      
+     */
     public getCurrentUserToken(_options?: Configuration): Promise<GetTokenResponse> {
         const result = this.api.getCurrentUserToken(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Gets an authentication token with custom rules and security attributes and creates a full session in ThoughtSpot for a given user. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  To add a new user and assign privileges during auto creation, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege and edit access to the data source is required.  To assign security attributes with filter rules and Parameters to the JWT token, you\'ll need administrator privileges and edit access to the data source (Worksheet or Model). If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege and edit access to the data source is required.  #### Usage guidelines  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret_key`.  To generate a `secret_key` on your cluster, the administrator must enable [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable) in the **Develop** > **Customizations** > **Security Settings** page.  **Note**: When both `password` and `secret_key` are included in the API request, `password` takes precedence.  ##### Attribute-Based Access Control (ABAC) with tokens  To implement Attribute-Based Access Control (ABAC) and assign security entitlements to users during session creation, you can generate a token with custom filtering rules and Parameters in the `filter_rules` and `parameter_values` array respectively. These attributes can be configured to persist on a specific set of objects for user sessions initiated using the token. Once defined, the rules are added to the user\'s `access_control_properties` object, after which all sessions will use the persisted values.   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.  For more information, see [ABAC via tokens Documentation](https://developers.thoughtspot.com/docs/api-authv2#_get_tokens_with_custom_rules_and_filter_conditions).  ##### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `groups`  Set `auto_create` to `true` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true` in the API request, the user properties such as the display name, email, Org and group assignment will not be updated with new values.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  ##### Important point to note All options in the token creation APIs that define access to the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Persist options such as  `APPEND`, `REPLACE`, `RESET` will persist security parameters on the user profile when the token is created, while Persist option `NONE` will not persist anything but will be honoured in the session.      
+     * @param getCustomAccessTokenRequest 
+     */
+    public getCustomAccessTokenWithHttpInfo(getCustomAccessTokenRequest: GetCustomAccessTokenRequest, _options?: Configuration): Promise<HttpInfo<AccessToken>> {
+        const result = this.api.getCustomAccessTokenWithHttpInfo(getCustomAccessTokenRequest, _options);
         return result.toPromise();
     }
 
@@ -1734,8 +2869,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Gets an authentication token and creates a full session in ThoughtSpot for a given user. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret_key` (for [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable)).  To generate a `secret_key` on your cluster, the administrator must enable **Trusted authentication** in the **Develop** > **Customizations** > **Security Settings** page. For more information, see [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable).  **Note**: When both `password` and `secret_key` are included in the API request, `password` takes precedence.  #### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `group_identifiers`  Set `auto_create` to `True` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true`, the API call will update user properties like display name, email and group assignment.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  To add a new user and assign privileges, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege is required.  #### Attribute-Based Access Control (ABAC) with tokens  You can define Attribute-Based Access Control (ABAC) parameters to assign security entitlements to users during session creation. For more information, see [ABAC via token](https://developers.thoughtspot.com/docs/abac-user-parameters).  #### Important point to note All options in the token creation APIs changing the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Similarly, using `user_parameters` with `persist: true` persists security parameters on the user profile when the token is created and not during authentication.   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.      
      * @param getFullAccessTokenRequest 
      */
+    public getFullAccessTokenWithHttpInfo(getFullAccessTokenRequest: GetFullAccessTokenRequest, _options?: Configuration): Promise<HttpInfo<Token>> {
+        const result = this.api.getFullAccessTokenWithHttpInfo(getFullAccessTokenRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets an authentication token and creates a full session in ThoughtSpot for a given user. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret_key` (for [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable)).  To generate a `secret_key` on your cluster, the administrator must enable **Trusted authentication** in the **Develop** > **Customizations** > **Security Settings** page. For more information, see [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable).  **Note**: When both `password` and `secret_key` are included in the API request, `password` takes precedence.  #### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `group_identifiers`  Set `auto_create` to `True` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true`, the API call will update user properties like display name, email and group assignment.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  To add a new user and assign privileges, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege is required.  #### Attribute-Based Access Control (ABAC) with tokens  You can define Attribute-Based Access Control (ABAC) parameters to assign security entitlements to users during session creation. For more information, see [ABAC via token](https://developers.thoughtspot.com/docs/abac-user-parameters).  #### Important point to note All options in the token creation APIs changing the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Similarly, using `user_parameters` with `persist: true` persists security parameters on the user profile when the token is created and not during authentication.   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.      
+     * @param getFullAccessTokenRequest 
+     */
     public getFullAccessToken(getFullAccessTokenRequest: GetFullAccessTokenRequest, _options?: Configuration): Promise<Token> {
         const result = this.api.getFullAccessToken(getFullAccessTokenRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets an authentication token that provides access to a specific metadata object. By default, the token obtained from ThoughtSpot remains valid for 5 mins.  You can generate the token for a user by providing a `username` and `password`, or by using the cluster’s `secret key` (for [Trusted authentication](https://developers.thoughtspot.com/docs/?pageid=trusted-auth#trusted-auth-enable)).  To generate a `secret_key` on your cluster, the administrator must enable **Trusted authentication** in the **Develop** > **Customizations** > **Security Settings** page.  **Note**: When both `password` and `secret_key` are included in the API request,  `password` takes precedence.  #### Just-in-time provisioning  For just-in-time user creation and provisioning, define the following attributes:  * `auto_create` * `username` * `display_name` * `email` * `group_identifiers`  Set `auto_create` to `True` if the user is not available in ThoughtSpot. If the user already exists in ThoughtSpot and the `auto_create` parameter is set to `true`, the API call will update user properties like display name, email and group assignment.  For more information, see [Just-in-time provisioning](https://developers.thoughtspot.com/docs/just-in-time-provisioning).  To add a new user and assign privileges, you need `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled, the `CONTROL_TRUSTED_AUTH`(**Can Enable or Disable Trusted Authentication**) privilege is required.  #### Attribute-Based Access Control (ABAC) with tokens  You can define Attribute-Based Access Control (ABAC) parameters to assign security entitlements to users during session creation. For more information, see [ABAC via token](https://developers.thoughtspot.com/docs/abac-user-parameters).   Specify the object type as `LOGICAL_TABLE`.  The `LIVEBOARD` and `ANSWER` object types are not supported.  #### Important point to note All options in the token creation APIs changing the content in ThoughtSpot will do so during the token creation and not when the token is being used for authentication. For example, `auto_create:true` will create the user when the authentication token is created. Similarly, using `user_parameters` with `persist: true` persists security parameters on the user profile when the token is created and not during authentication.      
+     * @param getObjectAccessTokenRequest 
+     */
+    public getObjectAccessTokenWithHttpInfo(getObjectAccessTokenRequest: GetObjectAccessTokenRequest, _options?: Configuration): Promise<HttpInfo<Token>> {
+        const result = this.api.getObjectAccessTokenWithHttpInfo(getObjectAccessTokenRequest, _options);
         return result.toPromise();
     }
 
@@ -1751,8 +2904,24 @@ export class PromiseThoughtSpotRestApi {
     /**
      *   Version: 9.0.0.cl or later   Retrieves the current configuration details of the cluster. If the request is successful, the API returns a list configuration settings applied on the cluster.  Requires `ADMINISTRATION`(**Can administer ThoughtSpot**) privilege to view these complete configuration settings of the cluster. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `SYSTEM_INFO_ADMINISTRATION` (**Can view system activities**) privilege is required.  This API does not require any parameters to be passed in the request.      
      */
+    public getSystemConfigWithHttpInfo(_options?: Configuration): Promise<HttpInfo<SystemConfig>> {
+        const result = this.api.getSystemConfigWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Retrieves the current configuration details of the cluster. If the request is successful, the API returns a list configuration settings applied on the cluster.  Requires `ADMINISTRATION`(**Can administer ThoughtSpot**) privilege to view these complete configuration settings of the cluster. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `SYSTEM_INFO_ADMINISTRATION` (**Can view system activities**) privilege is required.  This API does not require any parameters to be passed in the request.      
+     */
     public getSystemConfig(_options?: Configuration): Promise<SystemConfig> {
         const result = this.api.getSystemConfig(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets system information such as the release version, locale, time zone, deployment environment, date format, and date time format of the cluster.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `SYSTEM_INFO_ADMINISTRATION` (**Can view system activities**) privilege is required.  This API does not require any parameters to be passed in the request.        
+     */
+    public getSystemInformationWithHttpInfo(_options?: Configuration): Promise<HttpInfo<SystemInfo>> {
+        const result = this.api.getSystemInformationWithHttpInfo(_options);
         return result.toPromise();
     }
 
@@ -1767,8 +2936,25 @@ export class PromiseThoughtSpotRestApi {
     /**
      *   Version: 9.2.0.cl or later   Gets a list of configuration overrides applied on the cluster.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `APPLICATION_ADMINISTRATION` (**Can manage application settings**) privilege is required.  This API does not require any parameters to be passed in the request.        
      */
+    public getSystemOverrideInfoWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.getSystemOverrideInfoWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets a list of configuration overrides applied on the cluster.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `APPLICATION_ADMINISTRATION` (**Can manage application settings**) privilege is required.  This API does not require any parameters to be passed in the request.        
+     */
     public getSystemOverrideInfo(_options?: Configuration): Promise<any> {
         const result = this.api.getSystemOverrideInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Imports [TML](https://docs.thoughtspot.com/cloud/latest/tml) files into ThoughtSpot.  Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtsSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required: - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### Usage guidelines  *  Import all related objects in a single TML Import API call. For example, Tables that use the same Connection object and Worksheets connected to these Tables. * Include the `fqn` property to distinguish objects that have the same name.   For example, if you have multiple Connections or Worksheets with the same name on ThoughtSpot and the Connection or Worksheet referenced in your TML file does not have a unique name to distinguish, it may result in invalid object references.   Adding `fqn` helps ThoughtSpot differentiate a Table from another with the same name.   We recommend [exporting TML with FQNs](#/http/api-endpoints/metadata/export-metadata-tml) and using these during the import operation. * You can upload multiple TML files at a time.   If you import a Worksheet along with Liveboards, Answers, and other dependent objects in a single API call, the imported objects will be immediately available for use.   When you import only a Worksheet object, it may take some time for the Worksheet to become available in the ThoughtSpot system. Please wait for a few minutes, and then proceed to create an Answer and Liveboard from the newly imported Worksheet.  For more information, see [TML Documentation](https://developers.thoughtspot.com/docs/tml#_import_a_tml).      
+     * @param importMetadataTMLRequest 
+     */
+    public importMetadataTMLWithHttpInfo(importMetadataTMLRequest: ImportMetadataTMLRequest, _options?: Configuration): Promise<HttpInfo<Array<any>>> {
+        const result = this.api.importMetadataTMLWithHttpInfo(importMetadataTMLRequest, _options);
         return result.toPromise();
     }
 
@@ -1785,8 +2971,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 10.4.0.cl or later   Schedules a task to import [TML](https://docs.thoughtspot.com/cloud/latest/tml) files into ThoughtSpot. You can use this API endpoint to process TML objects asynchronously when importing TMLs of large and complex metadata objects into ThoughtSpot. Unlike the synchronous import TML operation, the API processes TML data in the background and returns a task ID, which can be used to check the status of the import task via `/api/rest/2.0/metadata/tml/async/status` API endpoint.  Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtsSpot**) privilege, and edit access to the TML objects.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required: - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### Usage guidelines  See [Async TML API Documentation](https://developers.thoughtspot.com/docs/tml#_import_tml_objects_asynchronously) for usage guidelines.      
      * @param importMetadataTMLAsyncRequest 
      */
+    public importMetadataTMLAsyncWithHttpInfo(importMetadataTMLAsyncRequest: ImportMetadataTMLAsyncRequest, _options?: Configuration): Promise<HttpInfo<ImportEPackAsyncTaskStatus>> {
+        const result = this.api.importMetadataTMLAsyncWithHttpInfo(importMetadataTMLAsyncRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Schedules a task to import [TML](https://docs.thoughtspot.com/cloud/latest/tml) files into ThoughtSpot. You can use this API endpoint to process TML objects asynchronously when importing TMLs of large and complex metadata objects into ThoughtSpot. Unlike the synchronous import TML operation, the API processes TML data in the background and returns a task ID, which can be used to check the status of the import task via `/api/rest/2.0/metadata/tml/async/status` API endpoint.  Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtsSpot**) privilege, and edit access to the TML objects.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following Data control privileges may be required: - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### Usage guidelines  See [Async TML API Documentation](https://developers.thoughtspot.com/docs/tml#_import_tml_objects_asynchronously) for usage guidelines.      
+     * @param importMetadataTMLAsyncRequest 
+     */
     public importMetadataTMLAsync(importMetadataTMLAsyncRequest: ImportMetadataTMLAsyncRequest, _options?: Configuration): Promise<ImportEPackAsyncTaskStatus> {
         const result = this.api.importMetadataTMLAsync(importMetadataTMLAsyncRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Imports group objects from external databases into ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  During the import operation:  * If the specified group is not available in ThoughtSpot, it will be added to ThoughtSpot. * If `delete_unspecified_groups` is set to `true`, the groups not specified in the API request, excluding administrator and system user groups, are deleted. * If the specified groups are already available in ThoughtSpot, the object properties of these groups are modified and synchronized as per the input data in the API request.  A successful API call returns the object that represents the changes made in the ThoughtSpot system.      
+     * @param importUserGroupsRequest 
+     */
+    public importUserGroupsWithHttpInfo(importUserGroupsRequest: ImportUserGroupsRequest, _options?: Configuration): Promise<HttpInfo<ImportUserGroupsResponse>> {
+        const result = this.api.importUserGroupsWithHttpInfo(importUserGroupsRequest, _options);
         return result.toPromise();
     }
 
@@ -1803,8 +3007,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Imports user data from external databases into ThoughtSpot. During the user import operation:  * If the specified users are not available in ThoughtSpot, the users are created and assigned a default password. Defining a `default_password` in the API request is optional. * If `delete_unspecified_users` is set to `true`, the users not specified in the API request, excluding the `tsadmin`, `guest`, `system` and `su` users, are deleted. * If the specified user objects are already available in ThoughtSpot, the object properties are updated and synchronized as per the input data in the API request.  A successful API call returns the object that represents the changes made in the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
      * @param importUsersRequest 
      */
+    public importUsersWithHttpInfo(importUsersRequest: ImportUsersRequest, _options?: Configuration): Promise<HttpInfo<ImportUsersResponse>> {
+        const result = this.api.importUsersWithHttpInfo(importUsersRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Imports user data from external databases into ThoughtSpot. During the user import operation:  * If the specified users are not available in ThoughtSpot, the users are created and assigned a default password. Defining a `default_password` in the API request is optional. * If `delete_unspecified_users` is set to `true`, the users not specified in the API request, excluding the `tsadmin`, `guest`, `system` and `su` users, are deleted. * If the specified user objects are already available in ThoughtSpot, the object properties are updated and synchronized as per the input data in the API request.  A successful API call returns the object that represents the changes made in the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param importUsersRequest 
+     */
     public importUsers(importUsersRequest: ImportUsersRequest, _options?: Configuration): Promise<ImportUsersResponse> {
         const result = this.api.importUsers(importUsersRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Creates a login session for a ThoughtSpot user with Basic authentication.  In Basic authentication method, REST clients log in to ThoughtSpot using `username` and `password` attributes. On a multi-tenant cluster with Orgs, users can pass the ID of the Org in the API request to log in to a specific Org context.  A successful login returns a session cookie that can be used in your subsequent API requests.      
+     * @param loginRequest 
+     */
+    public loginWithHttpInfo(loginRequest: LoginRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.loginWithHttpInfo(loginRequest, _options);
         return result.toPromise();
     }
 
@@ -1820,8 +3042,25 @@ export class PromiseThoughtSpotRestApi {
     /**
      *   Version: 9.0.0.cl or later    Logs out a user from their current session.      
      */
+    public logoutWithHttpInfo(_options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.logoutWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Logs out a user from their current session.      
+     */
     public logout(_options?: Configuration): Promise<void> {
         const result = this.api.logout(_options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Resets the password of a user account. Administrators can reset password on behalf of a user.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param resetUserPasswordRequest 
+     */
+    public resetUserPasswordWithHttpInfo(resetUserPasswordRequest: ResetUserPasswordRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.resetUserPasswordWithHttpInfo(resetUserPasswordRequest, _options);
         return result.toPromise();
     }
 
@@ -1839,8 +3078,27 @@ export class PromiseThoughtSpotRestApi {
      * @param commitId Commit id to which the object should be reverted
      * @param revertCommitRequest 
      */
+    public revertCommitWithHttpInfo(commitId: string, revertCommitRequest: RevertCommitRequest, _options?: Configuration): Promise<HttpInfo<RevertResponse>> {
+        const result = this.api.revertCommitWithHttpInfo(commitId, revertCommitRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Reverts TML objects to a previous commit specified in the API request.  Requires at least edit access to objects.  In the API request, specify the `commit_id`. If the branch name is not specified in the request, the API will consider the default branch configured on your instance.  By default, the API reverts all objects. If the revert operation fails for one of the objects provided in the commit, the API returns an error and does not revert any object.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
+     * @param commitId Commit id to which the object should be reverted
+     * @param revertCommitRequest 
+     */
     public revertCommit(commitId: string, revertCommitRequest: RevertCommitRequest, _options?: Configuration): Promise<RevertResponse> {
         const result = this.api.revertCommit(commitId, revertCommitRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later    Revokes the authentication token issued for current user session.  The token of your current session expires when you make a call to the `/api/rest/2.0/auth/token/revoke` endpoint. the users will not be able to access ThoughtSpot objects until a new token is obtained.  To restart your session, request for a new token from ThoughtSpot. See [Get Full Access Token](#/http/api-endpoints/authentication/get-full-access-token).      
+     * @param revokeTokenRequest 
+     */
+    public revokeTokenWithHttpInfo(revokeTokenRequest: RevokeTokenRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.revokeTokenWithHttpInfo(revokeTokenRequest, _options);
         return result.toPromise();
     }
 
@@ -1857,8 +3115,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Gets a list of commits for a given metadata object.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**) privilege and edit access to the metadata objects.      
      * @param searchCommitsRequest 
      */
+    public searchCommitsWithHttpInfo(searchCommitsRequest: SearchCommitsRequest, _options?: Configuration): Promise<HttpInfo<Array<CommitHistoryResponse>>> {
+        const result = this.api.searchCommitsWithHttpInfo(searchCommitsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets a list of commits for a given metadata object.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**) privilege and edit access to the metadata objects.      
+     * @param searchCommitsRequest 
+     */
     public searchCommits(searchCommitsRequest: SearchCommitsRequest, _options?: Configuration): Promise<Array<CommitHistoryResponse>> {
         const result = this.api.searchCommits(searchCommitsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets Git repository connections configured on the ThoughtSpot instance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
+     * @param searchConfigRequest 
+     */
+    public searchConfigWithHttpInfo(searchConfigRequest: SearchConfigRequest, _options?: Configuration): Promise<HttpInfo<Array<RepoConfigObject>>> {
+        const result = this.api.searchConfigWithHttpInfo(searchConfigRequest, _options);
         return result.toPromise();
     }
 
@@ -1875,8 +3151,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Gets connection objects. Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  - To get a list of all connections available in the ThoughtSpot system, send the API request without any attributes in the request body. - To get the connection objects for a specific type of data warehouse, specify the type in `data_warehouse_types`. - To fetch details of a connection object, specify the connection object GUID or name. The `name_pattern` attribute allows passing partial text with `%` for a wildcard match. - To get details of the database, schemas, tables, or columns from a data connection object, specify `data_warehouse_object_type`. - To get a specific database, schema, table, or column from a connection object, define the object type in `data_warehouse_object_type` and object properties in the `data_warehouse_objects` array. For example, to search for a column, you must pass the database, schema, and table names in the API request.   Note that in the following example, object properties are set in a hierarchical order (`database` > `schema` > `table` > `column`).  ``` {   \"connections\": [     {       \"identifier\": \"b9d1f2ef-fa65-4a4b-994e-30fa2d57b0c2\",       \"data_warehouse_objects\": [         {           \"database\": \"NEBULADEV\",           \"schema\": \"INFORMATION_SCHEMA\",           \"table\": \"APPLICABLE_ROLES\",           \"column\": \"ROLE_NAME\"         }       ]     }   ],   \"data_warehouse_object_type\": \"COLUMN\" } ```  - To fetch data by `configuration`, specify `data_warehouse_object_type`. For example, to fetch columns from the `DEVELOPMENT` database, specify the `data_warehouse_object_type` as `DATABASE` and define the `configuration` string as `{\"database\":\"DEVELOPMENT\"}`. To get column data for a specific table, specify the table, for example,`{\"database\":\"RETAILAPPAREL\",\"table\":\"PIPES\"}`. - To query connections by `authentication_type`, specify `data_warehouse_object_type`. Supported values for `authentication_type` are:   - `SERVICE_ACCOUNT`: For connections that require service account credentials to authenticate to the Cloud Data Warehouse and fetch data.   - `OAUTH`: For connections that require OAuth credentials to authenticate to the Cloud Data Warehouse and fetch data. Teradata, Oracle, and Presto Cloud Data Warehouses do not support the OAuth authentication type.   - `IAM`: For connections that have the IAM OAuth set up. This authentication type is supported on Amazon Redshift connections only.   - `EXTOAUTH`: For connections that have external OAuth set up. ThoughtSpot supports external [OAuth with Microsoft Azure Active Directory (AD)](https://docs.thoughtspot.com/cloud/latest/ connections-snowflake-azure-ad-oauth) and [Okta for Snowflake data connections](https://docs.thoughtspot.com/cloud/latest/connections-snowflake-okta-oauth). - To include more details about connection objects in the API response, set `include_details` to `true`. - You can also sort the output by field names and filter connections by tags.  **NOTE**: When filtering connection records by parameters other than `data_warehouse_types` or `tag_identifiers`, ensure that you set `record_size` to `-1` and `record_offset` to `0` for precise results.      
      * @param searchConnectionRequest 
      */
+    public searchConnectionWithHttpInfo(searchConnectionRequest: SearchConnectionRequest, _options?: Configuration): Promise<HttpInfo<Array<SearchConnectionResponse>>> {
+        const result = this.api.searchConnectionWithHttpInfo(searchConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets connection objects. Requires `DATAMANAGEMENT` (**Can manage data**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  - To get a list of all connections available in the ThoughtSpot system, send the API request without any attributes in the request body. - To get the connection objects for a specific type of data warehouse, specify the type in `data_warehouse_types`. - To fetch details of a connection object, specify the connection object GUID or name. The `name_pattern` attribute allows passing partial text with `%` for a wildcard match. - To get details of the database, schemas, tables, or columns from a data connection object, specify `data_warehouse_object_type`. - To get a specific database, schema, table, or column from a connection object, define the object type in `data_warehouse_object_type` and object properties in the `data_warehouse_objects` array. For example, to search for a column, you must pass the database, schema, and table names in the API request.   Note that in the following example, object properties are set in a hierarchical order (`database` > `schema` > `table` > `column`).  ``` {   \"connections\": [     {       \"identifier\": \"b9d1f2ef-fa65-4a4b-994e-30fa2d57b0c2\",       \"data_warehouse_objects\": [         {           \"database\": \"NEBULADEV\",           \"schema\": \"INFORMATION_SCHEMA\",           \"table\": \"APPLICABLE_ROLES\",           \"column\": \"ROLE_NAME\"         }       ]     }   ],   \"data_warehouse_object_type\": \"COLUMN\" } ```  - To fetch data by `configuration`, specify `data_warehouse_object_type`. For example, to fetch columns from the `DEVELOPMENT` database, specify the `data_warehouse_object_type` as `DATABASE` and define the `configuration` string as `{\"database\":\"DEVELOPMENT\"}`. To get column data for a specific table, specify the table, for example,`{\"database\":\"RETAILAPPAREL\",\"table\":\"PIPES\"}`. - To query connections by `authentication_type`, specify `data_warehouse_object_type`. Supported values for `authentication_type` are:   - `SERVICE_ACCOUNT`: For connections that require service account credentials to authenticate to the Cloud Data Warehouse and fetch data.   - `OAUTH`: For connections that require OAuth credentials to authenticate to the Cloud Data Warehouse and fetch data. Teradata, Oracle, and Presto Cloud Data Warehouses do not support the OAuth authentication type.   - `IAM`: For connections that have the IAM OAuth set up. This authentication type is supported on Amazon Redshift connections only.   - `EXTOAUTH`: For connections that have external OAuth set up. ThoughtSpot supports external [OAuth with Microsoft Azure Active Directory (AD)](https://docs.thoughtspot.com/cloud/latest/ connections-snowflake-azure-ad-oauth) and [Okta for Snowflake data connections](https://docs.thoughtspot.com/cloud/latest/connections-snowflake-okta-oauth). - To include more details about connection objects in the API response, set `include_details` to `true`. - You can also sort the output by field names and filter connections by tags.  **NOTE**: When filtering connection records by parameters other than `data_warehouse_types` or `tag_identifiers`, ensure that you set `record_size` to `-1` and `record_offset` to `0` for precise results.      
+     * @param searchConnectionRequest 
+     */
     public searchConnection(searchConnectionRequest: SearchConnectionRequest, _options?: Configuration): Promise<Array<SearchConnectionResponse>> {
         const result = this.api.searchConnection(searchConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Gets custom actions configured on the cluster.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.      
+     * @param searchCustomActionsRequest 
+     */
+    public searchCustomActionsWithHttpInfo(searchCustomActionsRequest: SearchCustomActionsRequest, _options?: Configuration): Promise<HttpInfo<Array<ResponseCustomAction>>> {
+        const result = this.api.searchCustomActionsWithHttpInfo(searchCustomActionsRequest, _options);
         return result.toPromise();
     }
 
@@ -1893,8 +3187,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Generates an Answer from a given data source.  Requires at least view access to the data source object (Worksheet or View) and the `DATADOWNLOADING` privilege.  #### Usage guidelines  To search data, specify the data source GUID in `logical_table_identifier`. The data source can be a Worksheet, View, Table, or SQL view.  Pass search tokens in the `query_string` attribute in the API request as shown in the following example:  ``` {   \"query_string\": \"[sales] by [store]\",   \"logical_table_identifier\": \"cd252e5c-b552-49a8-821d-3eadaa049cca\", } ```  For more information about the `query_string` format and data source attribute, see [Search data API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_search_data_api).    The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_api).     
      * @param searchDataRequest 
      */
+    public searchDataWithHttpInfo(searchDataRequest: SearchDataRequest, _options?: Configuration): Promise<HttpInfo<SearchDataResponse>> {
+        const result = this.api.searchDataWithHttpInfo(searchDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Generates an Answer from a given data source.  Requires at least view access to the data source object (Worksheet or View) and the `DATADOWNLOADING` privilege.  #### Usage guidelines  To search data, specify the data source GUID in `logical_table_identifier`. The data source can be a Worksheet, View, Table, or SQL view.  Pass search tokens in the `query_string` attribute in the API request as shown in the following example:  ``` {   \"query_string\": \"[sales] by [store]\",   \"logical_table_identifier\": \"cd252e5c-b552-49a8-821d-3eadaa049cca\", } ```  For more information about the `query_string` format and data source attribute, see [Search data API](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_search_data_api).    The `record_size` attribute determines the number of records to retrieve in an API call. For more information about pagination, record size, and maximum row limit, see [Pagination and record size settings](https://developers.thoughtspot.com/docs/fetch-data-and-report-apis#_pagination_settings_for_data_and_report_api).     
+     * @param searchDataRequest 
+     */
     public searchData(searchDataRequest: SearchDataRequest, _options?: Configuration): Promise<SearchDataResponse> {
         const result = this.api.searchData(searchDataRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of metadata objects available on the ThoughtSpot system.  This API endpoint is available to all users who have view access to the object. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view data for all metadata objects, including users and groups.  #### Usage guidelines  - To get all metadata objects, send the API request without any attributes. - To get metadata objects of a specific type, set the `type` attribute. For example, to fetch a Worksheet, set the type as `LOGICAL_TABLE`. - To get a specific metadata object, specify the GUID. - To customize your search and filter the API response, you can use several parameters.   You can search for objects created or modified by specific users, by tags applied to the objects, or by using the include parameters like `include_auto_created_objects`, `include_dependent_objects`, `include_headers`, `include_incomplete_objects`, and so on.   You can also define sorting options to sort the data retrieved in the API response.  **NOTE**: The following parameters support pagination of metadata records:  - `tag_identifiers` - `type` - `created_by_user_identifiers` - `modified_by_user_identifiers` - `owned_by_user_identifiers` - `exclude_objects` - `include_auto_created_objects` - `favorite_object_options` If you are using other parameters to search metadata, set `record_size` to `-1` and `record_offset` to `0`.      
+     * @param searchMetadataRequest 
+     */
+    public searchMetadataWithHttpInfo(searchMetadataRequest: SearchMetadataRequest, _options?: Configuration): Promise<HttpInfo<Array<MetadataSearchResponse>>> {
+        const result = this.api.searchMetadataWithHttpInfo(searchMetadataRequest, _options);
         return result.toPromise();
     }
 
@@ -1911,8 +3223,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Gets a list of Orgs configured on the ThoughtSpot system. To get details of a specific Org, specify the Org ID or name. You can also pass parameters such as status, visibility, and user identifiers to get a specific list of Orgs.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
      * @param searchOrgsRequest 
      */
+    public searchOrgsWithHttpInfo(searchOrgsRequest: SearchOrgsRequest, _options?: Configuration): Promise<HttpInfo<Array<OrgResponse>>> {
+        const result = this.api.searchOrgsWithHttpInfo(searchOrgsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of Orgs configured on the ThoughtSpot system. To get details of a specific Org, specify the Org ID or name. You can also pass parameters such as status, visibility, and user identifiers to get a specific list of Orgs.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
+     * @param searchOrgsRequest 
+     */
     public searchOrgs(searchOrgsRequest: SearchOrgsRequest, _options?: Configuration): Promise<Array<OrgResponse>> {
         const result = this.api.searchOrgs(searchOrgsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Gets Roles configured on a ThoughtSpot instance. Requires cluster Administration, Role Administration or Group Administration privileges.    Version: 9.5.0.cl or later   Gets a list of Role objects from the ThoughtSpot system.  Available if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To search for Roles, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.  To get details of a specific Role object, specify the GUID or name. You can also filter the API response based on user group and Org identifiers, privileges assigned to the Role, and deprecation status.      
+     * @param searchRolesRequest 
+     */
+    public searchRolesWithHttpInfo(searchRolesRequest: SearchRolesRequest, _options?: Configuration): Promise<HttpInfo<Array<SearchRoleResponse>>> {
+        const result = this.api.searchRolesWithHttpInfo(searchRolesRequest, _options);
         return result.toPromise();
     }
 
@@ -1929,8 +3259,26 @@ export class PromiseThoughtSpotRestApi {
      *  Search Schedules    Version: 9.4.0.cl or later   Gets a list of scheduled jobs configured for a Liveboard.  To get details of a specific scheduled job, specify the name or GUID of the scheduled job.  Requires at least view access to Liveboards.  **NOTE**: When filtering schedules by parameters other than `metadata`, set `record_size` to `-1` and `record_offset` to `0` for accurate results.      
      * @param searchSchedulesRequest 
      */
+    public searchSchedulesWithHttpInfo(searchSchedulesRequest: SearchSchedulesRequest, _options?: Configuration): Promise<HttpInfo<Array<ResponseSchedule>>> {
+        const result = this.api.searchSchedulesWithHttpInfo(searchSchedulesRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Search Schedules    Version: 9.4.0.cl or later   Gets a list of scheduled jobs configured for a Liveboard.  To get details of a specific scheduled job, specify the name or GUID of the scheduled job.  Requires at least view access to Liveboards.  **NOTE**: When filtering schedules by parameters other than `metadata`, set `record_size` to `-1` and `record_offset` to `0` for accurate results.      
+     * @param searchSchedulesRequest 
+     */
     public searchSchedules(searchSchedulesRequest: SearchSchedulesRequest, _options?: Configuration): Promise<Array<ResponseSchedule>> {
         const result = this.api.searchSchedules(searchSchedulesRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of tag objects available on the ThoughtSpot system. To get details of a specific tag object, specify the GUID or name.  Any authenticated user can search for tag objects.      
+     * @param searchTagsRequest 
+     */
+    public searchTagsWithHttpInfo(searchTagsRequest: SearchTagsRequest, _options?: Configuration): Promise<HttpInfo<Array<Tag>>> {
+        const result = this.api.searchTagsWithHttpInfo(searchTagsRequest, _options);
         return result.toPromise();
     }
 
@@ -1947,8 +3295,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.0.0.cl or later   Gets a list of user group objects from the ThoughtSpot system.  To get details of a specific user group, specify the user group GUID or name. You can also filter the API response based on User ID, Org ID, Role ID, type of group, sharing visibility, privileges assigned to the group, and the Liveboard IDs assigned to the users in the group.  Available to all users. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view all users properties.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  **NOTE**: If you do not get precise results, try setting `record_size` to `-1` and `record_offset` to `0`.      
      * @param searchUserGroupsRequest 
      */
+    public searchUserGroupsWithHttpInfo(searchUserGroupsRequest: SearchUserGroupsRequest, _options?: Configuration): Promise<HttpInfo<Array<UserGroupResponse>>> {
+        const result = this.api.searchUserGroupsWithHttpInfo(searchUserGroupsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of user group objects from the ThoughtSpot system.  To get details of a specific user group, specify the user group GUID or name. You can also filter the API response based on User ID, Org ID, Role ID, type of group, sharing visibility, privileges assigned to the group, and the Liveboard IDs assigned to the users in the group.  Available to all users. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view all users properties.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  **NOTE**: If you do not get precise results, try setting `record_size` to `-1` and `record_offset` to `0`.      
+     * @param searchUserGroupsRequest 
+     */
     public searchUserGroups(searchUserGroupsRequest: SearchUserGroupsRequest, _options?: Configuration): Promise<Array<UserGroupResponse>> {
         const result = this.api.searchUserGroups(searchUserGroupsRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of users available on the ThoughtSpot system.  To get details of a specific user, specify the user GUID or name. You can also filter the API response based on groups, Org ID, user visibility, account status, user type, and user preference settings and favorites.  Available to all users. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view all users properties. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  **NOTE**: If the API returns an empty list, consider increasing the value of the `record_size` parameter. To search across all available users, set `record_size` to `-1`.      
+     * @param searchUsersRequest 
+     */
+    public searchUsersWithHttpInfo(searchUsersRequest: SearchUsersRequest, _options?: Configuration): Promise<HttpInfo<Array<User>>> {
+        const result = this.api.searchUsersWithHttpInfo(searchUsersRequest, _options);
         return result.toPromise();
     }
 
@@ -1966,8 +3332,27 @@ export class PromiseThoughtSpotRestApi {
      * @param conversationIdentifier Unique identifier of the conversation.
      * @param sendMessageRequest 
      */
+    public sendMessageWithHttpInfo(conversationIdentifier: string, sendMessageRequest: SendMessageRequest, _options?: Configuration): Promise<HttpInfo<Array<ResponseMessage>>> {
+        const result = this.api.sendMessageWithHttpInfo(conversationIdentifier, sendMessageRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Version: 10.4.0.cl or later   Allows sending a follow-up message to an ongoing conversation within the context of the metadata model.  Requires at least view access to the metadata object specified in the request.  #### Usage guidelines  The API requires you to specify the `conversation_identifier` in the request path, and a `metadata_identifier` and `message` string in the request body.  If the API request is successful, ThoughtSpot returns the session ID, tokens used in the conversation, and visualization type.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
+     * @param conversationIdentifier Unique identifier of the conversation.
+     * @param sendMessageRequest 
+     */
     public sendMessage(conversationIdentifier: string, sendMessageRequest: SendMessageRequest, _options?: Configuration): Promise<Array<ResponseMessage>> {
         const result = this.api.sendMessage(conversationIdentifier, sendMessageRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Allows sharing one or several metadata objects with users and groups in ThoughtSpot.  Requires edit access to the metadata object.  The API endpoint allows sharing only the following types of metadata objects: * Liveboards * Visualizations * Answers * Worksheets * Views  You can provide `READ_ONLY` or `MODIFY` access when sharing an object with another user or group. With `READ_ONLY` access grants view access to the shared object, whereas `MODIFY` provides edit access.  To prevent a user or group from accessing the shared object, specify the GUID or name of the principal and set `shareMode` to `NO_ACCESS`.      
+     * @param shareMetadataRequest 
+     */
+    public shareMetadataWithHttpInfo(shareMetadataRequest: ShareMetadataRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.shareMetadataWithHttpInfo(shareMetadataRequest, _options);
         return result.toPromise();
     }
 
@@ -1984,8 +3369,26 @@ export class PromiseThoughtSpotRestApi {
      *  Version: 10.4.0.cl or later   Processes a natural language query and returns an AI-generated response based on a specified data model.  Requires at least view access to the metadata object specified in the request.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
      * @param singleAnswerRequest 
      */
+    public singleAnswerWithHttpInfo(singleAnswerRequest: SingleAnswerRequest, _options?: Configuration): Promise<HttpInfo<ResponseMessage>> {
+        const result = this.api.singleAnswerWithHttpInfo(singleAnswerRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Version: 10.4.0.cl or later   Processes a natural language query and returns an AI-generated response based on a specified data model.  Requires at least view access to the metadata object specified in the request.  > ###### Note: > * This endpoint is currently in Beta. Breaking changes may be introduced before the endpoint is made Generally Available. > * This endpoint requires Spotter - please contact ThoughtSpot support to enable Spotter on your cluster.      
+     * @param singleAnswerRequest 
+     */
     public singleAnswer(singleAnswerRequest: SingleAnswerRequest, _options?: Configuration): Promise<ResponseMessage> {
         const result = this.api.singleAnswer(singleAnswerRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Removes the tags applied to a Liveboard, Answer, Table, or Worksheet.  Requires edit access to the metadata object.      
+     * @param assignTagRequest 
+     */
+    public unassignTagWithHttpInfo(assignTagRequest: AssignTagRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.unassignTagWithHttpInfo(assignTagRequest, _options);
         return result.toPromise();
     }
 
@@ -2002,6 +3405,15 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Updates Git repository configuration settings.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
      * @param updateConfigRequest 
      */
+    public updateConfigWithHttpInfo(updateConfigRequest: UpdateConfigRequest, _options?: Configuration): Promise<HttpInfo<RepoConfigObject>> {
+        const result = this.api.updateConfigWithHttpInfo(updateConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Updates Git repository configuration settings.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
+     * @param updateConfigRequest 
+     */
     public updateConfig(updateConfigRequest: UpdateConfigRequest, _options?: Configuration): Promise<RepoConfigObject> {
         const result = this.api.updateConfig(updateConfigRequest, _options);
         return result.toPromise();
@@ -2011,8 +3423,27 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Updates a connection object.    Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  To update a connection object, pass these parameters in your API request:  1. GUID of the connection object. 2. If you are updating tables or database schema of a connection object:    a. Add the updated JSON map of metadata with database, schema, and tables in `data_warehouse_config`.    b. Set `validate` to `true`. 3. If you are updating a configuration attribute, connection name, or description, you can set `validate` to `false`.      
      * @param updateConnectionRequest 
      */
+    public updateConnectionWithHttpInfo(updateConnectionRequest: UpdateConnectionRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateConnectionWithHttpInfo(updateConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Updates a connection object.    Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  To update a connection object, pass these parameters in your API request:  1. GUID of the connection object. 2. If you are updating tables or database schema of a connection object:    a. Add the updated JSON map of metadata with database, schema, and tables in `data_warehouse_config`.    b. Set `validate` to `true`. 3. If you are updating a configuration attribute, connection name, or description, you can set `validate` to `false`.      
+     * @param updateConnectionRequest 
+     */
     public updateConnection(updateConnectionRequest: UpdateConnectionRequest, _options?: Configuration): Promise<void> {
         const result = this.api.updateConnection(updateConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 10.4.0.cl or later   Updates a connection object.  Requires `DATAMANAGEMENT` (**Can manage data**) and edit permissions to the connection object, or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) privilege is required.  To update a connection object, pass these parameters in your API request:  1. GUID of the connection object. 2. If you are updating tables or database schema of a connection object:    a. Add the updated JSON map of metadata with database, schema, and tables in `data_warehouse_config`.    b. Set `validate` to `true`. 3. If you are updating a configuration attribute, connection name, or description, you can set `validate` to `false`.      
+     * @param connectionIdentifier Unique ID or name of the connection.
+     * @param updateConnectionV2Request 
+     */
+    public updateConnectionV2WithHttpInfo(connectionIdentifier: string, updateConnectionV2Request: UpdateConnectionV2Request, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateConnectionV2WithHttpInfo(connectionIdentifier, updateConnectionV2Request, _options);
         return result.toPromise();
     }
 
@@ -2031,6 +3462,16 @@ export class PromiseThoughtSpotRestApi {
      * @param customActionIdentifier Unique ID or name of the custom action.
      * @param updateCustomActionRequest 
      */
+    public updateCustomActionWithHttpInfo(customActionIdentifier: string, updateCustomActionRequest: UpdateCustomActionRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateCustomActionWithHttpInfo(customActionIdentifier, updateCustomActionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.6.0.cl or later   Updates a custom action.  Requires `DEVELOPER` (**Has Developer privilege**) or `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `DEVELOPER` (**Has developer privilege**) privilege is required.  #### Usage Guidelines  The API allows you to modify the following properties:  * Name of the custom action * Action availability to groups * Association to metadata objects * Authentication settings for a URL-based action  For more information, see [Custom actions](https://developers.thoughtspot.com/docs/custom-action-intro).      
+     * @param customActionIdentifier Unique ID or name of the custom action.
+     * @param updateCustomActionRequest 
+     */
     public updateCustomAction(customActionIdentifier: string, updateCustomActionRequest: UpdateCustomActionRequest, _options?: Configuration): Promise<void> {
         const result = this.api.updateCustomAction(customActionIdentifier, updateCustomActionRequest, _options);
         return result.toPromise();
@@ -2040,8 +3481,27 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.9.0.cl or later   Updates a DBT connection object.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data ThoughtSpot**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About update DBT connection You can modify DBT connection object properties such as embrace connection name, embrace database name, import type, account identifier, access token, project identifier and environment (or) embrace connection, embrace database name, import type, file_content settings.      
      * @param updateDbtConnectionRequest 
      */
+    public updateDbtConnectionWithHttpInfo(updateDbtConnectionRequest: UpdateDbtConnectionRequest, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.updateDbtConnectionWithHttpInfo(updateDbtConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.9.0.cl or later   Updates a DBT connection object.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege or `DATAMANAGEMENT` (**Can manage data ThoughtSpot**) privilege, along with an existing DBT connection. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the following data control privileges may be required:  - `CAN_MANAGE_CUSTOM_CALENDAR`(**Can manage custom calendars**) - `CAN_CREATE_OR_EDIT_CONNECTIONS` (**Can create/edit Connections**) - `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**)  #### About update DBT connection You can modify DBT connection object properties such as embrace connection name, embrace database name, import type, account identifier, access token, project identifier and environment (or) embrace connection, embrace database name, import type, file_content settings.      
+     * @param updateDbtConnectionRequest 
+     */
     public updateDbtConnection(updateDbtConnectionRequest: UpdateDbtConnectionRequest, _options?: Configuration): Promise<any> {
         const result = this.api.updateDbtConnection(updateDbtConnectionRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates an Org object. You can modify Org properties such as name, description, and user associations.  Requires cluster administration (**Can administer Org**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `ORG_ADMINISTRATION` (**Can manage Orgs**) privilege is required.      
+     * @param orgIdentifier ID or name of the Org
+     * @param updateOrgRequest 
+     */
+    public updateOrgWithHttpInfo(orgIdentifier: string, updateOrgRequest: UpdateOrgRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateOrgWithHttpInfo(orgIdentifier, updateOrgRequest, _options);
         return result.toPromise();
     }
 
@@ -2060,8 +3520,28 @@ export class PromiseThoughtSpotRestApi {
      * @param roleIdentifier Unique ID or name of the Role.
      * @param updateRoleRequest 
      */
+    public updateRoleWithHttpInfo(roleIdentifier: string, updateRoleRequest: UpdateRoleRequest, _options?: Configuration): Promise<HttpInfo<RoleResponse>> {
+        const result = this.api.updateRoleWithHttpInfo(roleIdentifier, updateRoleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Updates a Role. Requires cluster Administration or Role Administration privileges.    Version: 9.5.0.cl or later   Updates the properties of a Role object.  Available only if [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance. To update a Role, the `ROLE_ADMINISTRATION` (**Can manage roles**) privilege is required.      
+     * @param roleIdentifier Unique ID or name of the Role.
+     * @param updateRoleRequest 
+     */
     public updateRole(roleIdentifier: string, updateRoleRequest: UpdateRoleRequest, _options?: Configuration): Promise<RoleResponse> {
         const result = this.api.updateRole(roleIdentifier, updateRoleRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *  Update schedule.    Version: 9.4.0.cl or later   Updates a scheduled Liveboard job.  Requires at least edit access to Liveboards. To update a schedule on behalf of another user, you need `ADMINISTRATION` (**Can administer Org**) or `JOBSCHEDULING` (**Can schedule for others**) privilege and edit access to the Liveboard. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `JOBSCHEDULING` (**Can schedule for others**) privilege is required.  The API endpoint allows you to pause a scheduled job, change the status of a paused job. You can also edit the recipients list, frequency of the job, format of the file to send to the recipients in email notifications, PDF options, and time zone setting.      
+     * @param scheduleIdentifier Unique ID or name of the schedule.
+     * @param updateScheduleRequest 
+     */
+    public updateScheduleWithHttpInfo(scheduleIdentifier: string, updateScheduleRequest: UpdateScheduleRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateScheduleWithHttpInfo(scheduleIdentifier, updateScheduleRequest, _options);
         return result.toPromise();
     }
 
@@ -2079,8 +3559,27 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Updates the current configuration of the cluster. You must send the configuration data in JSON format.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `APPLICATION_ADMINISTRATION` (**Can manage application settings**) privilege is required.      
      * @param updateSystemConfigRequest 
      */
+    public updateSystemConfigWithHttpInfo(updateSystemConfigRequest: UpdateSystemConfigRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateSystemConfigWithHttpInfo(updateSystemConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Updates the current configuration of the cluster. You must send the configuration data in JSON format.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `APPLICATION_ADMINISTRATION` (**Can manage application settings**) privilege is required.      
+     * @param updateSystemConfigRequest 
+     */
     public updateSystemConfig(updateSystemConfigRequest: UpdateSystemConfigRequest, _options?: Configuration): Promise<void> {
         const result = this.api.updateSystemConfig(updateSystemConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates a tag object.  You can modify the `name` and `color` properties of a tag object.    Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `TAGMANAGEMENT` (**Can manage tags**) privilege is required to create, edit, and delete tags.      
+     * @param tagIdentifier Name or Id of the tag.
+     * @param updateTagRequest 
+     */
+    public updateTagWithHttpInfo(tagIdentifier: string, updateTagRequest: UpdateTagRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateTagWithHttpInfo(tagIdentifier, updateTagRequest, _options);
         return result.toPromise();
     }
 
@@ -2099,8 +3598,28 @@ export class PromiseThoughtSpotRestApi {
      * @param userIdentifier GUID / name of the user
      * @param updateUserRequest 
      */
+    public updateUserWithHttpInfo(userIdentifier: string, updateUserRequest: UpdateUserRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateUserWithHttpInfo(userIdentifier, updateUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates the properties of a user object.  You can modify user properties such as username, email, and share notification settings. You can also assign new groups and Orgs, remove the user from a group or Org, reset password, and modify user preferences.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param userIdentifier GUID / name of the user
+     * @param updateUserRequest 
+     */
     public updateUser(userIdentifier: string, updateUserRequest: UpdateUserRequest, _options?: Configuration): Promise<void> {
         const result = this.api.updateUser(userIdentifier, updateUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates the properties of a group object in ThoughtSpot.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `GROUP_ADMINISTRATION` (**Can manage groups**) privilege is required.  #### Supported operations  This API endpoint lets you perform the following operations in a single API request:  * Edit [privileges](https://developers.thoughtspot.com/docs/?pageid=api-user-management#group-privileges) * Add or remove users * Change sharing visibility settings * Add or remove sub-groups * Assign a default Liveboard  or update the existing settings      
+     * @param groupIdentifier GUID or name of the group.
+     * @param updateUserGroupRequest 
+     */
+    public updateUserGroupWithHttpInfo(groupIdentifier: string, updateUserGroupRequest: UpdateUserGroupRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateUserGroupWithHttpInfo(groupIdentifier, updateUserGroupRequest, _options);
         return result.toPromise();
     }
 
@@ -2118,8 +3637,26 @@ export class PromiseThoughtSpotRestApi {
      *   Version: 9.2.0.cl or later   Validates the content of your source branch against the objects in your destination environment.  Before merging content from your source branch to the destination branch, run this API operation from your destination environment and ensure that the changes from the source branch function in the destination environment.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**) privilege and edit access to the metadata objects.      
      * @param validateMergeRequest 
      */
+    public validateMergeWithHttpInfo(validateMergeRequest: ValidateMergeRequest, _options?: Configuration): Promise<HttpInfo<Array<DeployResponse>>> {
+        const result = this.api.validateMergeWithHttpInfo(validateMergeRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Validates the content of your source branch against the objects in your destination environment.  Before merging content from your source branch to the destination branch, run this API operation from your destination environment and ensure that the changes from the source branch function in the destination environment.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**) privilege and edit access to the metadata objects.      
+     * @param validateMergeRequest 
+     */
     public validateMerge(validateMergeRequest: ValidateMergeRequest, _options?: Configuration): Promise<Array<DeployResponse>> {
         const result = this.api.validateMerge(validateMergeRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.12.0.cl or later    Validates the authentication token specified in the API request.  If your token is not valid, [Get a new token](#/http/api-endpoints/authentication/get-full-access-token).      
+     * @param validateTokenRequest 
+     */
+    public validateTokenWithHttpInfo(validateTokenRequest: ValidateTokenRequest, _options?: Configuration): Promise<HttpInfo<TokenValidationResponse>> {
+        const result = this.api.validateTokenWithHttpInfo(validateTokenRequest, _options);
         return result.toPromise();
     }
 
@@ -2155,8 +3692,26 @@ export class PromiseUsersApi {
      *   Version: 9.7.0.cl or later   Activates a deactivated user account.  Requires `ADMINISTRATION` (**Can administer Thoughtspot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  To activate an inactive user account, the API request body must include the following information:  - Username or the GUID of the user account. - Auth token generated for the deactivated user. The auth token is sent in the API response when a user is deactivated. - Password for the user account.      
      * @param activateUserRequest 
      */
+    public activateUserWithHttpInfo(activateUserRequest: ActivateUserRequest, _options?: Configuration): Promise<HttpInfo<User>> {
+        const result = this.api.activateUserWithHttpInfo(activateUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.7.0.cl or later   Activates a deactivated user account.  Requires `ADMINISTRATION` (**Can administer Thoughtspot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  To activate an inactive user account, the API request body must include the following information:  - Username or the GUID of the user account. - Auth token generated for the deactivated user. The auth token is sent in the API response when a user is deactivated. - Password for the user account.      
+     * @param activateUserRequest 
+     */
     public activateUser(activateUserRequest: ActivateUserRequest, _options?: Configuration): Promise<User> {
         const result = this.api.activateUser(activateUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates the current password of the user.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param changeUserPasswordRequest 
+     */
+    public changeUserPasswordWithHttpInfo(changeUserPasswordRequest: ChangeUserPasswordRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.changeUserPasswordWithHttpInfo(changeUserPasswordRequest, _options);
         return result.toPromise();
     }
 
@@ -2173,8 +3728,26 @@ export class PromiseUsersApi {
      *   Version: 9.0.0.cl or later   Creates a user in ThoughtSpot.  The API endpoint allows you to configure several user properties such as email address, account status, share notification preferences, and sharing visibility. You can provision the user to [groups](https://docs.thoughtspot.com/cloud/latest/groups-privileges) and [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview). You can also add Liveboard, Answer, and Worksheet objects to the user’s favorites list, assign a default Liveboard for the user, and set user preferences.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
      * @param createUserRequest 
      */
+    public createUserWithHttpInfo(createUserRequest: CreateUserRequest, _options?: Configuration): Promise<HttpInfo<User>> {
+        const result = this.api.createUserWithHttpInfo(createUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Creates a user in ThoughtSpot.  The API endpoint allows you to configure several user properties such as email address, account status, share notification preferences, and sharing visibility. You can provision the user to [groups](https://docs.thoughtspot.com/cloud/latest/groups-privileges) and [Orgs](https://docs.thoughtspot.com/cloud/latest/orgs-overview). You can also add Liveboard, Answer, and Worksheet objects to the user’s favorites list, assign a default Liveboard for the user, and set user preferences.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param createUserRequest 
+     */
     public createUser(createUserRequest: CreateUserRequest, _options?: Configuration): Promise<User> {
         const result = this.api.createUser(createUserRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.7.0.cl or later   Deactivates a user account.  Requires `ADMINISTRATION` (**Can administer Thoughtspot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  To deactivate a user account, the API request body must include the following information:  - Username or the GUID of the user account - Base URL of the ThoughtSpot instance  If the API request is successful, ThoughtSpot returns the activation URL in the response. The activation URL is valid for 14 days and can be used to re-activate the account and reset the password of the deactivated account.      
+     * @param deactivateUserRequest 
+     */
+    public deactivateUserWithHttpInfo(deactivateUserRequest: DeactivateUserRequest, _options?: Configuration): Promise<HttpInfo<ResponseActivationURL>> {
+        const result = this.api.deactivateUserWithHttpInfo(deactivateUserRequest, _options);
         return result.toPromise();
     }
 
@@ -2191,8 +3764,26 @@ export class PromiseUsersApi {
      *   Version: 9.0.0.cl or later   Deletes a user from the ThoughtSpot system.  If you want to remove a user from a specific Org but not from ThoughtSpot, update the group and Org mapping properties of the user object via a POST API call to the [/api/rest/2.0/users/{user_identifier}/update](#/http/api-endpoints/users/update-user) endpoint.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
      * @param userIdentifier GUID / name of the user
      */
+    public deleteUserWithHttpInfo(userIdentifier: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteUserWithHttpInfo(userIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Deletes a user from the ThoughtSpot system.  If you want to remove a user from a specific Org but not from ThoughtSpot, update the group and Org mapping properties of the user object via a POST API call to the [/api/rest/2.0/users/{user_identifier}/update](#/http/api-endpoints/users/update-user) endpoint.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param userIdentifier GUID / name of the user
+     */
     public deleteUser(userIdentifier: string, _options?: Configuration): Promise<void> {
         const result = this.api.deleteUser(userIdentifier, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Enforces logout on current user sessions.    Use this API with caution as it may invalidate active user sessions and force users to re-login. Make sure you specify the usernames or GUIDs. If you pass null values in the API call, all user sessions on your cluster become invalid, and the users are forced to re-login.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param forceLogoutUsersRequest 
+     */
+    public forceLogoutUsersWithHttpInfo(forceLogoutUsersRequest: ForceLogoutUsersRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.forceLogoutUsersWithHttpInfo(forceLogoutUsersRequest, _options);
         return result.toPromise();
     }
 
@@ -2209,8 +3800,26 @@ export class PromiseUsersApi {
      *   Version: 9.0.0.cl or later   Imports user data from external databases into ThoughtSpot. During the user import operation:  * If the specified users are not available in ThoughtSpot, the users are created and assigned a default password. Defining a `default_password` in the API request is optional. * If `delete_unspecified_users` is set to `true`, the users not specified in the API request, excluding the `tsadmin`, `guest`, `system` and `su` users, are deleted. * If the specified user objects are already available in ThoughtSpot, the object properties are updated and synchronized as per the input data in the API request.  A successful API call returns the object that represents the changes made in the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
      * @param importUsersRequest 
      */
+    public importUsersWithHttpInfo(importUsersRequest: ImportUsersRequest, _options?: Configuration): Promise<HttpInfo<ImportUsersResponse>> {
+        const result = this.api.importUsersWithHttpInfo(importUsersRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Imports user data from external databases into ThoughtSpot. During the user import operation:  * If the specified users are not available in ThoughtSpot, the users are created and assigned a default password. Defining a `default_password` in the API request is optional. * If `delete_unspecified_users` is set to `true`, the users not specified in the API request, excluding the `tsadmin`, `guest`, `system` and `su` users, are deleted. * If the specified user objects are already available in ThoughtSpot, the object properties are updated and synchronized as per the input data in the API request.  A successful API call returns the object that represents the changes made in the ThoughtSpot system.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param importUsersRequest 
+     */
     public importUsers(importUsersRequest: ImportUsersRequest, _options?: Configuration): Promise<ImportUsersResponse> {
         const result = this.api.importUsers(importUsersRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Resets the password of a user account. Administrators can reset password on behalf of a user.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param resetUserPasswordRequest 
+     */
+    public resetUserPasswordWithHttpInfo(resetUserPasswordRequest: ResetUserPasswordRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.resetUserPasswordWithHttpInfo(resetUserPasswordRequest, _options);
         return result.toPromise();
     }
 
@@ -2227,8 +3836,27 @@ export class PromiseUsersApi {
      *   Version: 9.0.0.cl or later   Gets a list of users available on the ThoughtSpot system.  To get details of a specific user, specify the user GUID or name. You can also filter the API response based on groups, Org ID, user visibility, account status, user type, and user preference settings and favorites.  Available to all users. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view all users properties. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  **NOTE**: If the API returns an empty list, consider increasing the value of the `record_size` parameter. To search across all available users, set `record_size` to `-1`.      
      * @param searchUsersRequest 
      */
+    public searchUsersWithHttpInfo(searchUsersRequest: SearchUsersRequest, _options?: Configuration): Promise<HttpInfo<Array<User>>> {
+        const result = this.api.searchUsersWithHttpInfo(searchUsersRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Gets a list of users available on the ThoughtSpot system.  To get details of a specific user, specify the user GUID or name. You can also filter the API response based on groups, Org ID, user visibility, account status, user type, and user preference settings and favorites.  Available to all users. Users with `ADMINISTRATION` (**Can administer ThoughtSpot**) privileges can view all users properties. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.  **NOTE**: If the API returns an empty list, consider increasing the value of the `record_size` parameter. To search across all available users, set `record_size` to `-1`.      
+     * @param searchUsersRequest 
+     */
     public searchUsers(searchUsersRequest: SearchUsersRequest, _options?: Configuration): Promise<Array<User>> {
         const result = this.api.searchUsers(searchUsersRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.0.0.cl or later   Updates the properties of a user object.  You can modify user properties such as username, email, and share notification settings. You can also assign new groups and Orgs, remove the user from a group or Org, reset password, and modify user preferences.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege. If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance, the `USER_ADMINISTRATION` (**Can manage users**) privilege is required.      
+     * @param userIdentifier GUID / name of the user
+     * @param updateUserRequest 
+     */
+    public updateUserWithHttpInfo(userIdentifier: string, updateUserRequest: UpdateUserRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.updateUserWithHttpInfo(userIdentifier, updateUserRequest, _options);
         return result.toPromise();
     }
 
@@ -2265,8 +3893,26 @@ export class PromiseVersionControlApi {
      *   Version: 9.2.0.cl or later   Commits TML files of metadata objects to the Git branch configured on your instance.  Requires at least edit access to objects used in the commit operation.  Before using this endpoint to push your commits:  * Enable Git integration on your instance. * Make sure the Git repository and branch details are configured on your instance.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
      * @param commitBranchRequest 
      */
+    public commitBranchWithHttpInfo(commitBranchRequest: CommitBranchRequest, _options?: Configuration): Promise<HttpInfo<CommitResponse>> {
+        const result = this.api.commitBranchWithHttpInfo(commitBranchRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Commits TML files of metadata objects to the Git branch configured on your instance.  Requires at least edit access to objects used in the commit operation.  Before using this endpoint to push your commits:  * Enable Git integration on your instance. * Make sure the Git repository and branch details are configured on your instance.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
+     * @param commitBranchRequest 
+     */
     public commitBranch(commitBranchRequest: CommitBranchRequest, _options?: Configuration): Promise<CommitResponse> {
         const result = this.api.commitBranch(commitBranchRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Allows you to connect a ThoughtSpot instance to a Git repository.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.  You can use this API endpoint to connect your ThoughtSpot development and production environments to the development and production branches of a Git repository.  Before using this endpoint to connect your ThoughtSpot instance to a Git repository, check the following prerequisites:  * You have a Git repository. If you are using GitHub, make sure you have a valid account and an access token to connect ThoughtSpot to GitHub. For information about generating a token, see [GitHub Documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).  * Your access token has `repo` scope that grants full access to public and private repositories. * Your Git repository has a branch that can be configured as a default branch in ThoughtSpot.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/?pageid=git-integration).  **Note**: ThoughtSpot supports only GitHub / GitHub Enterprise for CI/CD.      
+     * @param createConfigRequest 
+     */
+    public createConfigWithHttpInfo(createConfigRequest: CreateConfigRequest, _options?: Configuration): Promise<HttpInfo<RepoConfigObject>> {
+        const result = this.api.createConfigWithHttpInfo(createConfigRequest, _options);
         return result.toPromise();
     }
 
@@ -2283,8 +3929,26 @@ export class PromiseVersionControlApi {
      *   Version: 9.2.0.cl or later   Deletes Git repository configuration from your ThoughtSpot instance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
      * @param deleteConfigRequest 
      */
+    public deleteConfigWithHttpInfo(deleteConfigRequest: DeleteConfigRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.deleteConfigWithHttpInfo(deleteConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Deletes Git repository configuration from your ThoughtSpot instance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
+     * @param deleteConfigRequest 
+     */
     public deleteConfig(deleteConfigRequest: DeleteConfigRequest, _options?: Configuration): Promise<void> {
         const result = this.api.deleteConfig(deleteConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Allows you to deploy a commit and publish TML content to your ThoughtSpot instance.  Requires at least edit access to the objects used in the deploy operation.  The API deploys the head of the branch unless a `commit_id` is specified in the API request. If the branch name is not defined in the request, the default branch is considered for deploying commits.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
+     * @param deployCommitRequest 
+     */
+    public deployCommitWithHttpInfo(deployCommitRequest: DeployCommitRequest, _options?: Configuration): Promise<HttpInfo<Array<DeployResponse>>> {
+        const result = this.api.deployCommitWithHttpInfo(deployCommitRequest, _options);
         return result.toPromise();
     }
 
@@ -2302,8 +3966,27 @@ export class PromiseVersionControlApi {
      * @param commitId Commit id to which the object should be reverted
      * @param revertCommitRequest 
      */
+    public revertCommitWithHttpInfo(commitId: string, revertCommitRequest: RevertCommitRequest, _options?: Configuration): Promise<HttpInfo<RevertResponse>> {
+        const result = this.api.revertCommitWithHttpInfo(commitId, revertCommitRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Reverts TML objects to a previous commit specified in the API request.  Requires at least edit access to objects.  In the API request, specify the `commit_id`. If the branch name is not specified in the request, the API will consider the default branch configured on your instance.  By default, the API reverts all objects. If the revert operation fails for one of the objects provided in the commit, the API returns an error and does not revert any object.  For more information, see [Git integration documentation](https://developers.thoughtspot.com/docs/git-integration).      
+     * @param commitId Commit id to which the object should be reverted
+     * @param revertCommitRequest 
+     */
     public revertCommit(commitId: string, revertCommitRequest: RevertCommitRequest, _options?: Configuration): Promise<RevertResponse> {
         const result = this.api.revertCommit(commitId, revertCommitRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets a list of commits for a given metadata object.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**) privilege and edit access to the metadata objects.      
+     * @param searchCommitsRequest 
+     */
+    public searchCommitsWithHttpInfo(searchCommitsRequest: SearchCommitsRequest, _options?: Configuration): Promise<HttpInfo<Array<CommitHistoryResponse>>> {
+        const result = this.api.searchCommitsWithHttpInfo(searchCommitsRequest, _options);
         return result.toPromise();
     }
 
@@ -2320,6 +4003,15 @@ export class PromiseVersionControlApi {
      *   Version: 9.2.0.cl or later   Gets Git repository connections configured on the ThoughtSpot instance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
      * @param searchConfigRequest 
      */
+    public searchConfigWithHttpInfo(searchConfigRequest: SearchConfigRequest, _options?: Configuration): Promise<HttpInfo<Array<RepoConfigObject>>> {
+        const result = this.api.searchConfigWithHttpInfo(searchConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Gets Git repository connections configured on the ThoughtSpot instance.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
+     * @param searchConfigRequest 
+     */
     public searchConfig(searchConfigRequest: SearchConfigRequest, _options?: Configuration): Promise<Array<RepoConfigObject>> {
         const result = this.api.searchConfig(searchConfigRequest, _options);
         return result.toPromise();
@@ -2329,8 +4021,26 @@ export class PromiseVersionControlApi {
      *   Version: 9.2.0.cl or later   Updates Git repository configuration settings.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
      * @param updateConfigRequest 
      */
+    public updateConfigWithHttpInfo(updateConfigRequest: UpdateConfigRequest, _options?: Configuration): Promise<HttpInfo<RepoConfigObject>> {
+        const result = this.api.updateConfigWithHttpInfo(updateConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Updates Git repository configuration settings.  Requires `ADMINISTRATION` (**Can administer ThoughtSpot**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_VERSION_CONTROL` (**Can toggle version control for objects**) privilege.      
+     * @param updateConfigRequest 
+     */
     public updateConfig(updateConfigRequest: UpdateConfigRequest, _options?: Configuration): Promise<RepoConfigObject> {
         const result = this.api.updateConfig(updateConfigRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     *   Version: 9.2.0.cl or later   Validates the content of your source branch against the objects in your destination environment.  Before merging content from your source branch to the destination branch, run this API operation from your destination environment and ensure that the changes from the source branch function in the destination environment.  Requires `DATAMANAGEMENT` (**Can manage data**) privilege.  If [Role-Based Access Control (RBAC)](https://developers.thoughtspot.com/docs/rbac) is enabled on your instance on your instance, the `CAN_MANAGE_WORKSHEET_VIEWS_TABLES` (**Can manage data models**) privilege and edit access to the metadata objects.      
+     * @param validateMergeRequest 
+     */
+    public validateMergeWithHttpInfo(validateMergeRequest: ValidateMergeRequest, _options?: Configuration): Promise<HttpInfo<Array<DeployResponse>>> {
+        const result = this.api.validateMergeWithHttpInfo(validateMergeRequest, _options);
         return result.toPromise();
     }
 

@@ -50,6 +50,15 @@ export class SortOptions {
 }
 
 
-export type SortOptionsFieldNameEnum = "NAME" | "DISPLAY_NAME" | "AUTHOR" | "CREATED" | "MODIFIED" ;
-export type SortOptionsOrderEnum = "ASC" | "DESC" ;
+export enum SortOptionsFieldNameEnum {
+    Name = 'NAME',
+    DisplayName = 'DISPLAY_NAME',
+    Author = 'AUTHOR',
+    Created = 'CREATED',
+    Modified = 'MODIFIED'
+}
+export enum SortOptionsOrderEnum {
+    Asc = 'ASC',
+    Desc = 'DESC'
+}
 

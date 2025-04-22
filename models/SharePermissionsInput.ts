@@ -45,5 +45,9 @@ export class SharePermissionsInput {
 }
 
 
-export type SharePermissionsInputShareModeEnum = "READ_ONLY" | "MODIFY" | "NO_ACCESS" ;
+export enum SharePermissionsInputShareModeEnum {
+    ReadOnly = 'READ_ONLY',
+    Modify = 'MODIFY',
+    NoAccess = 'NO_ACCESS'
+}
 

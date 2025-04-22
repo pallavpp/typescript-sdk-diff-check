@@ -50,6 +50,18 @@ export class MetadataSearchSortOptions {
 }
 
 
-export type MetadataSearchSortOptionsFieldNameEnum = "NAME" | "DISPLAY_NAME" | "AUTHOR" | "CREATED" | "MODIFIED" | "VIEWS" | "FAVORITES" | "LAST_ACCESSED" ;
-export type MetadataSearchSortOptionsOrderEnum = "ASC" | "DESC" ;
+export enum MetadataSearchSortOptionsFieldNameEnum {
+    Name = 'NAME',
+    DisplayName = 'DISPLAY_NAME',
+    Author = 'AUTHOR',
+    Created = 'CREATED',
+    Modified = 'MODIFIED',
+    Views = 'VIEWS',
+    Favorites = 'FAVORITES',
+    LastAccessed = 'LAST_ACCESSED'
+}
+export enum MetadataSearchSortOptionsOrderEnum {
+    Asc = 'ASC',
+    Desc = 'DESC'
+}
 

@@ -71,5 +71,8 @@ export class RuntimeSorts {
 }
 
 
-export type RuntimeSortsOrderEnum = "ASC" | "DESC" ;
+export enum RuntimeSortsOrderEnum {
+    Asc = 'ASC',
+    Desc = 'DESC'
+}
 

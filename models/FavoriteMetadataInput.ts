@@ -47,5 +47,8 @@ export class FavoriteMetadataInput {
 }
 
 
-export type FavoriteMetadataInputTypeEnum = "LIVEBOARD" | "ANSWER" ;
+export enum FavoriteMetadataInputTypeEnum {
+    Liveboard = 'LIVEBOARD',
+    Answer = 'ANSWER'
+}
 
